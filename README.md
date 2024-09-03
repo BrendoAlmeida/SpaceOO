@@ -3,6 +3,10 @@ Sistema de login
     subclasse de Usuario Administrador  
     método- validação de dados (nome e senha)  
 
+Hitbox
+    posição x e y
+    altura e largura
+
 Escolha de Personagem  
     SuperClasse Personagem  
     subclasses personagem 1 e 2  
@@ -16,7 +20,14 @@ Jogo
     jogador passa as tres fases e ganha  
 
 ---------Jogo--------------  
-
+Hitbox  
+    atributo- Tiro  
+    atributo- x  
+    atributo- y  
+    atributo- altura  
+    atributo- largura  
+    retangulo hitboxP(x,y,altura,largura)  
+    
 Inimigo  
     SuperClasse Inimigo  
     atributo Tiro (objeto)  
@@ -27,6 +38,7 @@ Inimigo
     atributo- imgAp  
     atributo- tamanho  
     subclasses inimigo 1, 2 e o Boss  
+    atributo- hitbox
 
 Usuario  
     atributo- nome  
@@ -39,18 +51,14 @@ Administrador
     
 Personagem  
     atributo- vida  
-    atributo- velMov  
-    atributo- Tiro  
-    atributo- x  
-    atributo- y  
-    atributo- altura  
-    atributo- largura  
-    retangulo hitboxP(x,y,altura,largura)  
+    atributo- velMov 
+    atributo- hitbox
     
 interface Tiro  
     atributo- vel  
     atributo- dano  
     metodo protected Atira  
+    atributo- hitbox
 elemento  
 Animar o tiro  
 implementar a hitbox  
