@@ -20,45 +20,60 @@ Jogo
     jogador passa as tres fases e ganha  
 
 ---------Jogo--------------  
-Hitbox  
-    atributo- Tiro  
+Hitbox   
     atributo- x  
     atributo- y  
     atributo- altura  
     atributo- largura  
     retangulo hitboxP(x,y,altura,largura)  
     
-Inimigo  
-    SuperClasse Inimigo  
-    atributo Tiro (objeto)  
+interface Inimigo  
     método- Atirar  
     método- tomarTiro  
-    método- destruir Inimigo  
+    método-  morrer  
     atributo- vida  
     atributo- imgAp  
     atributo- tamanho  
-    subclasses inimigo 1, 2 e o Boss  
     atributo- hitbox
+    
+Inimigo 1
+    Implementa inimigo
+    Atributo- : Tiro
+Inimigo 2
+    Implementa inimigo
+    Atributo- : Tiro
+BOSS
+    Implementa inimigo
+    Atributo- : Tiro
 
 Usuario  
     atributo- nome  
     atributo- senha  
     atributo- score  
-    atributo- personagem(objeto)  
 
 Administrador  
     Personagem método- modificarPersonagem()  
     
-Personagem  
+interface Personagem  
     atributo- vida  
     atributo- velMov 
     atributo- hitbox
-    
-interface Tiro  
+    método- Atirar
+    método estático- tomarTiro
+
+Personagem 1
+    Implementa Personagem
+    atributo - Tiro
+Personagem 2
+    Implementa Personagem
+    atributo - Tiro
+
+Tiro  
     atributo- vel  
     atributo- dano  
     metodo protected Atira  
     atributo- hitbox
+    
 elemento  
 Animar o tiro  
 implementar a hitbox  
