@@ -5,13 +5,12 @@ import org.example.controller.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 public class modelLogin {
     public Connection con = connection.con;
 
     public Usuario login(Usuario usuario) {
-        String sql = "SELECT * FROM usuario WHERE nome = ? AND senha = ?";
+        String sql = "SELECT * FROM usuario where nome = ? and senha = ?";
         PreparedStatement stmt;
         try {
             stmt = con.prepareStatement(sql);
