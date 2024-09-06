@@ -1,5 +1,6 @@
 package org.example.model;
 
+import org.example.config.db.connection;
 import org.example.controller.Usuario;
 
 import java.sql.Connection;
@@ -7,9 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class modelLogin {
-    public Connection con = connection.con;
+    private static final Connection con = connection.con;
 
-    public Usuario login(Usuario usuario) {
+    public static Usuario login(Usuario usuario) {
         String sql = "SELECT * FROM usuario where nome = ? and senha = ?";
         PreparedStatement stmt;
         try {

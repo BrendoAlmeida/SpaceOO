@@ -12,8 +12,7 @@ public class App
     public static void main( String[] args )
     {
         Usuario usuario = new Usuario("admin", "admin");
-        modelLogin model = new modelLogin();
-        usuario = model.login(usuario);
+        usuario = modelLogin.login(usuario);
         if (usuario != null) {
             System.out.println("Usuário logado com sucesso!");
         } else {
