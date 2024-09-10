@@ -1,7 +1,6 @@
 package org.example;
 
-import org.example.controller.Usuario;
-import org.example.model.modelLogin;
+import org.example.view.fase1;
 
 /**
  * Hello world!
@@ -11,12 +10,6 @@ public class App
 {
     public static void main( String[] args )
     {
-        Usuario usuario = new Usuario("admin", "admin");
-        usuario = modelLogin.login(usuario);
-        if (usuario != null) {
-            System.out.println("Usuário logado com sucesso!");
-        } else {
-            System.out.println("Usuário ou senha inválidos!");
-        }
+        fase1 fase1 = new fase1();
     }
 }
