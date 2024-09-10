@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.controller.Usuario;
 import org.example.model.modelLogin;
+import org.example.view.FramePrincipal;
 
 /**
  * Hello world!
@@ -18,5 +19,10 @@ public class App
         } else {
             System.out.println("Usuário ou senha inválidos!");
         }
+
+
+        FramePrincipal frame = new FramePrincipal();
+
+
     }
 }
