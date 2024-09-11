@@ -57,8 +57,7 @@ public class TelaLoginPn extends JPanel
             @Override
             public void actionPerformed(ActionEvent e) {
                 usuario =  new Usuario(NmUsr.getText(), psswrd.getText());
-                usuario = modelLogin.login(usuario);
-                if(usuario != null)
+                if(usuario.login())
                 {
                     txtLog.setEnabled(true);
                     txtLog.setText("Usuário logado com sucesso!");

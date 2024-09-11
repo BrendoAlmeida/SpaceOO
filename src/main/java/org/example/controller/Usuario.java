@@ -1,5 +1,7 @@
 package org.example.controller;
 
+import org.example.model.modelLogin;
+
 public class Usuario {
     private String nome;
     private String senha;
@@ -7,6 +9,12 @@ public class Usuario {
     public Usuario(String nome, String senha) {
         this.nome = nome;
         this.senha = senha;
+    }
+
+    public boolean login(){
+        if (modelLogin.login(this) == null) return false;
+
+        return true;
     }
 
     public String getNome(){
