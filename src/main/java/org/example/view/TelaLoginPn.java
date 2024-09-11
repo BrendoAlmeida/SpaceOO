@@ -1,6 +1,5 @@
 package org.example.view;
 import org.example.controller.Usuario;
-import org.example.model.modelLogin;
 import org.example.util.CarregadorFonte;
 import javax.swing.*;
 import java.awt.*;
