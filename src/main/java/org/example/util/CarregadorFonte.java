@@ -1,15 +1,15 @@
-package org.example.view;
+package org.example.util;
 
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 
-public class CustomFontLoader {
-
-    public Font loadCustomFont() {
+public class CarregadorFonte
+{
+    public static Font CarregaFonte(String arq)
+    {
         // Carrega o arquivo de fonte da pasta resources
-
-        URL fontURL = getClass().getClassLoader().getResource("fonts/space_invaders.ttf");
+        URL fontURL = CarregadorFonte.class.getClassLoader().getResource(arq);
 
         if (fontURL == null) {
             System.out.println("Fonte não encontrada!");
@@ -24,6 +24,5 @@ public class CustomFontLoader {
                 e.printStackTrace();
                 return null;
             }
-
     }
 }
