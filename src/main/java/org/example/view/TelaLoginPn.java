@@ -1,6 +1,7 @@
 package org.example.view;
 import org.example.controller.Usuario;
 import org.example.model.modelLogin;
+import org.example.util.CarregadorFonte;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,8 +16,8 @@ public class TelaLoginPn extends JPanel
 
     final int LARGURA = 1000;
     final int ALTURA = 800;
-    private final Font fnt = CarregaRecursos.CarregaFonte("fonts/space_invaders.ttf");
-    private final Font fnt2 = CarregaRecursos.CarregaFonte("fonts/MachineStd-Medium.otf");
+    private final Font fnt = CarregadorFonte.CarregaFonte("fonts/space_invaders.ttf");
+    private final Font fnt2 = CarregadorFonte.CarregaFonte("fonts/MachineStd-Medium.otf");
     private final JLabel txtInfo = new JLabel("Insira seus dados de login:");
     private final JLabel txtLog = new JLabel("");
     Usuario usuario;

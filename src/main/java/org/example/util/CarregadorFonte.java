@@ -1,15 +1,15 @@
-package org.example.view;
+package org.example.util;
 
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
 
-public class CarregaRecursos {
+public class CarregadorFonte
+{
     public static Font CarregaFonte(String arq)
     {
         // Carrega o arquivo de fonte da pasta resources
-
-        URL fontURL = CarregaRecursos.class.getClassLoader().getResource(arq);
+        URL fontURL = CarregadorFonte.class.getClassLoader().getResource(arq);
 
         if (fontURL == null) {
             System.out.println("Fonte não encontrada!");
@@ -25,5 +25,4 @@ public class CarregaRecursos {
                 return null;
             }
     }
-
 }
