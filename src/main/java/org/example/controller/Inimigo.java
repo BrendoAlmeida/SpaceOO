@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Inimigo {
+    private int vida;
     private int tamanho;
     private int[] pos;
     private Tiro tiro;
@@ -26,6 +27,8 @@ public class Inimigo {
         return hitbox;
     }
 
+    public int getVida() { return vida; }
+
     public JPanel getSprite() {
         return sprite;
     }
@@ -41,6 +44,8 @@ public class Inimigo {
     public int[] getPos() {
         return pos;
     }
+
+    public void setVida(int vida) { this.vida = vida; }
 
     public void setPos(int[] pos) {
         this.pos = pos;
