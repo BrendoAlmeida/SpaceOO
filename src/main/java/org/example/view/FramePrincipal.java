@@ -1,5 +1,4 @@
 package org.example.view;
-
 import javax.swing.*;
 
 public class FramePrincipal extends JFrame
@@ -13,5 +12,6 @@ public class FramePrincipal extends JFrame
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+        this.setResizable(false);
     }
 }

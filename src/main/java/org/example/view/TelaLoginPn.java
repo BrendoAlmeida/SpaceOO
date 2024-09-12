@@ -2,6 +2,7 @@ package org.example.view;
 import org.example.controller.Usuario;
 import org.example.util.CarregadorFonte;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,32 +20,30 @@ public class TelaLoginPn extends JPanel
     private final Font fnt = CarregadorFonte.CarregaFonte("fonts/space_invaders.ttf");
     private final Font fnt2 = CarregadorFonte.CarregaFonte("fonts/MachineStd-Medium.otf");
 
-    private final JLabel txtInfo = new JLabel("Insira seus dados de login:");
-    private final JLabel txtNome = new JLabel("Nome:");
-    private final JLabel txtSenha = new JLabel("Senha:");
-    private final JLabel txtLog = new JLabel("");
-
     private final JButton btnCAD = new JButton("CADASTRO");
     private final JButton btnLogin = new JButton("LOGIN");
-    private final JButton conf = new JButton();
 
     private final JPanel Cad = new JPanel();
     private final JPanel Login = new JPanel();
-    private final JPanel intPn = new JPanel();
+
     private final JPanel selec = new JPanel();
+    private final JPanel contTxt = new JPanel();
 
-    private final JTextField NmUsr = new JTextField();
-    private final JTextField psswrd= new JTextField();
+    private final JLabel title = new JLabel("SPACE SWINGVADERS");
+    private final JLabel txtLog = new JLabel("Selecione o que deseja fazer");
 
-    Usuario usuario;
-    TelaLoginPn PAINEL = this;
+    private final TelaLoginPn PAINEL = this;
 
     public TelaLoginPn()
     {
-        intPn.setEnabled(false);
-        intPn.setVisible(false);
+        this.setPreferredSize(new Dimension(LARGURA,ALTURA));
 
-        this.setPreferredSize(new Dimension(ALTURA,LARGURA));
+        contTxt.setLayout(new BoxLayout(contTxt,BoxLayout.Y_AXIS));
+        contTxt.setBorder(new EmptyBorder(100,0,0,150));
+        contTxt.setPreferredSize(new Dimension(500, 400));
+        contTxt.setBackground(Color.BLACK);
+        contTxt.setVisible(true);
+
         Cad.setPreferredSize(new Dimension(400,400));
         Cad.setBackground(Color.BLACK);
         Cad.add(btnCAD);
@@ -62,99 +61,60 @@ public class TelaLoginPn extends JPanel
         selec.add(Login);
         selec.setVisible(true);
 
-        JButton conf = new JButton("Confirmar");
-        //organiza o painel em um layout de caixas (BoxLayout.Y_AXIS para eixo y e BoxLayout.X_AXIS para eixo x)
-        intPn.setLayout(new BoxLayout(intPn,BoxLayout.Y_AXIS));
-        intPn.setPreferredSize(new Dimension(1000,250));
-        intPn.setBackground(Color.black);
-        //intPn.setVisible(true);
-
-        this.setPreferredSize(new Dimension(LARGURA,ALTURA));
-        this.setBackground(Color.black);
-
-        txtNome.setForeground(Color.WHITE);
-        txtSenha.setForeground(Color.WHITE);
-        txtInfo.setForeground(Color.white);
+        title.setFont(fnt2.deriveFont(70f));
+        title.setForeground(Color.white);
+        txtLog.setFont(fnt);
         txtLog.setForeground(Color.white);
 
-        txtInfo.setFont(fnt);
-        txtLog.setFont(fnt);
-        txtNome.setFont(fnt);
-        txtSenha.setFont(fnt);
-
-        txtInfo.setVisible(true);
-        txtLog.setVisible(true);
-        txtNome.setVisible(true);
-        txtSenha.setVisible(true);
+        //organiza o painel em um layout de caixas (BoxLayout.Y_AXIS para eixo y e BoxLayout.X_AXIS para eixo x)
+        this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+        this.setBackground(Color.black);
 
         btnLogin.setFont(fnt);
         btnLogin.setForeground(Color.WHITE);
+        btnLogin.setBackground(Color.black);
         btnCAD.setForeground(Color.WHITE);
+        btnCAD.setBackground(Color.black);
         btnLogin.setVisible(true);
         btnCAD.setFont(fnt);
         btnCAD.setVisible(true);
-        conf.setFont(fnt);
-        conf.setForeground(Color.white);
-        conf.setPreferredSize(new Dimension(150,100));
-        conf.setBackground(Color.BLACK);
-        conf.setBorder(null);
-
-        conf.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                usuario =  new Usuario(NmUsr.getText(), psswrd.getText());
-                if(usuario.login())
-                {
-                    txtLog.setEnabled(true);
-                    txtLog.setText("Usuário logado com sucesso!");
-                    PAINEL.setEnabled(false);
-                    PAINEL.setVisible(false);
-                }
-                else
-                    txtLog.setText("Usuário ou senha inválidos!");
-            }
-        });
 
         btnCAD.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
+                SelUsuario UsPn = new SelUsuario();
+                PAINEL.remove(selec);
+                PAINEL.add(UsPn);
+                PAINEL.revalidate();
+                repaint();
+                System.out.println("escreveu");
             }
         });
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                intPn.setVisible(true);
-                intPn.setVisible(true);
+
+                intPn pn = new intPn();
+                PAINEL.remove(selec);
+                PAINEL.remove(contTxt);
+                PAINEL.add(pn);
+                PAINEL.revalidate();
+                repaint();
+                System.out.println("escreveu");
             }
         });
 
-        NmUsr.setPreferredSize(new Dimension(600,100));
-        psswrd.setPreferredSize(new Dimension(600,100));
-        NmUsr.setFont(NmUsr.getFont().deriveFont(30f));
-        psswrd.setFont(psswrd.getFont().deriveFont(30f));
-        NmUsr.setBackground(Color.BLACK);
-        psswrd.setBackground(Color.BLACK);
-        NmUsr.setForeground(Color.WHITE);
-        psswrd.setForeground(Color.WHITE);
-        NmUsr.setVisible(true);
-        psswrd.setVisible(true);
+        contTxt.add(title);
+        contTxt.add(txtLog);
 
-        intPn.add(txtInfo);
-        intPn.add(txtNome);
-        intPn.add(NmUsr);
-        intPn.add(txtSenha);
-        intPn.add(psswrd);
-        intPn.add(conf);
+        this.add(contTxt);
+        this.add(selec);
 
-        this.add(intPn);
-        this.add(txtLog);
         this.setVisible(true);
     }
     public void paint(Graphics  g)
     {
         super.paint(g);
-        Graphics2D g2d = (Graphics2D) g;
     }
 
 }
