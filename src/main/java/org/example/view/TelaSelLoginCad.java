@@ -1,5 +1,4 @@
 package org.example.view;
-import org.example.controller.Usuario;
 import org.example.util.CarregadorFonte;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -11,14 +10,14 @@ import java.awt.event.ActionListener;
 //.setBorder() pra configurar a borda
 
 
-public class TelaLoginPn extends JPanel
+public class TelaSelLoginCad extends JPanel
 {
 
     final int LARGURA = 1000;
     final int ALTURA = 800;
 
     private final Font fnt = CarregadorFonte.CarregaFonte("fonts/space_invaders.ttf");
-    private final Font fnt2 = CarregadorFonte.CarregaFonte("fonts/MachineStd-Medium.otf");
+    private final Font fnt2 = CarregadorFonte.CarregaFonte("fonts/FE.ttf");
 
     private final JButton btnCAD = new JButton("CADASTRO");
     private final JButton btnLogin = new JButton("LOGIN");
@@ -32,9 +31,7 @@ public class TelaLoginPn extends JPanel
     private final JLabel title = new JLabel("SPACE SWINGVADERS");
     private final JLabel txtLog = new JLabel("Selecione o que deseja fazer");
 
-    private final TelaLoginPn PAINEL = this;
-
-    public TelaLoginPn()
+    public TelaSelLoginCad()
     {
         this.setPreferredSize(new Dimension(LARGURA,ALTURA));
 
@@ -61,7 +58,7 @@ public class TelaLoginPn extends JPanel
         selec.add(Login);
         selec.setVisible(true);
 
-        title.setFont(fnt2.deriveFont(70f));
+        title.setFont(fnt2.deriveFont(50f));
         title.setForeground(Color.white);
         txtLog.setFont(fnt);
         txtLog.setForeground(Color.white);
@@ -82,28 +79,15 @@ public class TelaLoginPn extends JPanel
         btnCAD.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                SelUsuario UsPn = new SelUsuario();
-                PAINEL.remove(selec);
-                PAINEL.add(UsPn);
-                PAINEL.revalidate();
-                repaint();
-                System.out.println("escreveu");
+                FramePrincipal.CarregarPag("TelaCad");
             }
         });
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
-                intPn pn = new intPn();
-                PAINEL.remove(selec);
-                PAINEL.remove(contTxt);
-                PAINEL.add(pn);
-                PAINEL.revalidate();
-                repaint();
-                System.out.println("escreveu");
+                FramePrincipal.CarregarPag("TelaLog");
             }
         });
-
         contTxt.add(title);
         contTxt.add(txtLog);
 

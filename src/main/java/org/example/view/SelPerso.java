@@ -1,4 +1,6 @@
 package org.example.view;
 
-public class SelPerso {
+import javax.swing.*;
+
+public class SelPerso extends JPanel {
 }
