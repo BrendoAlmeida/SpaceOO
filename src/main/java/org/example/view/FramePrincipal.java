@@ -19,6 +19,7 @@ public class FramePrincipal extends JFrame
 
     public FramePrincipal()
     {
+        this.setTitle("Space SwingInvaders");
         pnPrincipal.add(tlLC,"TelaSelLoginCad");
         pnPrincipal.add(tlLog,"TelaLog");
         pnPrincipal.add(tlCad,"TelaCad");

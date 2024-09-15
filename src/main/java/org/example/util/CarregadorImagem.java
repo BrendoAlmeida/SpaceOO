@@ -6,6 +6,10 @@ import java.net.URL;
 
 public class CarregadorImagem
 {
+    /*
+    *
+    * @arq no formato img/(nome do arquivo com a extensão dele)
+     */
     public static Image CarregaImagem(String arq)
     {
         URL imgURL = CarregadorImagem.class.getClassLoader().getResource(arq);
