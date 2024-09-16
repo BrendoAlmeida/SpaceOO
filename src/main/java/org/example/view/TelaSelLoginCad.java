@@ -28,25 +28,6 @@ public class TelaSelLoginCad extends JPanel {
     private final Font fnt = CarregadorFonte.CarregaFonte("fonts/space_invaders.ttf");
     private final Font fnt2 = CarregadorFonte.CarregaFonte("fonts/FE.ttf");
 
-    private final AudioInputStream hover = CarregadorAudio.CarregarAudio("audio/Hover.wav");
-    private final AudioInputStream click = CarregadorAudio.CarregarAudio("audio/Click.wav");
-    private final AudioInputStream msc = CarregadorAudio.CarregarAudio("audio/menuTheme.wav");
-    private final Clip clip;
-    private final Clip Hov;
-    private final Clip Click;
-    {
-        try {
-            clip = AudioSystem.getClip();
-            Hov = AudioSystem.getClip();
-            Click = AudioSystem.getClip();
-
-            clip.open(msc);
-            Hov.open(hover);
-            Click.open(click);
-        } catch (LineUnavailableException | IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     private final JButton btnCAD = new JButton("CADASTRO");
     private final JButton btnLogin = new JButton("LOGIN");
@@ -61,7 +42,7 @@ public class TelaSelLoginCad extends JPanel {
     private final JLabel txtLog = new JLabel("Selecione o que deseja fazer");
     private final JLabel musicCredits = new JLabel("Music by Jake feddermanb from Pixabay");
 
-    public TelaSelLoginCad()
+    public TelaSelLoginCad(Clip Click,Clip Hov, Clip clip)
     {
         this.setPreferredSize(new Dimension(LARGURA,ALTURA));
 
@@ -106,64 +87,15 @@ public class TelaSelLoginCad extends JPanel {
         btnLogin.setVisible(true);
         btnCAD.setFont(fnt);
         btnCAD.setVisible(true);
+        btnCAD.addMouseListener(new TratadorMouseClick(Click,Hov,null,null,null,false,"TelaCad"));
+        btnLogin.addMouseListener(new TratadorMouseClick(Click,Hov,null,null,null,false,"TelaLog"));
 
-        clip.start();
-        btnCAD.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                Click.start();
-                FramePrincipal.CarregarPag("TelaCad");
-            }
+        if(clip != null)
+        {
+            clip.setFramePosition(0);
+            clip.start();
+        }
 
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                Hov.setFramePosition(0);
-                Hov.start();
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                Hov.stop();
-            }
-        });
-        btnLogin.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e)
-            {
-                Click.start();
-                FramePrincipal.CarregarPag("TelaLog");
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                Hov.setFramePosition(0);
-                Hov.start();
-            }
-            @Override
-            public void mouseExited(MouseEvent e) {
-                Hov.stop();
-            }
-        });
         contTxt.add(title);
 
         this.add(contTxt);

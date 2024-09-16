@@ -1,18 +1,11 @@
 package org.example.util;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.*;
-import java.awt.*;
+import javax.sound.sampled.*;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.io.IOException;
-import javax.sound.*;
 
 public class CarregadorAudio
 {
-    public static AudioInputStream CarregarAudio(String arq)
+    public static Clip CarregarAudio(String arq)
     {
         URL audioUrl = CarregadorAudio.class.getClassLoader().getResource(arq);
         if(audioUrl == null)
@@ -22,11 +15,18 @@ public class CarregadorAudio
         }
         else
             try{
-                return AudioSystem.getAudioInputStream(audioUrl);
+                Clip clip = AudioSystem.getClip();
+                clip.open(AudioSystem.getAudioInputStream(audioUrl));
+                if(clip == null)
+                {
+                    System.out.println("áudio não encontrado!");
+                    return  null;
+                }
+                else
+                    return clip;
             }
-            catch(IOException | UnsupportedAudioFileException e){
-                e.printStackTrace();
-                return null;
+            catch(IOException | UnsupportedAudioFileException | LineUnavailableException e){
+                throw new RuntimeException(e);
             }
     }
 }

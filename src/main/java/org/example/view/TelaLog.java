@@ -3,6 +3,7 @@ package org.example.view;
 import org.example.controller.Usuario;
 import org.example.util.CarregadorFonte;
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -19,7 +20,7 @@ public class TelaLog extends JPanel
     private final Font fnt = CarregadorFonte.CarregaFonte("fonts/FT14.ttf");
     private final Font fnt2= CarregadorFonte.CarregaFonte("fonts/FT16.ttf");
 
-    public TelaLog()
+    public TelaLog(Clip Click, Clip Hov)
     {
         this.setPreferredSize(new Dimension(1000,800));
         //this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
