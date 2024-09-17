@@ -55,4 +55,8 @@ public class Personagem {
     public void setPos(int[] pos) {
         this.pos = pos;
     }
+
+    public JPanel getPanel() {
+        return panel;
+    }
 }
