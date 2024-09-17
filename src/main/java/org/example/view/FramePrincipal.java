@@ -18,9 +18,7 @@ public class FramePrincipal extends JFrame
     private final static TelaLog tlLog = new TelaLog(Click,Hov);
     private final static TelaCad tlCad = new TelaCad(Click,Hov);
     private final static SelPerso SelP = new SelPerso(Click,Hov);
-    //private final static fase1 F1 = new fase1();
-
-
+    private final static fase1 F1 = new fase1();
 
 
     public static void CarregarPag(String pag)

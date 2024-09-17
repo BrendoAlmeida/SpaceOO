@@ -63,7 +63,6 @@ public class SelPerso extends JPanel
                 estP1.setVisible(true);
             }});
 
-
         SelP2.setBackground(Color.BLACK);
         SelP2.setSize(new Dimension(250,250));
         SelP2.addMouseListener(new TratadorMouseHover(Click,Hov,null,null,null));
@@ -85,7 +84,6 @@ public class SelPerso extends JPanel
         conf.setFont(fnt2);
         conf.addMouseListener(new TratadorMouseClick(Click,Hov,null,null,null,false,"fase1"));
 
-
         contP1.add(SelP1);
         contP1.add(estP1);
         contP1.setLayout(new BoxLayout(contP1,BoxLayout.Y_AXIS));
@@ -96,13 +94,17 @@ public class SelPerso extends JPanel
         contP2.setLayout(new BoxLayout(contP2,BoxLayout.Y_AXIS));
         contP2.setBackground(Color.black);
 
-        contPs.add(contP1);
-        contPs.add(contP2);
+        //contPs.add(contP1);
+        //contPs.add(contP2);
         contPs.setBackground(Color.black);
-        contPs.setLayout(new BoxLayout(contPs,BoxLayout.X_AXIS));
+        contPs.setLayout(new BoxLayout(contPs,BoxLayout.LINE_AXIS));
+        contPs.setSize(new Dimension(700,600));
+
 
         this.add(txtSel);
         this.add(contPs);
+        this.add(contP1);
+        this.add(contP2);
         this.add(conf);
         this.setVisible(true);
     }

@@ -16,25 +16,27 @@ public class CarregadorImagem
         if(imgURL == null)
         {
             System.out.println("Imagem não encontrada");
-            return null;
+            URL templateURL = CarregadorImagem.class.getClassLoader().getResource("img/template.png");
+            assert  templateURL != null;
+            return new ImageIcon(templateURL).getImage();
         }
         else
             return new ImageIcon(imgURL).getImage();
     }
+
     public static ImageIcon CarregaIcone(String arq,int wd, int hg)
     {
         URL imgURL = CarregadorImagem.class.getClassLoader().getResource(arq);
         if(imgURL == null)
         {
+
             System.out.println("Imagem não encontrada");
             return null;
         }
         else
         {
-            ImageIcon ic = new ImageIcon(imgURL);
-            Image escala = ic.getImage();
-            escala.getScaledInstance(wd,hg,Image.SCALE_SMOOTH);
-            return new ImageIcon(escala);
+            ImageIcon img = new ImageIcon(imgURL);
+            return new ImageIcon(img.getImage().getScaledInstance(wd,hg,Image.SCALE_DEFAULT));
         }
     }
 }
