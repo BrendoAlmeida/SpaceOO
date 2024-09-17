@@ -32,7 +32,7 @@ public class Personagem {
         return vida;
     }
 
-    public JPanel getSprite() {
+    public Image getSprite() {
         return sprite;
     }
 
