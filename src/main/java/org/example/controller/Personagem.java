@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Personagem {
+    private int vida;
     private int[] pos;
     private int tamanho;
     private JPanel panel;
@@ -27,12 +28,20 @@ public class Personagem {
         this.tiro = tiro;
     }
 
-    public JPanel getPanel(){
-        return panel;
+    public int getVida() {
+        return vida;
+    }
+
+    public JPanel getSprite() {
+        return sprite;
     }
 
     public int getTamanho() {
         return tamanho;
+    }
+
+    public void setVida(int vida) {
+        this.vida = vida;
     }
 
     public void setTamanho(int tamanho) {

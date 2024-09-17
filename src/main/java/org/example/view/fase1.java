@@ -23,6 +23,6 @@ public class fase1 {
         frame.setSize(dimencao[0], dimencao[1]);
         frame.setVisible(true);
 
-        controllerJogo = new ControllerJogo(mainPanel, dimencao, fatorDimencao, new Inimigo(new int[]{0, 0}, fatorDimencao, new Tiro()), new Personagem(new int[]{0, 0}, fatorDimencao, new Tiro()));
+        controllerJogo = new ControllerJogo(mainPanel, dimencao, fatorDimencao, new Inimigo(new int[]{0, 0}, fatorDimencao, new Tiro(new int[]{0,0}, new int[]{2,10})), new Personagem(new int[]{0, 0}, fatorDimencao, new Tiro(new int[]{0,0}, new int[]{2,10})));
     }
 }

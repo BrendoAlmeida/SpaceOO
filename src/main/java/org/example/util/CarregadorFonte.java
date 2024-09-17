@@ -6,6 +6,11 @@ import java.net.URL;
 
 public class CarregadorFonte
 {
+    /*
+    *
+    * @arq = String do caminho da fonte no formato: fonts/(nome do arquivo)
+    */
+
     public static Font CarregaFonte(String arq)
     {
         // Carrega o arquivo de fonte da pasta resources
