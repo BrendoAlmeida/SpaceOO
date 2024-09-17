@@ -1,12 +1,15 @@
 package org.example.controller;
 
+import org.example.util.CarregadorImagem;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class Personagem {
     private int[] pos;
     private int tamanho;
-    private JPanel sprite;
+    private JPanel panel;
+    private Image sprite;
     private Rectangle hitbox = new Rectangle();
     private Tiro tiro;
 
@@ -15,15 +18,17 @@ public class Personagem {
         this.tamanho = tamanho;
         this.hitbox.setBounds(pos[0], pos[1], tamanho, tamanho);
 
-        this.sprite = new JPanel();
-        this.sprite.setBounds(pos[0], pos[1], tamanho, tamanho);
-        this.sprite.setBackground(Color.BLACK);
+        this.sprite = new ImageIcon(CarregadorImagem.CarregaImagem("img/player1.png")).getImage().getScaledInstance(tamanho, tamanho, Image.SCALE_DEFAULT);
+
+        this.panel = new JPanel();
+        this.panel.setBounds(pos[0], pos[1], tamanho, tamanho);
+        this.panel.setBackground(Color.BLACK);
 
         this.tiro = tiro;
     }
 
-    public JPanel getSprite() {
-        return sprite;
+    public JPanel getPanel(){
+        return panel;
     }
 
     public int getTamanho() {
