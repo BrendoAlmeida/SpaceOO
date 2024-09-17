@@ -18,12 +18,16 @@ public class Inimigo extends JPanel{
         this.tamanho = tamanho;
         hitbox.setBounds(pos[0], pos[1], tamanho, tamanho);
 
-        sprite = CarregadorImagem.CarregaIcone("img/player1.png", tamanho, tamanho).getImage();
+        sprite = CarregadorImagem.CarregaIcone("img/inimigo1.png", tamanho, tamanho).getImage();
 
         this.setBounds(pos[0], pos[1], tamanho, tamanho);
-        this.setBackground(Color.BLACK);
 
         this.tiro = tiro;
+    }
+
+    public void paintComponent(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawImage(sprite, 0, 0, null);
     }
 
     public Rectangle getHitbox() {
@@ -52,6 +56,8 @@ public class Inimigo extends JPanel{
 
     public void setPos(int[] pos) {
         this.pos = pos;
+        this.setBounds(pos[0], pos[1], tamanho, tamanho);
+        hitbox.setBounds(pos[0], pos[1], tamanho, tamanho);
     }
 
     public int getTamanho() {

@@ -12,6 +12,7 @@ public class Personagem extends JPanel {
     private Image sprite;
     private Rectangle hitbox = new Rectangle();
     private Tiro tiro;
+    private int velocidade = 1;
 
     public Personagem(int[] pos, int tamanho, Tiro tiro) {
         this.pos = pos;
@@ -21,14 +22,13 @@ public class Personagem extends JPanel {
         sprite = CarregadorImagem.CarregaIcone("img/player1.png", tamanho, tamanho).getImage();
 
         this.setBounds(pos[0], pos[1], tamanho, tamanho);
-        this.setBackground(Color.BLACK);
 
         this.tiro = tiro;
     }
 
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(sprite, pos[0], pos[1], null);
+        g2d.drawImage(sprite, 0, 0, null);
     }
 
     public int getVida() {
@@ -57,5 +57,12 @@ public class Personagem extends JPanel {
 
     public void setPos(int[] pos) {
         this.pos = pos;
+        this.setBounds(pos[0], pos[1], tamanho, tamanho);
+        hitbox.setBounds(pos[0], pos[1], tamanho, tamanho);
+    }
+
+    public void mover(int direcao) {
+        pos[0] += direcao * velocidade;
+        setPos(pos);
     }
 }

@@ -2,6 +2,8 @@ package org.example.controller;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.List;
 
 public class ControllerJogo {
@@ -28,8 +30,10 @@ public class ControllerJogo {
 
     public void initPersonagem(Personagem jogador) {
         int[] pos = new int[]{(dimencao[0] / 2) - jogador.getTamanho(), (dimencao[1] - jogador.getTamanho()*2)};
-        jogador.setBounds(pos[0], pos[1], jogador.getTamanho(), jogador.getTamanho());
+        jogador.setPos(pos);
         mainPanel.add(jogador);
+        jogador.setFocusable(true);
+        jogador.requestFocusInWindow();
         mainPanel.repaint();
     }
 
@@ -42,6 +46,29 @@ public class ControllerJogo {
         initPersonagem(jogador);
         this.jogador = jogador;
         mainPanel.repaint();
+
+        jogador.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                    jogador.mover(-1);
+                    mainPanel.repaint();
+                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                    jogador.mover(1);
+                    mainPanel.repaint();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
     }
 
     public int getFatorDimecao() {
