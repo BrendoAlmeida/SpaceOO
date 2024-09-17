@@ -6,15 +6,14 @@ import org.example.controller.Personagem;
 import org.example.controller.Tiro;
 
 import javax.swing.*;
-import java.awt.*;
 
-public class fase1 {
+public class fase1a {
     private JPanel mainPanel;
     private ControllerJogo controllerJogo;
     private int[] dimencao = new int[]{800, 600};
     private int fatorDimencao = 50;
 
-    public fase1() {
+    public fase1a() {
         JFrame frame = new JFrame("Space Invaders");
         mainPanel.setLayout(null);
         frame.setContentPane(mainPanel);

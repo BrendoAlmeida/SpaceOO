@@ -1,24 +1,27 @@
 package org.example.controller;
 
+import org.example.util.CarregadorImagem;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class Inimigo {
+public class Inimigo extends JPanel{
     private int vida;
-    private int tamanho;
     private int[] pos;
-    private Tiro tiro;
+    private int tamanho;
+    private Image sprite;
     private Rectangle hitbox = new Rectangle();
-    private JPanel sprite;
+    private Tiro tiro;
 
     public Inimigo(int[] pos, int tamanho, Tiro tiro) {
         this.pos = pos;
         this.tamanho = tamanho;
-        this.hitbox.setBounds(pos[0], pos[1], tamanho, tamanho);
+        hitbox.setBounds(pos[0], pos[1], tamanho, tamanho);
 
-        this.sprite = new JPanel();
-        this.sprite.setBounds(pos[0], pos[1], tamanho, tamanho);
-        this.sprite.setBackground(Color.RED);
+        sprite = CarregadorImagem.CarregaIcone("img/player1.png", tamanho, tamanho).getImage();
+
+        this.setBounds(pos[0], pos[1], tamanho, tamanho);
+        this.setBackground(Color.BLACK);
 
         this.tiro = tiro;
     }
@@ -29,7 +32,7 @@ public class Inimigo {
 
     public int getVida() { return vida; }
 
-    public JPanel getSprite() {
+    public Image getSprite() {
         return sprite;
     }
 

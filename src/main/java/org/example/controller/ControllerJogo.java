@@ -19,16 +19,18 @@ public class ControllerJogo {
         for (int i = fatorDim; i < qtdInimigos; i += fatorDim) {
             Inimigo novoInimigo = inimigo.clone();
             novoInimigo.setPos(new int[]{i, 0});
-            novoInimigo.getSprite().setBounds(i, 0, novoInimigo.getTamanho(), novoInimigo.getTamanho());
+            novoInimigo.setBounds(i, 0, novoInimigo.getTamanho(), novoInimigo.getTamanho());
             inimigos.add(novoInimigo);
-            mainPanel.add(novoInimigo.getSprite());
+            mainPanel.add(novoInimigo);
         }
+        mainPanel.repaint();
     }
 
     public void initPersonagem(Personagem jogador) {
         int[] pos = new int[]{(dimencao[0] / 2) - jogador.getTamanho(), (dimencao[1] - jogador.getTamanho()*2)};
-        jogador.getPanel().setBounds(pos[0], pos[1], jogador.getTamanho(), jogador.getTamanho());
-        mainPanel.add(jogador.getPanel());
+        jogador.setBounds(pos[0], pos[1], jogador.getTamanho(), jogador.getTamanho());
+        mainPanel.add(jogador);
+        mainPanel.repaint();
     }
 
     public ControllerJogo(JPanel mainPanel, int[] pos, int fatorDimecao, Inimigo inimigo, Personagem jogador) {
@@ -39,6 +41,7 @@ public class ControllerJogo {
         initInimigos(inimigo);
         initPersonagem(jogador);
         this.jogador = jogador;
+        mainPanel.repaint();
     }
 
     public int getFatorDimecao() {

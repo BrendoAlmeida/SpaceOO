@@ -31,10 +31,8 @@ public class CarregadorImagem
         }
         else
         {
-            ImageIcon ic = new ImageIcon(imgURL);
-            Image escala = ic.getImage();
-            escala.getScaledInstance(wd,hg,Image.SCALE_SMOOTH);
-            return new ImageIcon(escala);
+            ImageIcon img = new ImageIcon(imgURL);
+            return new ImageIcon(img.getImage().getScaledInstance(wd,hg,Image.SCALE_DEFAULT));
         }
     }
 }

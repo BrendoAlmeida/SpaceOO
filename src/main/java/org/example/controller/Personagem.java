@@ -5,11 +5,10 @@ import org.example.util.CarregadorImagem;
 import javax.swing.*;
 import java.awt.*;
 
-public class Personagem {
+public class Personagem extends JPanel {
     private int vida;
     private int[] pos;
     private int tamanho;
-    private JPanel panel;
     private Image sprite;
     private Rectangle hitbox = new Rectangle();
     private Tiro tiro;
@@ -17,15 +16,19 @@ public class Personagem {
     public Personagem(int[] pos, int tamanho, Tiro tiro) {
         this.pos = pos;
         this.tamanho = tamanho;
-        this.hitbox.setBounds(pos[0], pos[1], tamanho, tamanho);
+        hitbox.setBounds(pos[0], pos[1], tamanho, tamanho);
 
-        this.sprite = new ImageIcon(CarregadorImagem.CarregaImagem("img/player1.png")).getImage().getScaledInstance(tamanho, tamanho, Image.SCALE_DEFAULT);
+        sprite = CarregadorImagem.CarregaIcone("img/player1.png", tamanho, tamanho).getImage();
 
-        this.panel = new JPanel();
-        this.panel.setBounds(pos[0], pos[1], tamanho, tamanho);
-        this.panel.setBackground(Color.BLACK);
+        this.setBounds(pos[0], pos[1], tamanho, tamanho);
+        this.setBackground(Color.BLACK);
 
         this.tiro = tiro;
+    }
+
+    public void paintComponent(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawImage(sprite, pos[0], pos[1], null);
     }
 
     public int getVida() {
@@ -54,9 +57,5 @@ public class Personagem {
 
     public void setPos(int[] pos) {
         this.pos = pos;
-    }
-
-    public JPanel getPanel() {
-        return panel;
     }
 }
