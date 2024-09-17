@@ -6,13 +6,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Personagem extends JPanel {
-    private int vida;
+    private int vida = 3;
     private int[] pos;
     private int tamanho;
     private Image sprite;
     private Rectangle hitbox = new Rectangle();
     private Tiro tiro;
-    private int velocidade = 1;
+    private int velocidade = 5;
 
     public Personagem(int[] pos, int tamanho, Tiro tiro) {
         this.pos = pos;
@@ -61,7 +61,9 @@ public class Personagem extends JPanel {
         hitbox.setBounds(pos[0], pos[1], tamanho, tamanho);
     }
 
-    public void mover(int direcao) {
+    public void mover(int direcao, int maxPos) {
+        if (pos[0] + direcao * velocidade < 0 || pos[0] + direcao * velocidade > maxPos - tamanho) return;
+
         pos[0] += direcao * velocidade;
         setPos(pos);
     }

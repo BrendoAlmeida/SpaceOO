@@ -1,7 +1,8 @@
 package org.example.controller;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.List;
@@ -12,6 +13,10 @@ public class ControllerJogo {
     private List<Inimigo> inimigos = new java.util.ArrayList<>();
     private Personagem jogador;
     private JPanel mainPanel;
+    private Timer updateTimer;
+    private Timer renderTimer;
+    private boolean moveLeft = false;
+    private boolean moveRight = false;
 
     public void initInimigos(Inimigo inimigo) {
         int tamanhoX = this.getDimencao()[0];
@@ -29,7 +34,7 @@ public class ControllerJogo {
     }
 
     public void initPersonagem(Personagem jogador) {
-        int[] pos = new int[]{(dimencao[0] / 2) - jogador.getTamanho(), (dimencao[1] - jogador.getTamanho()*2)};
+        int[] pos = new int[]{(dimencao[0] / 2) - jogador.getTamanho(), (dimencao[1] - jogador.getTamanho() - 20)};
         jogador.setPos(pos);
         mainPanel.add(jogador);
         jogador.setFocusable(true);
@@ -50,25 +55,59 @@ public class ControllerJogo {
         jogador.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-
             }
 
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                    jogador.mover(-1);
-                    mainPanel.repaint();
+                    moveLeft = true;
+                    moveRight = false;
                 } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    jogador.mover(1);
-                    mainPanel.repaint();
+                    moveRight = true;
+                    moveLeft = false;
                 }
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
-
+                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                    moveLeft = false;
+                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                    moveRight = false;
+                }
             }
         });
+
+        startGameLoop();
+        startRenderLoop();
+    }
+
+    private void startGameLoop() {
+        updateTimer = new Timer(16, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateGame();
+            }
+        });
+        updateTimer.start();
+    }
+
+    private void startRenderLoop() {
+        renderTimer = new Timer(16, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainPanel.repaint();
+            }
+        });
+        renderTimer.start();
+    }
+
+    private void updateGame() {
+        if (moveLeft) {
+            jogador.mover(-1, dimencao[0]);
+        } else if (moveRight) {
+            jogador.mover(1, dimencao[0]);
+        }
     }
 
     public int getFatorDimecao() {

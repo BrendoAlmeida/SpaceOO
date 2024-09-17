@@ -6,6 +6,7 @@ import org.example.controller.Personagem;
 import org.example.controller.Tiro;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class fase1a {
     private JPanel mainPanel;
@@ -15,13 +16,25 @@ public class fase1a {
 
     public fase1a() {
         JFrame frame = new JFrame("Space Invaders");
+        JPanel mainPanel = new JPanel();
         mainPanel.setLayout(null);
-        frame.setContentPane(mainPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setSize(dimencao[0], dimencao[1]);
-        frame.setVisible(true);
+        int contentWidth = 800;
+        int contentHeight = 600;
+        mainPanel.setPreferredSize(new Dimension(contentWidth, contentHeight));
 
-        controllerJogo = new ControllerJogo(mainPanel, dimencao, fatorDimencao, new Inimigo(new int[]{0, 0}, fatorDimencao, new Tiro(new int[]{0,0}, new int[]{2,10})), new Personagem(new int[]{0, 0}, fatorDimencao, new Tiro(new int[]{0,0}, new int[]{2,10})));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(mainPanel);
+        frame.pack();
+
+        Insets insets = frame.getInsets();
+        int frameWidth = contentWidth + insets.left + insets.right;
+        int frameHeight = contentHeight + insets.top + insets.bottom;
+        frame.setSize(frameWidth, frameHeight);
+
+        frame.setVisible(true);
+        controllerJogo = new ControllerJogo(mainPanel, dimencao, fatorDimencao,
+                new Inimigo(new int[]{0, 0}, fatorDimencao, new Tiro(new int[]{0,0}, new int[]{2,10})),
+                new Personagem(new int[]{0, 0}, fatorDimencao, new Tiro(new int[]{0,0}, new int[]{2,10}))
+        );
     }
 }
