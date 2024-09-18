@@ -10,8 +10,9 @@ public class Tiro extends JPanel{
     private int[] pos;
     private int[] tamanho;
     private boolean movendo = false;
+    private boolean tiroInimigo = false;
 
-    public Tiro(int[] pos, int[] tamanho, int vel, int dano, int direcao){
+    public Tiro(int[] pos, int[] tamanho, int vel, int dano, int direcao, boolean tiroInimigo){
         this.pos = new int[]{pos[0], pos[1]};
         this.tamanho = tamanho;
         this.setBounds(this.pos[0],this.pos[1],tamanho[0],tamanho[1]);
@@ -21,6 +22,7 @@ public class Tiro extends JPanel{
         this.vel = vel;
         this.dano = dano;
         this.direcao = direcao;
+        this.tiroInimigo = tiroInimigo;
     }
 
     public int getVel() {
@@ -45,7 +47,7 @@ public class Tiro extends JPanel{
     }
 
     public Tiro clone(){
-        return new Tiro(pos, tamanho, vel, dano, direcao);
+        return new Tiro(pos, tamanho, vel, dano, direcao, tiroInimigo);
     }
 
     public void atirar(int[] pos){
@@ -62,5 +64,9 @@ public class Tiro extends JPanel{
 
     public boolean colisao(Rectangle hitbox){
         return this.getBounds().intersects(hitbox);
+    }
+
+    public boolean isTiroInimigo() {
+        return tiroInimigo;
     }
 }

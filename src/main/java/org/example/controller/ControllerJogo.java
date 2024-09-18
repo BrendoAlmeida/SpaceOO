@@ -219,6 +219,7 @@ public class ControllerJogo {
         for (Inimigo inimigo : inimigos) {
             Rectangle hitboxInimigo = inimigo.getBounds();
             if (hitboxTiro.intersects(hitboxInimigo)) {
+                if (tiro.isTiroInimigo()) return false;
                 inimigo.tomarDano(tiro.getDano());
                 if (inimigo.getVida() > 0) return true;
 

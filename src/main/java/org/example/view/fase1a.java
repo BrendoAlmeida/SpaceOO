@@ -29,8 +29,8 @@ public class fase1a {
 
         frame.setVisible(true);
         controllerJogo = new ControllerJogo(mainPanel, dimencao, fatorDimencao,
-                new Inimigo(new int[]{0, 0}, fatorDimencao, new Tiro(new int[]{0,0}, new int[]{2,10}, 5, 1, 1)),
-                new Personagem(new int[]{0, 0}, fatorDimencao, new Tiro(new int[]{0,0}, new int[]{2,10}, 5, 1, -1)),
+                new Inimigo(new int[]{0, 0}, fatorDimencao, new Tiro(new int[]{0,0}, new int[]{2,10}, 7, 1, 1, true)),
+                new Personagem(new int[]{0, 0}, fatorDimencao, new Tiro(new int[]{0,0}, new int[]{2,10}, 7, 1, -1, false)),
                 new Parede(new int[]{0, 0}, fatorDimencao*2),
                 3
         );
