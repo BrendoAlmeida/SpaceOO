@@ -14,6 +14,7 @@ public class ControllerJogo {
 
     private List<Inimigo> inimigos = new java.util.ArrayList<>();
     private List<Tiro> tiros = new java.util.ArrayList<>();
+    private List<Parede> paredes = new java.util.ArrayList<>();
 
     private Personagem jogador;
     private JPanel mainPanel;
@@ -49,13 +50,29 @@ public class ControllerJogo {
         mainPanel.repaint();
     }
 
-    public ControllerJogo(JPanel mainPanel, int[] pos, int fatorDimecao, Inimigo inimigo, Personagem jogador) {
+    public void initParede(Parede parede) {
+        int tamanhoX = this.getDimencao()[0];
+        int tamanhoY = this.getDimencao()[1];
+        int fatorDim = this.getFatorDimecao();
+        int qtdParedes = (tamanhoX - fatorDim*2);
+
+        for (int i = parede.getTamanho(); i < qtdParedes; i += parede.getTamanho()*2) {
+            Parede novaParede = parede.clone();
+            novaParede.setPos(new int[]{i, tamanhoY - parede.getTamanho()*2});
+            paredes.add(novaParede);
+            mainPanel.add(novaParede);
+        }
+        mainPanel.repaint();
+    }
+
+    public ControllerJogo(JPanel mainPanel, int[] pos, int fatorDimecao, Inimigo inimigo, Personagem jogador, Parede parede) {
         dimencao = pos;
         this.fatorDimecao = fatorDimecao;
         this.mainPanel = mainPanel;
 
         initInimigos(inimigo);
         initPersonagem(jogador);
+        initParede(parede);
         this.jogador = jogador;
         mainPanel.repaint();
 
@@ -176,7 +193,7 @@ public class ControllerJogo {
     public boolean colideInimigo(Tiro tiro){
         Rectangle hitboxTiro = tiro.getBounds();
         for (Inimigo inimigo : inimigos) {
-            Rectangle hitboxInimigo = inimigo.getHitbox();
+            Rectangle hitboxInimigo = inimigo.getBounds();
             if (hitboxTiro.intersects(hitboxInimigo)) {
                 inimigo.tomarDano(tiro.getDano());
                 if (inimigo.getVida() > 0) return true;

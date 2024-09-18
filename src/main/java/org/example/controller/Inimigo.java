@@ -11,7 +11,6 @@ public class Inimigo extends JPanel{
     private int[] pos;
     private int tamanho;
     private Image sprite;
-    private Rectangle hitbox = new Rectangle();
     private Tiro tiro;
     private int delayAtirar = 0;
     private int delayTiro;
@@ -19,7 +18,6 @@ public class Inimigo extends JPanel{
     public Inimigo(int[] pos, int tamanho, Tiro tiro) {
         this.pos = pos;
         this.tamanho = tamanho;
-        hitbox.setBounds(pos[0], pos[1], tamanho, tamanho);
 
         sprite = CarregadorImagem.CarregaIcone("img/inimigo1.png", tamanho, tamanho).getImage();
 
@@ -35,10 +33,6 @@ public class Inimigo extends JPanel{
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(sprite, 0, 0, null);
-    }
-
-    public Rectangle getHitbox() {
-        return hitbox;
     }
 
     public int getVida() { return vida; }
@@ -68,7 +62,6 @@ public class Inimigo extends JPanel{
     public void setPos(int[] pos) {
         this.pos = pos;
         this.setBounds(pos[0], pos[1], tamanho, tamanho);
-        hitbox.setBounds(pos[0], pos[1], tamanho, tamanho);
     }
 
     public int getTamanho() {
