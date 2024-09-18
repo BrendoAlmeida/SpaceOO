@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -10,13 +11,19 @@ import java.util.List;
 public class ControllerJogo {
     private int[] dimencao;
     private int fatorDimecao;
+
     private List<Inimigo> inimigos = new java.util.ArrayList<>();
+    private List<Tiro> tiros = new java.util.ArrayList<>();
+
     private Personagem jogador;
     private JPanel mainPanel;
     private Timer updateTimer;
     private Timer renderTimer;
+
+    // botões
     private boolean moveLeft = false;
     private boolean moveRight = false;
+    private boolean atirar = false;
 
     public void initInimigos(Inimigo inimigo) {
         int tamanhoX = this.getDimencao()[0];
@@ -61,10 +68,12 @@ public class ControllerJogo {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                     moveLeft = true;
-                    moveRight = false;
-                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                }
+                if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     moveRight = true;
-                    moveLeft = false;
+                }
+                if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    atirar = true;
                 }
             }
 
@@ -72,8 +81,12 @@ public class ControllerJogo {
             public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_LEFT) {
                     moveLeft = false;
-                } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                }
+                if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     moveRight = false;
+                }
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    atirar = false;
                 }
             }
         });
@@ -105,9 +118,81 @@ public class ControllerJogo {
     private void updateGame() {
         if (moveLeft) {
             jogador.mover(-1, dimencao[0]);
-        } else if (moveRight) {
+        }
+        if (moveRight) {
             jogador.mover(1, dimencao[0]);
         }
+        if(atirar) {
+            jogadorAtira();
+        }
+        inimigoAtira();
+        moveTiro();
+        jogador.delayTiro();
+        for (Inimigo inimigo : inimigos) {
+            inimigo.delayTiro();
+        }
+    }
+
+    public void moveTiro(){
+        for (int i = 0; i < tiros.size(); i++) {
+            Tiro tiro = tiros.get(i);
+            tiro.mover();
+            if (tiro.getPos()[1] < 0) {
+                tiros.remove(tiro);
+                mainPanel.remove(tiro);
+                continue;
+            }
+            if (colideInimigo(tiro)) {
+                tiros.remove(tiro);
+                mainPanel.remove(tiro);
+                i--;
+            }
+            if (colideJogador(tiro)) {
+                tiros.remove(tiro);
+                mainPanel.remove(tiro);
+                jogador.tomarDano(tiro.getDano());
+            }
+        }
+    }
+
+    public void inimigoAtira(){
+        for (Inimigo inimigo : inimigos) {
+            Tiro tiro = inimigo.atirar();
+            if (tiro != null) {
+                tiros.add(tiro);
+                mainPanel.add(tiro);
+            }
+        }
+    }
+
+    public void jogadorAtira(){
+        Tiro tiro = jogador.atirar();
+        if (tiro != null) {
+            tiros.add(tiro);
+            mainPanel.add(tiro);
+        }
+    }
+
+    public boolean colideInimigo(Tiro tiro){
+        Rectangle hitboxTiro = tiro.getBounds();
+        for (Inimigo inimigo : inimigos) {
+            Rectangle hitboxInimigo = inimigo.getHitbox();
+            if (hitboxTiro.intersects(hitboxInimigo)) {
+                inimigo.tomarDano(tiro.getDano());
+                if (inimigo.getVida() > 0) return true;
+
+                inimigos.remove(inimigo);
+                mainPanel.remove(inimigo);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean colideJogador(Tiro tiro){
+        Rectangle hitboxTiro = tiro.getBounds();
+        Rectangle hitboxJogador = jogador.getBounds();
+        return hitboxTiro.intersects(hitboxJogador);
     }
 
     public int getFatorDimecao() {

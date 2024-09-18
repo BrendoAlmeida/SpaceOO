@@ -10,14 +10,14 @@ public class Personagem extends JPanel {
     private int[] pos;
     private int tamanho;
     private Image sprite;
-    private Rectangle hitbox = new Rectangle();
     private Tiro tiro;
     private int velocidade = 5;
+    private int delayAtirar = 0;
+    private int delayTiro = 50;
 
     public Personagem(int[] pos, int tamanho, Tiro tiro) {
         this.pos = pos;
         this.tamanho = tamanho;
-        hitbox.setBounds(pos[0], pos[1], tamanho, tamanho);
 
         sprite = CarregadorImagem.CarregaIcone("img/player1.png", tamanho, tamanho).getImage();
 
@@ -58,7 +58,10 @@ public class Personagem extends JPanel {
     public void setPos(int[] pos) {
         this.pos = pos;
         this.setBounds(pos[0], pos[1], tamanho, tamanho);
-        hitbox.setBounds(pos[0], pos[1], tamanho, tamanho);
+    }
+
+    public void tomarDano(int dano) {
+        this.vida -= dano;
     }
 
     public void mover(int direcao, int maxPos) {
@@ -66,5 +69,24 @@ public class Personagem extends JPanel {
 
         pos[0] += direcao * velocidade;
         setPos(pos);
+    }
+
+    public Tiro atirar(){
+        if(delayAtirar > 0) return null;
+        Tiro tiro = this.tiro.clone();
+        int pos[] = new int[]{this.pos[0] + tamanho/2 - tiro.getTamanho()[0]/2, this.pos[1] - tiro.getTamanho()[1]};
+        tiro.atirar(pos);
+        delayAtirar = delayTiro;
+        return tiro;
+    }
+
+    public void delayTiro(){
+        if(delayAtirar > 0){
+            delayAtirar -= 1;
+        }
+    }
+
+    public int getDelayAtirar() {
+        return delayAtirar;
     }
 }
