@@ -14,6 +14,7 @@ public class Inimigo extends JPanel{
     private Tiro tiro;
     private int delayAtirar = 0;
     private int delayTiro;
+    private int velocidade = 5;
 
     public Inimigo(int[] pos, int tamanho, Tiro tiro) {
         this.pos = pos;
@@ -83,6 +84,15 @@ public class Inimigo extends JPanel{
         tiro.atirar(pos);
         delayAtirar = delayTiro;
         return tiro;
+    }
+
+    public boolean mover(int direcao, int maxPos) {
+        if (pos[0] + direcao * velocidade < 0 || pos[0] + direcao * velocidade > maxPos - tamanho) return false;
+
+        pos[0] += direcao * velocidade;
+        setPos(pos);
+
+        return true;
     }
 
     public void delayTiro(){

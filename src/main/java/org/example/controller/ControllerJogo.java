@@ -13,6 +13,7 @@ public class ControllerJogo {
     private int fatorDimecao;
 
     private List<Inimigo> inimigos = new java.util.ArrayList<>();
+    private int direcaoInimigo = 1;
     private List<Tiro> tiros = new java.util.ArrayList<>();
     private List<Parede> paredes = new java.util.ArrayList<>();
 
@@ -29,7 +30,7 @@ public class ControllerJogo {
     public void initInimigos(Inimigo inimigo) {
         int tamanhoX = this.getDimencao()[0];
         int fatorDim = this.getFatorDimecao();
-        int qtdInimigos = (tamanhoX - fatorDim);
+        int qtdInimigos = (tamanhoX - fatorDim*3);
 
         for (int i = fatorDim; i < qtdInimigos; i += fatorDim) {
             Inimigo novoInimigo = inimigo.clone();
@@ -144,6 +145,7 @@ public class ControllerJogo {
         }
         inimigoAtira();
         moveTiro();
+        moveInimigo();
         jogador.delayTiro();
         for (Inimigo inimigo : inimigos) {
             inimigo.delayTiro();
@@ -172,6 +174,16 @@ public class ControllerJogo {
                 tiros.remove(tiro);
                 mainPanel.remove(tiro);
             }
+        }
+    }
+
+    public void moveInimigo(){
+        int i = 0;
+        if (direcaoInimigo == 1) i = inimigos.size() - 1;
+
+        for (; i < inimigos.size() && i >= 0; i += direcaoInimigo*-1) {
+            Inimigo inimigo = inimigos.get(i);
+            if (!inimigo.mover(direcaoInimigo, dimencao[0])) direcaoInimigo *= -1;
         }
     }
 

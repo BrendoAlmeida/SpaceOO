@@ -64,11 +64,13 @@ public class Personagem extends JPanel {
         this.vida -= dano;
     }
 
-    public void mover(int direcao, int maxPos) {
-        if (pos[0] + direcao * velocidade < 0 || pos[0] + direcao * velocidade > maxPos - tamanho) return;
+    public boolean mover(int direcao, int maxPos) {
+        if (pos[0] + direcao * velocidade < 0 || pos[0] + direcao * velocidade > maxPos - tamanho) return false;
 
         pos[0] += direcao * velocidade;
         setPos(pos);
+
+        return true;
     }
 
     public Tiro atirar(){
