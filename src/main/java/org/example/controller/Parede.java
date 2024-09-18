@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Parede extends JPanel {
-    private int vida = 10;
+    private int vida = 30;
     private int[] pos;
     private int tamanho;
     private Image sprite;
@@ -45,5 +45,13 @@ public class Parede extends JPanel {
     public void setPos(int[] pos) {
         this.pos = pos;
         this.setBounds(pos[0], pos[1], tamanho, tamanho);
+    }
+
+    public void tomarDano(int dano) {
+        vida -= dano;
+    }
+
+    public int getVida() {
+        return vida;
     }
 }

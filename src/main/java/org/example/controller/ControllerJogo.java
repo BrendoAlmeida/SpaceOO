@@ -167,7 +167,10 @@ public class ControllerJogo {
             if (colideJogador(tiro)) {
                 tiros.remove(tiro);
                 mainPanel.remove(tiro);
-                jogador.tomarDano(tiro.getDano());
+            }
+            if (colideParede(tiro)) {
+                tiros.remove(tiro);
+                mainPanel.remove(tiro);
             }
         }
     }
@@ -209,7 +212,24 @@ public class ControllerJogo {
     public boolean colideJogador(Tiro tiro){
         Rectangle hitboxTiro = tiro.getBounds();
         Rectangle hitboxJogador = jogador.getBounds();
+        jogador.tomarDano(tiro.getDano());
         return hitboxTiro.intersects(hitboxJogador);
+    }
+
+    public boolean colideParede(Tiro tiro){
+        Rectangle hitboxTiro = tiro.getBounds();
+        for (Parede parede : paredes) {
+            Rectangle hitboxParede = parede.getBounds();
+            if (hitboxTiro.intersects(hitboxParede)) {
+                parede.tomarDano(tiro.getDano());
+                if (parede.getVida() > 0) return true;
+
+                paredes.remove(parede);
+                mainPanel.remove(parede);
+                return true;
+            }
+        }
+        return false;
     }
 
     public int getFatorDimecao() {
