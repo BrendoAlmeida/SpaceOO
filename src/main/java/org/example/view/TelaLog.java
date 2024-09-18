@@ -17,8 +17,8 @@ public class TelaLog extends JPanel
     private final JButton edit = new JButton("Editar");
     private final JPanel btnCont = new JPanel();
     private final JLabel txtInfo = new JLabel("Jogadores Cadastrados:");
-    private final Font fnt = CarregadorFonte.CarregaFonte("fonts/FT14.ttf");
-    private final Font fnt2= CarregadorFonte.CarregaFonte("fonts/FT16.ttf");
+    private final Font fnt = CarregadorFonte.CarregaFonte("fonts/FT14.ttf", 30f);
+    private final Font fnt2= CarregadorFonte.CarregaFonte("fonts/FT16.ttf", 30f);
 
     public TelaLog(Clip Click, Clip Hov)
     {

@@ -18,8 +18,8 @@ public class TelaCad extends JPanel
     private final JLabel txtSenha = new JLabel("Senha:");
     protected final JLabel txtLog = new JLabel("");
 
-    private final Font fnt = CarregadorFonte.CarregaFonte("fonts/space_invaders.ttf");
-    private final Font fnt2 = CarregadorFonte.CarregaFonte("fonts/FT16.ttf");
+    private final Font fnt = CarregadorFonte.CarregaFonte("fonts/space_invaders.ttf", 30f);
+    private final Font fnt2 = CarregadorFonte.CarregaFonte("fonts/FT16.ttf", 30f);
 
     private final JButton conf = new JButton("Confirmar");
     private final JButton voltar = new JButton("Voltar");

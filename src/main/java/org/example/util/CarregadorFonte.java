@@ -11,7 +11,7 @@ public class CarregadorFonte
     * @arq = String do caminho da fonte no formato: fonts/(nome do arquivo)
     */
 
-    public static Font CarregaFonte(String arq)
+    public static Font CarregaFonte(String arq, float size)
     {
         // Carrega o arquivo de fonte da pasta resources
         URL fontURL = CarregadorFonte.class.getClassLoader().getResource(arq);
@@ -22,7 +22,7 @@ public class CarregadorFonte
         }
         else
             try {
-                return Font.createFont(Font.TRUETYPE_FONT, fontURL.openStream()).deriveFont(30f);
+                return Font.createFont(Font.TRUETYPE_FONT, fontURL.openStream()).deriveFont(size);
             }
             catch (FontFormatException | IOException e)
             {
