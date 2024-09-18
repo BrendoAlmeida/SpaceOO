@@ -79,8 +79,8 @@ public class Inimigo extends JPanel{
 
     public Tiro atirar(){
         if(delayAtirar > 0) return null;
-        Tiro tiro = this.tiro.clone();
         int pos[] = new int[]{this.pos[0] + tamanho/2 - tiro.getTamanho()[0]/2, this.pos[1] + tiro.getTamanho()[1] + tamanho};
+        Tiro tiro = this.tiro.clone();
         tiro.atirar(pos);
         delayAtirar = delayTiro;
         return tiro;

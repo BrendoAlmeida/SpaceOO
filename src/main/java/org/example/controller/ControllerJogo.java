@@ -27,17 +27,18 @@ public class ControllerJogo {
     private boolean moveRight = false;
     private boolean atirar = false;
 
-    public void initInimigos(Inimigo inimigo) {
+    public void initInimigos(Inimigo inimigo, int qtdFileiras) {
         int tamanhoX = this.getDimencao()[0];
         int fatorDim = this.getFatorDimecao();
         int qtdInimigos = (tamanhoX - fatorDim*3);
 
         for (int i = fatorDim; i < qtdInimigos; i += fatorDim) {
-            Inimigo novoInimigo = inimigo.clone();
-            novoInimigo.setPos(new int[]{i, 0});
-            novoInimigo.setBounds(i, 0, novoInimigo.getTamanho(), novoInimigo.getTamanho());
-            inimigos.add(novoInimigo);
-            mainPanel.add(novoInimigo);
+            for (int j = 0; j < qtdFileiras; j++) {
+                Inimigo novoInimigo = inimigo.clone();
+                novoInimigo.setPos(new int[]{i, fatorDim + (j * fatorDim)});
+                inimigos.add(novoInimigo);
+                mainPanel.add(novoInimigo);
+            }
         }
         mainPanel.repaint();
     }
@@ -66,12 +67,12 @@ public class ControllerJogo {
         mainPanel.repaint();
     }
 
-    public ControllerJogo(JPanel mainPanel, int[] pos, int fatorDimecao, Inimigo inimigo, Personagem jogador, Parede parede) {
+    public ControllerJogo(JPanel mainPanel, int[] pos, int fatorDimecao, Inimigo inimigo, Personagem jogador, Parede parede, int qtdFileiras) {
         dimencao = pos;
         this.fatorDimecao = fatorDimecao;
         this.mainPanel = mainPanel;
 
-        initInimigos(inimigo);
+        initInimigos(inimigo, qtdFileiras);
         initPersonagem(jogador);
         initParede(parede);
         this.jogador = jogador;
@@ -191,6 +192,14 @@ public class ControllerJogo {
         for (Inimigo inimigo : inimigos) {
             Tiro tiro = inimigo.atirar();
             if (tiro != null) {
+                boolean tiroColide = false;
+                for (int i = 0; i < inimigos.size(); i++){
+                    if (tiro.getBounds().intersects(inimigos.get(i).getBounds())) {
+                        tiroColide = true;
+                        break;
+                    }
+                }
+                if (tiroColide) continue;
                 tiros.add(tiro);
                 mainPanel.add(tiro);
             }

@@ -31,7 +31,8 @@ public class fase1a {
         controllerJogo = new ControllerJogo(mainPanel, dimencao, fatorDimencao,
                 new Inimigo(new int[]{0, 0}, fatorDimencao, new Tiro(new int[]{0,0}, new int[]{2,10}, 5, 1, 1)),
                 new Personagem(new int[]{0, 0}, fatorDimencao, new Tiro(new int[]{0,0}, new int[]{2,10}, 5, 1, -1)),
-                new Parede(new int[]{0, 0}, fatorDimencao*2)
+                new Parede(new int[]{0, 0}, fatorDimencao*2),
+                3
         );
     }
 }
