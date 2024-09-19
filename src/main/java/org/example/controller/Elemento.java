@@ -8,43 +8,49 @@ import java.awt.*;
 public abstract class Elemento extends JPanel {
     protected int vida;
     protected int[] pos;
-    protected int tamanho;
+    protected Dimension tamanho;
     protected Image sprite;
-    protected Rectangle hitbox = new Rectangle();
-    protected Tiro tiro;
+    protected int velocidade;
+    protected int delayAtirar;
+    protected int delayTiro;
 
-    public Elemento(int[] pos, int tamanho, Tiro tiro) {
-        this.pos = pos;
-        this.tamanho = tamanho;
-        hitbox.setBounds(pos[0], pos[1], tamanho, tamanho);
+    public Elemento(int[] pos, Dimension tamanho, String spritePath) {
+        setTamanho(tamanho);
+        setPos(pos);
+        setSprite(spritePath);
+    }
 
-        sprite = CarregadorImagem.CarregaIcone("img/player1.png", tamanho, tamanho).getImage();
+    public Elemento(Dimension tamanho, String spritePath) {
+        setTamanho(tamanho);
+        setSprite(spritePath);
+    }
 
-        this.setBounds(pos[0], pos[1], tamanho, tamanho);
-        this.setBackground(Color.BLACK);
+    public Elemento(int[] pos, Dimension tamanho) {
+        setTamanho(tamanho);
+        setPos(pos);
+    }
 
-        this.tiro = tiro;
+    public Elemento(Dimension tamanho) {
+        setTamanho(tamanho);
     }
 
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(sprite, pos[0], pos[1], null);
+        g2d.drawImage(sprite, 0, 0, null);
     }
 
-    public Rectangle getHitbox() {return hitbox;}
-
     public int getVida() { return vida; }
+
+    public void tomarDano(int dano) {
+        this.vida -= dano; // TODO imunidade apos tomar dano?
+    }
 
     public Image getSprite() {
         return sprite;
     }
 
-    public Tiro getTiro() {
-        return tiro;
-    }
-
-    public void setTiro(Tiro tiro) {
-        this.tiro = tiro;
+    public void setSprite(String spritePath) {
+        sprite = CarregadorImagem.CarregaIcone(spritePath, tamanho.width, tamanho.height).getImage();
     }
 
     public int[] getPos() {
@@ -55,15 +61,19 @@ public abstract class Elemento extends JPanel {
 
     public void setPos(int[] pos) {
         this.pos = pos;
+        this.setBounds(pos[0], pos[1], tamanho.width, tamanho.height);
     }
 
-    public int getTamanho() {
+    public Dimension getTamanho() {
         return tamanho;
     }
 
-    public void setTamanho(int tamanho) {
+    public void setTamanho(Dimension tamanho) {
         this.tamanho = tamanho;
     }
 
+    public int getDelayAtirar() {
+        return delayAtirar;
+    }
 }
 

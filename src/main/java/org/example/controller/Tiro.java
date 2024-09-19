@@ -1,44 +1,40 @@
 package org.example.controller;
 
-import javax.swing.*;
 import java.awt.*;
 
-public class Tiro extends JPanel{
-    private int vel;
+public class Tiro extends Elemento{
     private int dano;
     private int direcao;
-    private int[] pos;
-    private Dimension tamanho;
-    private boolean movendo = false;
     private boolean tiroInimigo = false;
+    private boolean movendo = false;
 
-    public Tiro(int[] pos, Dimension tamanho, int vel, int dano, int direcao, boolean tiroInimigo){
-        this.pos = new int[]{pos[0], pos[1]};
-        this.tamanho = tamanho;
-        this.setBounds(this.pos[0],this.pos[1],tamanho.width,tamanho.height);
+    public Tiro(int[] pos, Dimension tamanho, int velocidade, int dano, int direcao, boolean tiroInimigo){
+        super(pos, tamanho);
+        startTiro(direcao, tiroInimigo);
+    }
 
+    public Tiro(Dimension tamanho, int velocidade, int dano, int direcao, boolean tiroInimigo){
+        super(tamanho);
+        startTiro(direcao, tiroInimigo);
+    }
+
+    public void startTiro(int direcao, boolean tiroInimigo){
         this.setBackground(Color.BLUE);
 
-        this.vel = vel;
-        this.dano = dano;
+        this.velocidade = 10;
+        this.dano = 1;
         this.direcao = direcao;
         this.tiroInimigo = tiroInimigo;
     }
 
-    public Tiro(Dimension tamanho, int vel, int dano, int direcao, boolean tiroInimigo){
-        this.tamanho = tamanho;
-        this.setSize(tamanho.width,tamanho.height);
-
-        this.setBackground(Color.BLUE);
-
-        this.vel = vel;
-        this.dano = dano;
-        this.direcao = direcao;
-        this.tiroInimigo = tiroInimigo;
+    public void paintComponent(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.BLUE);
+        g2d.fillRect(0, 0, tamanho.width, tamanho.height);
     }
 
     public int getVel() {
-        return vel;
+        return velocidade;
     }
 
     public int getDano() {
@@ -59,7 +55,7 @@ public class Tiro extends JPanel{
     }
 
     public Tiro clone(){
-        return new Tiro(tamanho, vel, dano, direcao, tiroInimigo);
+        return new Tiro(tamanho, velocidade, dano, direcao, tiroInimigo);
     }
 
     public void atirar(int[] pos){
@@ -70,7 +66,7 @@ public class Tiro extends JPanel{
     public void mover() {
         if (movendo == false) return;
 
-        pos[1] += vel * direcao;
+        pos[1] += velocidade * direcao;
         setPos(pos);
     }
 

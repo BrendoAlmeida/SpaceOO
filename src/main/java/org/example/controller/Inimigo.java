@@ -1,89 +1,31 @@
 package org.example.controller;
 
-import org.example.util.CarregadorImagem;
-
-import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
 
-public class Inimigo extends JPanel{
-    private int vida = 1;
-    private int[] pos;
-    private Dimension tamanho;
-    private Image sprite;
+public class Inimigo extends Elemento{
     private Tiro tiro;
-    private int delayAtirar = 0;
-    private int delayTiro;
-    private int velocidade = 5;
 
     public Inimigo(int[] pos, Dimension tamanho, Tiro tiro) {
-        this.pos = pos;
-        this.tamanho = tamanho;
-
-        sprite = CarregadorImagem.CarregaIcone("img/inimigo1.png", tamanho.width, tamanho.height).getImage();
-
-        this.setBounds(pos[0], pos[1], tamanho.width, tamanho.height);
-
-        this.tiro = tiro;
-
-        Random random = new Random();
-        delayTiro = 50 + random.nextInt(50);
-        delayAtirar = delayTiro;
+        super(pos, tamanho, "img/inimigo1.png");
+        startInimigo(tiro);
     }
 
     public Inimigo(Dimension tamanho, Tiro tiro) {
-        this.tamanho = tamanho;
-        this.setSize(tamanho.width,tamanho.height);
+        super(tamanho, "img/inimigo1.png");
+        startInimigo(tiro);
+    }
 
-        sprite = CarregadorImagem.CarregaIcone("img/inimigo1.png", tamanho.width, tamanho.height).getImage();
-
+    public void startInimigo(Tiro tiro){
+        this.velocidade = 2;
+        this.delayAtirar = 0;
+        this.delayTiro = 50;
+        this.vida = 1;
         this.tiro = tiro;
 
         Random random = new Random();
         delayTiro = 50 + random.nextInt(50);
         delayAtirar = delayTiro;
-    }
-
-    public void paintComponent(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(sprite, 0, 0, null);
-    }
-
-    public int getVida() { return vida; }
-
-    public Image getSprite() {
-        return sprite;
-    }
-
-    public Tiro getTiro() {
-        return tiro;
-    }
-
-    public void setTiro(Tiro tiro) {
-        this.tiro = tiro;
-    }
-
-    public int[] getPos() {
-        return pos;
-    }
-
-    public void setVida(int vida) { this.vida = vida; }
-
-    public void tomarDano(int dano) {
-        this.vida -= dano;
-    }
-
-    public void setPos(int[] pos) {
-        this.pos = pos;
-        this.setBounds(pos[0], pos[1], tamanho.width, tamanho.height);
-    }
-
-    public Dimension getTamanho() {
-        return tamanho;
-    }
-
-    public void setTamanho(Dimension tamanho) {
-        this.tamanho = tamanho;
     }
 
     public Inimigo clone() {
