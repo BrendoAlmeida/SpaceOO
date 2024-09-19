@@ -1,6 +1,6 @@
 package org.example.controller;
 
-import org.example.util.CarregadorImagem
+import org.example.util.CarregadorImagem;
 
 import javax.swing.*;
 import java.awt.*;
