@@ -1,5 +1,7 @@
 package org.example.controller;
 
+import org.example.util.CarregadorFonte;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -21,16 +23,30 @@ public class ControllerJogo {
     private JPanel mainPanel;
     private Timer updateTimer;
     private Timer renderTimer;
+    private Font font1 = CarregadorFonte.CarregaFonte("fonts/space_invaders.ttf", 20f);
 
     // botões
     private boolean moveLeft = false;
     private boolean moveRight = false;
     private boolean atirar = false;
 
+    private JLabel LblScore = new JLabel();
+    private int score = 0;
+    private double multScore = 100;
+
+    public void initScore(){
+        LblScore.setText("Score: " + score);
+        int tamanho = fatorDimecao*4;
+        LblScore.setBounds(dimencao[0] - tamanho, 20, tamanho, 20);
+        LblScore.setFont(font1);
+
+        mainPanel.add(LblScore);
+    }
+
     public void initInimigos(Inimigo inimigo, int qtdFileiras) {
         int tamanhoX = this.getDimencao()[0];
         int fatorDim = this.getFatorDimecao();
-        int qtdInimigos = (tamanhoX - fatorDim*3);
+        int qtdInimigos = (tamanhoX - fatorDim*2);
 
         for (int i = fatorDim; i < qtdInimigos; i += fatorDim) {
             for (int j = 0; j < qtdFileiras; j++) {
@@ -75,6 +91,7 @@ public class ControllerJogo {
         initInimigos(inimigo, qtdFileiras);
         initPersonagem(jogador);
         initParede(parede);
+        initScore();
         this.jogador = jogador;
         mainPanel.repaint();
 
@@ -115,7 +132,7 @@ public class ControllerJogo {
     }
 
     private void startGameLoop() {
-        updateTimer = new Timer(16, new ActionListener() {
+        updateTimer = new Timer(32, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 updateGame();
@@ -147,10 +164,16 @@ public class ControllerJogo {
         inimigoAtira();
         moveTiro();
         moveInimigo();
+        updateScore();
         jogador.delayTiro();
         for (Inimigo inimigo : inimigos) {
             inimigo.delayTiro();
         }
+    }
+
+    public void updateScore(){
+        multScore *= 0.9999;
+        LblScore.setText("Score: " + score);
     }
 
     public void moveTiro(){
@@ -225,6 +248,9 @@ public class ControllerJogo {
 
                 inimigos.remove(inimigo);
                 mainPanel.remove(inimigo);
+
+                score += multScore;
+
                 return true;
             }
         }
@@ -234,8 +260,12 @@ public class ControllerJogo {
     public boolean colideJogador(Tiro tiro){
         Rectangle hitboxTiro = tiro.getBounds();
         Rectangle hitboxJogador = jogador.getBounds();
+        if (!hitboxTiro.intersects(hitboxJogador)) return false;
+
         jogador.tomarDano(tiro.getDano());
-        return hitboxTiro.intersects(hitboxJogador);
+        if(jogador.getVida() == 0) perde();
+
+        return true;
     }
 
     public boolean colideParede(Tiro tiro){
@@ -272,5 +302,10 @@ public class ControllerJogo {
 
     public java.util.List<Inimigo> getInimigos() {
         return inimigos;
+    }
+
+    public void perde(){
+        System.out.println("Perdeu");
+        updateTimer.stop();
     }
 }

@@ -26,6 +26,15 @@ public class Personagem extends JPanel {
         this.tiro = tiro;
     }
 
+    public Personagem(int tamanho, Tiro tiro) {
+        this.tamanho = tamanho;
+        this.setSize(tamanho, tamanho);
+
+        sprite = CarregadorImagem.CarregaIcone("img/player1.png", tamanho, tamanho).getImage();
+
+        this.tiro = tiro;
+    }
+
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(sprite, 0, 0, null);
@@ -61,7 +70,7 @@ public class Personagem extends JPanel {
     }
 
     public void tomarDano(int dano) {
-        this.vida -= dano;
+        this.vida -= dano; // TODO imunidade apos tomar dano?
     }
 
     public boolean mover(int direcao, int maxPos) {
