@@ -21,8 +21,15 @@ public class Parede extends JPanel {
 
         sprite = CarregadorImagem.CarregaIcone("img/player1.png", tamanho, tamanho).getImage();
 
-        this.pos = pos;
         this.setBounds(pos[0], pos[1], tamanho, tamanho);
+    }
+
+    public Parede(int tamanho) {
+        this.tamanho = tamanho;
+
+        sprite = CarregadorImagem.CarregaIcone("img/player1.png", tamanho, tamanho).getImage();
+
+        this.setSize(tamanho, tamanho);
     }
 
     public void paintComponent(Graphics g) {

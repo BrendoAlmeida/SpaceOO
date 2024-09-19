@@ -25,6 +25,18 @@ public class Tiro extends JPanel{
         this.tiroInimigo = tiroInimigo;
     }
 
+    public Tiro(int[] tamanho, int vel, int dano, int direcao, boolean tiroInimigo){
+        this.tamanho = tamanho;
+        this.setSize(tamanho[0],tamanho[1]);
+
+        this.setBackground(Color.BLUE);
+
+        this.vel = vel;
+        this.dano = dano;
+        this.direcao = direcao;
+        this.tiroInimigo = tiroInimigo;
+    }
+
     public int getVel() {
         return vel;
     }

@@ -31,6 +31,19 @@ public class Inimigo extends JPanel{
         delayAtirar = delayTiro;
     }
 
+    public Inimigo(int tamanho, Tiro tiro) {
+        this.tamanho = tamanho;
+        this.setSize(tamanho,tamanho);
+
+        sprite = CarregadorImagem.CarregaIcone("img/inimigo1.png", tamanho, tamanho).getImage();
+
+        this.tiro = tiro;
+
+        Random random = new Random();
+        delayTiro = 50 + random.nextInt(50);
+        delayAtirar = delayTiro;
+    }
+
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(sprite, 0, 0, null);

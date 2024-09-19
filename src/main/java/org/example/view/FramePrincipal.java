@@ -18,8 +18,7 @@ public class FramePrincipal extends JFrame
     private final static TelaLog tlLog = new TelaLog(Click,Hov);
     private final static TelaCad tlCad = new TelaCad(Click,Hov);
     private final static SelPerso SelP = new SelPerso(Click,Hov);
-    //private final static fase1 F1 = new fase1();
-
+    private final static Fase1 F1 = new Fase1(clip, clip);
 
 
 
@@ -35,7 +34,7 @@ public class FramePrincipal extends JFrame
         pnPrincipal.add(tlLog,"TelaLog");
         pnPrincipal.add(tlCad,"TelaCad");
         pnPrincipal.add(SelP,"SelPerso");
-        //pnPrincipal.add(F1,"fase1");
+        pnPrincipal.add(F1,"fase1");
 
         CdLt.show(pnPrincipal,"TelaSelLoginCad");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
