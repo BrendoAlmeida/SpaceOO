@@ -9,20 +9,20 @@ import java.util.Random;
 public class Inimigo extends JPanel{
     private int vida = 1;
     private int[] pos;
-    private int tamanho;
+    private Dimension tamanho;
     private Image sprite;
     private Tiro tiro;
     private int delayAtirar = 0;
     private int delayTiro;
     private int velocidade = 5;
 
-    public Inimigo(int[] pos, int tamanho, Tiro tiro) {
+    public Inimigo(int[] pos, Dimension tamanho, Tiro tiro) {
         this.pos = pos;
         this.tamanho = tamanho;
 
-        sprite = CarregadorImagem.CarregaIcone("img/inimigo1.png", tamanho, tamanho).getImage();
+        sprite = CarregadorImagem.CarregaIcone("img/inimigo1.png", tamanho.width, tamanho.height).getImage();
 
-        this.setBounds(pos[0], pos[1], tamanho, tamanho);
+        this.setBounds(pos[0], pos[1], tamanho.width, tamanho.height);
 
         this.tiro = tiro;
 
@@ -31,11 +31,11 @@ public class Inimigo extends JPanel{
         delayAtirar = delayTiro;
     }
 
-    public Inimigo(int tamanho, Tiro tiro) {
+    public Inimigo(Dimension tamanho, Tiro tiro) {
         this.tamanho = tamanho;
-        this.setSize(tamanho,tamanho);
+        this.setSize(tamanho.width,tamanho.height);
 
-        sprite = CarregadorImagem.CarregaIcone("img/inimigo1.png", tamanho, tamanho).getImage();
+        sprite = CarregadorImagem.CarregaIcone("img/inimigo1.png", tamanho.width, tamanho.height).getImage();
 
         this.tiro = tiro;
 
@@ -75,24 +75,24 @@ public class Inimigo extends JPanel{
 
     public void setPos(int[] pos) {
         this.pos = pos;
-        this.setBounds(pos[0], pos[1], tamanho, tamanho);
+        this.setBounds(pos[0], pos[1], tamanho.width, tamanho.height);
     }
 
-    public int getTamanho() {
+    public Dimension getTamanho() {
         return tamanho;
     }
 
-    public void setTamanho(int tamanho) {
+    public void setTamanho(Dimension tamanho) {
         this.tamanho = tamanho;
     }
 
     public Inimigo clone() {
-        return new Inimigo(this.pos, this.tamanho, this.tiro);
+        return new Inimigo(this.tamanho, this.tiro);
     }
 
     public Tiro atirar(){
         if(delayAtirar > 0) return null;
-        int pos[] = new int[]{this.pos[0] + tamanho/2 - tiro.getTamanho()[0]/2, this.pos[1] + tiro.getTamanho()[1] + tamanho};
+        int pos[] = new int[]{this.pos[0] + tamanho.width/2 - tiro.getTamanho().width/2, this.pos[1] + tiro.getTamanho().height + tamanho.height};
         Tiro tiro = this.tiro.clone();
         tiro.atirar(pos);
         delayAtirar = delayTiro;
@@ -100,7 +100,7 @@ public class Inimigo extends JPanel{
     }
 
     public boolean mover(int direcao, int maxPos) {
-        if (pos[0] + direcao * velocidade < 0 || pos[0] + direcao * velocidade > maxPos - tamanho) return false;
+        if (pos[0] + direcao * velocidade < 0 || pos[0] + direcao * velocidade > maxPos - tamanho.width) return false;
 
         pos[0] += direcao * velocidade;
         setPos(pos);

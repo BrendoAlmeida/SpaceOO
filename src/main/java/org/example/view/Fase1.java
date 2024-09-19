@@ -8,14 +8,14 @@ import java.awt.*;
 
 public class Fase1 extends JPanel{
     private ControllerJogo controllerJogo;
-    private int[] dimencao = new int[]{750, 600};
+    private Dimension dimencao = new Dimension(750, 600);
     private int fatorDimencao = 50;
 
     public Fase1(Clip clip, Clip clipAnterior) {
         JFrame frame = new JFrame("Space Invaders");
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(null);
-        mainPanel.setPreferredSize(new Dimension(dimencao[0], dimencao[1]));
+        mainPanel.setPreferredSize(dimencao);
         mainPanel.setBackground(Color.BLACK);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -23,15 +23,15 @@ public class Fase1 extends JPanel{
         frame.pack();
 
         Insets insets = frame.getInsets();
-        int frameWidth = dimencao[0] + insets.left + insets.right;
-        int frameHeight = dimencao[1] + insets.top + insets.bottom;
+        int frameWidth = dimencao.width + insets.left + insets.right;
+        int frameHeight = dimencao.height + insets.top + insets.bottom;
         frame.setSize(frameWidth, frameHeight);
 
         frame.setVisible(true);
         controllerJogo = new ControllerJogo(mainPanel, dimencao, fatorDimencao,
-                new Inimigo(fatorDimencao, new Tiro(new int[]{2,10}, 7, 1, 1, true)),
-                new Personagem(fatorDimencao, new Tiro(new int[]{2,10}, 7, 1, -1, false)),
-                new Parede(fatorDimencao*2),
+                new Inimigo(new Dimension(fatorDimencao, fatorDimencao) , new Tiro(new Dimension(2,10), 7, 1, 1, true)),
+                new Personagem(new Dimension(fatorDimencao, fatorDimencao), new Tiro(new Dimension(2,10), 7, 1, -1, false)),
+                new Parede(new Dimension(fatorDimencao*2, fatorDimencao*2)),
                 3
         );
 

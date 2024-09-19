@@ -8,14 +8,14 @@ public class Tiro extends JPanel{
     private int dano;
     private int direcao;
     private int[] pos;
-    private int[] tamanho;
+    private Dimension tamanho;
     private boolean movendo = false;
     private boolean tiroInimigo = false;
 
-    public Tiro(int[] pos, int[] tamanho, int vel, int dano, int direcao, boolean tiroInimigo){
+    public Tiro(int[] pos, Dimension tamanho, int vel, int dano, int direcao, boolean tiroInimigo){
         this.pos = new int[]{pos[0], pos[1]};
         this.tamanho = tamanho;
-        this.setBounds(this.pos[0],this.pos[1],tamanho[0],tamanho[1]);
+        this.setBounds(this.pos[0],this.pos[1],tamanho.width,tamanho.height);
 
         this.setBackground(Color.BLUE);
 
@@ -25,9 +25,9 @@ public class Tiro extends JPanel{
         this.tiroInimigo = tiroInimigo;
     }
 
-    public Tiro(int[] tamanho, int vel, int dano, int direcao, boolean tiroInimigo){
+    public Tiro(Dimension tamanho, int vel, int dano, int direcao, boolean tiroInimigo){
         this.tamanho = tamanho;
-        this.setSize(tamanho[0],tamanho[1]);
+        this.setSize(tamanho.width,tamanho.height);
 
         this.setBackground(Color.BLUE);
 
@@ -49,17 +49,17 @@ public class Tiro extends JPanel{
         return pos;
     }
 
-    public int[] getTamanho() {
+    public Dimension getTamanho() {
         return tamanho;
     }
 
     public void setPos(int[] pos) {
         this.pos = new int[]{pos[0], pos[1]};
-        this.setBounds(this.pos[0], this.pos[1], tamanho[0], tamanho[1]);
+        this.setBounds(this.pos[0], this.pos[1], tamanho.width, tamanho.height);
     }
 
     public Tiro clone(){
-        return new Tiro(pos, tamanho, vel, dano, direcao, tiroInimigo);
+        return new Tiro(tamanho, vel, dano, direcao, tiroInimigo);
     }
 
     public void atirar(int[] pos){

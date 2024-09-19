@@ -11,7 +11,7 @@ import java.awt.event.KeyListener;
 import java.util.List;
 
 public class ControllerJogo {
-    private int[] dimencao;
+    private Dimension dimencao;
     private int fatorDimecao;
 
     private List<Inimigo> inimigos = new java.util.ArrayList<>();
@@ -37,14 +37,14 @@ public class ControllerJogo {
     public void initScore(){
         LblScore.setText("Score: " + score);
         int tamanho = fatorDimecao*4;
-        LblScore.setBounds(dimencao[0] - tamanho, 20, tamanho, 20);
+        LblScore.setBounds(dimencao.width - tamanho, 20, tamanho, 20);
         LblScore.setFont(font1);
 
         mainPanel.add(LblScore);
     }
 
     public void initInimigos(Inimigo inimigo, int qtdFileiras) {
-        int tamanhoX = this.getDimencao()[0];
+        int tamanhoX = this.getDimencao().width;
         int fatorDim = this.getFatorDimecao();
         int qtdInimigos = (tamanhoX - fatorDim*2);
 
@@ -60,7 +60,7 @@ public class ControllerJogo {
     }
 
     public void initPersonagem(Personagem jogador) {
-        int[] pos = new int[]{(dimencao[0] / 2) - jogador.getTamanho(), (dimencao[1] - jogador.getTamanho() - 20)};
+        int[] pos = new int[]{(dimencao.width / 2) - jogador.getTamanho().width, (dimencao.height - jogador.getTamanho().height - 20)};
         jogador.setPos(pos);
         mainPanel.add(jogador);
         jogador.setFocusable(true);
@@ -69,22 +69,22 @@ public class ControllerJogo {
     }
 
     public void initParede(Parede parede) {
-        int tamanhoX = this.getDimencao()[0];
-        int tamanhoY = this.getDimencao()[1];
+        int tamanhoX = this.getDimencao().width;
+        int tamanhoY = this.getDimencao().height;
         int fatorDim = this.getFatorDimecao();
         int qtdParedes = (tamanhoX - fatorDim*2);
 
-        for (int i = parede.getTamanho(); i < qtdParedes; i += parede.getTamanho()*2) {
+        for (int i = parede.getTamanho().width; i < qtdParedes; i += parede.getTamanho().width*2) {
             Parede novaParede = parede.clone();
-            novaParede.setPos(new int[]{i, tamanhoY - parede.getTamanho()*2});
+            novaParede.setPos(new int[]{i, tamanhoY - parede.getTamanho().height*2});
             paredes.add(novaParede);
             mainPanel.add(novaParede);
         }
         mainPanel.repaint();
     }
 
-    public ControllerJogo(JPanel mainPanel, int[] pos, int fatorDimecao, Inimigo inimigo, Personagem jogador, Parede parede, int qtdFileiras) {
-        dimencao = pos;
+    public ControllerJogo(JPanel mainPanel, Dimension dimencao, int fatorDimecao, Inimigo inimigo, Personagem jogador, Parede parede, int qtdFileiras) {
+        this.dimencao = dimencao;
         this.fatorDimecao = fatorDimecao;
         this.mainPanel = mainPanel;
 
@@ -153,10 +153,10 @@ public class ControllerJogo {
 
     private void updateGame() {
         if (moveLeft) {
-            jogador.mover(-1, dimencao[0]);
+            jogador.mover(-1, dimencao.width);
         }
         if (moveRight) {
-            jogador.mover(1, dimencao[0]);
+            jogador.mover(1, dimencao.width);
         }
         if(atirar) {
             jogadorAtira();
@@ -207,7 +207,7 @@ public class ControllerJogo {
 
         for (; i < inimigos.size() && i >= 0; i += direcaoInimigo*-1) {
             Inimigo inimigo = inimigos.get(i);
-            if (!inimigo.mover(direcaoInimigo, dimencao[0])) direcaoInimigo *= -1;
+            if (!inimigo.mover(direcaoInimigo, dimencao.width)) direcaoInimigo *= -1;
         }
     }
 
@@ -292,11 +292,11 @@ public class ControllerJogo {
         this.fatorDimecao = fatorDimecao;
     }
 
-    public int[] getDimencao() {
+    public Dimension getDimencao() {
         return dimencao;
     }
 
-    public void setDimencao(int[] dimencao) {
+    public void setDimencao(Dimension dimencao) {
         this.dimencao = dimencao;
     }
 
