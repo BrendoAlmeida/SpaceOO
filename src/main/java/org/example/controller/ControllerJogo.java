@@ -34,6 +34,8 @@ public class ControllerJogo {
     private int score = 0;
     private double multScore = 100;
 
+    private JPanel PanelVida = new JPanel();
+
     public void initScore(){
         LblScore.setText("Score: " + score);
         int tamanho = fatorDimecao*4;
@@ -41,6 +43,11 @@ public class ControllerJogo {
         LblScore.setFont(font1);
 
         mainPanel.add(LblScore);
+    }
+
+    public void initVida(){
+        PanelVida.setBounds(20, 20, 60, 20);
+        mainPanel.add(PanelVida);
     }
 
     public void initInimigos(Inimigo inimigo, int qtdFileiras) {
@@ -92,6 +99,7 @@ public class ControllerJogo {
         initPersonagem(jogador);
         initParede(parede);
         initScore();
+        initVida();
         this.jogador = jogador;
         mainPanel.repaint();
 
@@ -165,6 +173,7 @@ public class ControllerJogo {
         moveTiro();
         moveInimigo();
         updateScore();
+        updateVida();
         jogador.delayTiro();
         for (Inimigo inimigo : inimigos) {
             inimigo.delayTiro();
@@ -174,6 +183,21 @@ public class ControllerJogo {
     public void updateScore(){
         multScore *= 0.9999;
         LblScore.setText("Score: " + score);
+    }
+
+    public void updateVida(){
+        int vida = jogador.getVida();
+
+        PanelVida.removeAll();
+
+        for (int i = 0; i < vida; i++) {
+            JLabel coracao = new JLabel();
+            coracao.setBounds((PanelVida.getComponentCount())*20, 0, 20, 20);
+//            coracao.setIcon(new ImageIcon("img/coracao.png"));
+            coracao.setBackground(Color.RED);
+            coracao.setOpaque(true);
+            PanelVida.add(coracao);
+        }
     }
 
     public void moveTiro(){
@@ -188,15 +212,17 @@ public class ControllerJogo {
             if (colideInimigo(tiro)) {
                 tiros.remove(tiro);
                 mainPanel.remove(tiro);
-                i--;
+                continue;
             }
             if (colideJogador(tiro)) {
                 tiros.remove(tiro);
                 mainPanel.remove(tiro);
+                continue;
             }
             if (colideParede(tiro)) {
                 tiros.remove(tiro);
                 mainPanel.remove(tiro);
+                continue;
             }
         }
     }
