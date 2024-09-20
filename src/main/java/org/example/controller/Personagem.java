@@ -5,22 +5,21 @@ import java.awt.*;
 public class Personagem extends Elemento {
     private Tiro tiro;
 
-    public Personagem(int[] pos, Dimension tamanho, Tiro tiro) {
+    public Personagem(int[] pos, Dimension tamanho, Tiro tiro, int vida, int velocidade, int delayTiro) {
         super(pos, tamanho, "img/player1.png");
-        startPersonagem(tiro);
+        startPersonagem(tiro, vida, velocidade, delayTiro);
     }
 
-    public Personagem(Dimension tamanho, Tiro tiro) {
+    public Personagem(Dimension tamanho, Tiro tiro, int vida, int velocidade, int delayTiro) {
         super(tamanho, "img/player1.png");
-        startPersonagem(tiro);
+        startPersonagem(tiro, vida, velocidade, delayTiro);
     }
 
-    public void startPersonagem(Tiro tiro) {
-        this.velocidade = 5;
-        this.delayAtirar = 0;
-        this.delayTiro = 50;
-        this.vida = 3;
+    public void startPersonagem(Tiro tiro, int vida, int velocidade, int delayTiro) {
         this.tiro = tiro;
+        this.vida = vida;
+        this.velocidade = velocidade;
+        this.delayTiro = delayTiro;
     }
 
     public boolean mover(int direcao, int maxPos) {

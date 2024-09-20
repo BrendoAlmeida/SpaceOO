@@ -3,18 +3,18 @@ package org.example.controller;
 import java.awt.*;
 
 public class Parede extends Elemento {
-    public Parede(int[] pos, Dimension tamanho) {
+    public Parede(int[] pos, Dimension tamanho, int vida) {
         super(pos, tamanho, "img/player1.png");
-        startParede();
+        startParede(vida);
     }
 
-    public Parede(Dimension tamanho) {
+    public Parede(Dimension tamanho, int vida) {
         super(tamanho, "img/player1.png");
-        startParede();
+        startParede(vida);
     }
 
-    public void startParede(){
-        this.vida = 30;
+    public void startParede(int vida){
+        this.vida = vida;
     }
 
     public void paintComponent(Graphics g) {
@@ -23,6 +23,6 @@ public class Parede extends Elemento {
     }
 
     public Parede clone() {
-        return new Parede(tamanho);
+        return new Parede(tamanho, vida);
     }
 }

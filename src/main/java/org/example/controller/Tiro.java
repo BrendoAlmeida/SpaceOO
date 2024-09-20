@@ -10,21 +10,21 @@ public class Tiro extends Elemento{
 
     public Tiro(int[] pos, Dimension tamanho, int velocidade, int dano, int direcao, boolean tiroInimigo){
         super(pos, tamanho);
-        startTiro(direcao, tiroInimigo);
+        startTiro(direcao, tiroInimigo, velocidade, dano);
     }
 
     public Tiro(Dimension tamanho, int velocidade, int dano, int direcao, boolean tiroInimigo){
         super(tamanho);
-        startTiro(direcao, tiroInimigo);
+        startTiro(direcao, tiroInimigo, velocidade, dano);
     }
 
-    public void startTiro(int direcao, boolean tiroInimigo){
+    public void startTiro(int direcao, boolean tiroInimigo, int velocidade, int dano){
         this.setBackground(Color.BLUE);
 
-        this.velocidade = 10;
-        this.dano = 1;
         this.direcao = direcao;
         this.tiroInimigo = tiroInimigo;
+        this.velocidade = velocidade;
+        this.dano = dano;
     }
 
     public void paintComponent(Graphics g) {

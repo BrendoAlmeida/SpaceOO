@@ -72,6 +72,18 @@ public abstract class Elemento extends JPanel {
         this.tamanho = tamanho;
     }
 
+    public void setVelocidade(int velocidade) {
+        this.velocidade = velocidade;
+    }
+
+    public int getVelocidade() {
+        return velocidade;
+    }
+
+    public void setDelayAtirar(int delayAtirar) {
+        this.delayAtirar = delayAtirar;
+    }
+
     public int getDelayAtirar() {
         return delayAtirar;
     }
