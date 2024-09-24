@@ -7,6 +7,6 @@ public class App
     public static void main(String[] args )
     {
 //      fase1a fase1 = new fase1a();
-        FramePrincipal.CarregarPag("fase1");
+        new FramePrincipal();
     }
 }

@@ -20,8 +20,6 @@ public class FramePrincipal extends JFrame
     private final static SelPerso SelP = new SelPerso(Click,Hov);
     private final static Fase1 F1 = new Fase1(clip, clip);
 
-
-
     public static void CarregarPag(String pag)
     {
         CdLt.show(pnPrincipal,pag);

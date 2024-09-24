@@ -88,12 +88,7 @@ public class modelUsuario {
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
-                Usuario user = new Usuario();
-                user.setId(rs.getInt("id"));
-                user.setNome(rs.getString("nome"));
-                user.setSenha(rs.getString("senha"));
-                user.setScore(rs.getInt("Score"));
-
+                Usuario user = new Usuario(rs.getString("nome"),rs.getInt("score"));
                 Usuarios.add(user);
             }
         }

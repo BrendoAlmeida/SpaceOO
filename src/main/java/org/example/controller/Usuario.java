@@ -13,9 +13,10 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public Usuario()
+    public Usuario(String nome, int Score)
     {
-
+        this.nome = nome;
+        this.Score = Score;
     }
 
     public boolean login(){

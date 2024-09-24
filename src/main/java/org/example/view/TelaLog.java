@@ -23,10 +23,15 @@ public class TelaLog extends JPanel
     private final JList<Usuario> listUsers = new JList<>(lModel);
     private final JScrollPane pnUS = new JScrollPane(listUsers);
 
+    private Usuario usSelected;
+
     private final JButton selUsr = new JButton("Entrar");
     private final JButton adm = new JButton("Entrar como Admin");
     private final JButton del = new JButton("Excluir");
     private final JButton edit = new JButton("Editar");
+
+    private final JButton btnPswrdConf = new JButton("Confirmar");
+    private final JTextField inpPsswrd = new JTextField();
 
     private final JPanel btnCont = new JPanel();
     private final JPanel pnSenha = new JPanel();
@@ -44,10 +49,13 @@ public class TelaLog extends JPanel
         this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
         this.setBackground(Color.BLACK);
 
-        //pnSenha.setSize(new Dimension(500,500));
-        pnSenha.setBounds(0,0,500,500);
+        pnSenha.setSize(new Dimension(500,500));
+        //pnSenha.setBounds(0,0,500,500);
         pnSenha.setBackground(Color.green);
         pnSenha.setLayout(null);
+        pnSenha.setLayout(new BoxLayout(pnSenha,BoxLayout.X_AXIS));
+        pnSenha.add(inpPsswrd);
+        pnSenha.add(btnPswrdConf);
 
         btnCont.setSize(new Dimension(1000,800));
         btnCont.setLayout(new BoxLayout(btnCont,BoxLayout.X_AXIS));
@@ -108,8 +116,9 @@ public class TelaLog extends JPanel
                     int index = listUsers.locationToIndex(e.getPoint());
                     if(index >=0)
                     {
-                        Usuario usSelected = listUsers.getModel().getElementAt(index);
+                        usSelected = listUsers.getModel().getElementAt(index);
                         pnSenha.setVisible(true);
+                        System.out.println("foi");
                     }
                 }
             }

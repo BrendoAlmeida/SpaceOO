@@ -1,4 +1,5 @@
 package org.example.view;
+import org.example.controller.Personagem;
 import org.example.util.CarregadorFonte;
 import org.example.util.CarregadorImagem;
 import org.example.util.TratadorMouseClick;
@@ -14,8 +15,9 @@ import java.awt.event.ActionListener;
 
 public class SelPerso extends JPanel
 {
+
     private final JLabel txtSel = new JLabel("Selecione seu personagem");
-    private final JLabel estP1 = new JLabel("<html>Vida : <br/> Dano: <br/> Velocidade: <br/></html>");
+    private final JLabel estP1 = new JLabel("<html>Vida :" +"<br/> Dano: <br/> Velocidade: <br/></html>");
     private final JLabel estP2 = new JLabel("<html>Vida : <br/> Dano: <br/> Velocidade: <br/></html>");
 
     private final ImageIcon imgP1 = CarregadorImagem.CarregaIcone("img/player1.png",250,250);

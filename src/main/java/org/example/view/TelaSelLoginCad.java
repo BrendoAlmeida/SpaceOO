@@ -84,9 +84,11 @@ public class TelaSelLoginCad extends JPanel {
         btnLogin.setBackground(Color.black);
         btnCAD.setForeground(Color.WHITE);
         btnCAD.setBackground(Color.black);
+
         btnLogin.setVisible(true);
         btnCAD.setFont(fnt);
         btnCAD.setVisible(true);
+
         btnCAD.addMouseListener(new TratadorMouseClick(Click,Hov,null,null,null,false,"TelaCad"));
         btnLogin.addMouseListener(new TratadorMouseClick(Click,Hov,null,null,null,false,"TelaLog"));
 
