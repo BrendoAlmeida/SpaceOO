@@ -12,6 +12,11 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+      <resource>META-INF/services/java.sql.Driver</resource>
+    </transformer>
+
   </properties>
 
   <dependencies>
