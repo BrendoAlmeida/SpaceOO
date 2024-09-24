@@ -35,7 +35,12 @@
         <artifactId>exec-maven-plugin</artifactId>
         <version>3.1.0</version>
         <configuration>
-          <mainClass>org.example.App</mainClass>
+          <executable>java</executable>
+          <arguments>
+            <argument>-cp</argument>
+            <argument>${project.build.outputDirectory}</argument>
+            <argument>org.example.App</argument>
+          </arguments>
         </configuration>
       </plugin>
     </plugins>

@@ -6,6 +6,8 @@ import org.example.controller.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class modelUsuario {
     private static final Connection con = connection.con;
@@ -74,5 +76,33 @@ public class modelUsuario {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public static List<Usuario> getUsuarios()
+    {
+        String sql = "SELECT * FROM usuario";
+        PreparedStatement stmt;
+        List<Usuario> Usuarios = new ArrayList<>();
+        try{
+            stmt = con.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next())
+            {
+                Usuario user = new Usuario();
+                user.setId(rs.getInt("id"));
+                user.setNome(rs.getString("nome"));
+                user.setSenha(rs.getString("senha"));
+                user.setScore(rs.getInt("Score"));
+
+                Usuarios.add(user);
+            }
+        }
+        catch(Exception e)
+        {
+            System.out.println("ERRO");
+            e.printStackTrace();
+            Usuarios = null;
+        }
+        return Usuarios;
     }
 }

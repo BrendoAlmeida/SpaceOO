@@ -33,7 +33,7 @@ public class FramePrincipal extends JFrame
         pnPrincipal.add(tlLog,"TelaLog");
         pnPrincipal.add(tlCad,"TelaCad");
         pnPrincipal.add(SelP,"SelPerso");
-        //pnPrincipal.add(F1,"fase1");
+        pnPrincipal.add(F1,"fase1");
 
         CdLt.show(pnPrincipal,"TelaSelLoginCad");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

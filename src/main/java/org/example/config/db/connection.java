@@ -9,6 +9,7 @@ public class connection {
         try {
             con = DriverManager.getConnection("jdbc:sqlite:dbSpaceOO.db");
         }catch (Exception e){
+            e.printStackTrace();
             con = null;
         }
     }

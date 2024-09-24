@@ -13,6 +13,11 @@ public class Usuario {
         this.senha = senha;
     }
 
+    public Usuario()
+    {
+
+    }
+
     public boolean login(){
         Usuario usuario = modelUsuario.login(this);
 
@@ -57,5 +62,11 @@ public class Usuario {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Nome: "+this.getNome()+"                              Score:"+ this.getScore();
     }
 }
