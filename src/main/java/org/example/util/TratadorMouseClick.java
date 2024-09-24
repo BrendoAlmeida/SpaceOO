@@ -35,9 +35,8 @@ public class TratadorMouseClick implements MouseListener {
             Click.setFramePosition(0);
             Click.start();
         }
-        if(vef)
+        if(vef && (NmUsr != null && psswrd !=null) )
         {
-            System.out.println("é null");
             Usuario usuario;
             usuario =  new Usuario(NmUsr.getText(), psswrd.getText());
             if(usuario.login())
