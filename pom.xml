@@ -12,11 +12,6 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-    <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-      <resource>META-INF/services/java.sql.Driver</resource>
-    </transformer>
-
   </properties>
 
   <dependencies>
@@ -40,7 +35,7 @@
         <artifactId>exec-maven-plugin</artifactId>
         <version>3.1.0</version>
         <configuration>
-          <executable>java</executable>
+          <mainClass>org.example.App</mainClass>
           <arguments>
             <argument>-cp</argument>
             <argument>${project.build.outputDirectory}</argument>
