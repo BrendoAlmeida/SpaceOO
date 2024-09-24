@@ -203,8 +203,16 @@ public class ControllerJogo {
     public void moveTiro(){
         for (int i = 0; i < tiros.size(); i++) {
             Tiro tiro = tiros.get(i);
-            tiro.mover();
-            if (tiro.getPos()[1] < 0) {
+
+            if (tiro.getClass().getName().equals("org.example.controller.TiroPersegue")) {
+                TiroPersegue tiroPersegue = (TiroPersegue) tiro;
+                tiroPersegue.mover(jogador.getPos());
+                tiro = tiroPersegue;
+            }else{
+                tiro.mover();
+            }
+
+            if (tiro.getPos()[1] < 0  || tiro.getPos()[1] > dimencao.height || tiro.getPos()[0] < 0 || tiro.getPos()[0] > dimencao.width) {
                 tiros.remove(tiro);
                 mainPanel.remove(tiro);
                 continue;
