@@ -25,8 +25,8 @@ public class TelaSelLoginCad extends JPanel {
     private final Image imgInmg1 = CarregadorImagem.CarregaImagem("img/inimigo1.png");
     private final Image imgInmg2 = CarregadorImagem.CarregaImagem("img/inimigo2.png");
 
-    private final Font fnt = CarregadorFonte.CarregaFonte("fonts/space_invaders.ttf");
-    private final Font fnt2 = CarregadorFonte.CarregaFonte("fonts/FE.ttf");
+    private final Font fnt = CarregadorFonte.CarregaFonte("fonts/space_invaders.ttf", 30f);
+    private final Font fnt2 = CarregadorFonte.CarregaFonte("fonts/FE.ttf", 30f);
 
 
     private final JButton btnCAD = new JButton("CADASTRO");

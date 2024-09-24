@@ -1,53 +1,48 @@
 package org.example.controller;
 
-import javax.swing.*;
 import java.awt.*;
 
-public class Personagem {
-    private int vida;
-    private int[] pos;
-    private int tamanho;
-    private JPanel sprite;
-    private Rectangle hitbox = new Rectangle();
+public class Personagem extends Elemento {
     private Tiro tiro;
 
-    public Personagem(int[] pos, int tamanho, Tiro tiro) {
-        this.pos = pos;
-        this.tamanho = tamanho;
-        this.hitbox.setBounds(pos[0], pos[1], tamanho, tamanho);
+    public Personagem(int[] pos, Dimension tamanho, Tiro tiro, int vida, int velocidade, int delayTiro) {
+        super(pos, tamanho, "img/player1.png");
+        startPersonagem(tiro, vida, velocidade, delayTiro);
+    }
 
-        this.sprite = new JPanel();
-        this.sprite.setBounds(pos[0], pos[1], tamanho, tamanho);
-        this.sprite.setBackground(Color.BLACK);
+    public Personagem(Dimension tamanho, Tiro tiro, int vida, int velocidade, int delayTiro) {
+        super(tamanho, "img/player1.png");
+        startPersonagem(tiro, vida, velocidade, delayTiro);
+    }
 
+    public void startPersonagem(Tiro tiro, int vida, int velocidade, int delayTiro) {
         this.tiro = tiro;
-    }
-
-    public int getVida() {
-        return vida;
-    }
-
-    public JPanel getSprite() {
-        return sprite;
-    }
-
-    public int getTamanho() {
-        return tamanho;
-    }
-
-    public void setVida(int vida) {
         this.vida = vida;
+        this.velocidade = velocidade;
+        this.delayTiro = delayTiro;
     }
 
-    public void setTamanho(int tamanho) {
-        this.tamanho = tamanho;
+    public boolean mover(int direcao, int maxPos) {
+        if (pos[0] + direcao * velocidade < 0 || pos[0] + direcao * velocidade > maxPos - tamanho.width) return false;
+
+        pos[0] += direcao * velocidade;
+        setPos(pos);
+
+        return true;
     }
 
-    public int[] getPos() {
-        return pos;
+    public Tiro atirar(){
+        if(delayAtirar > 0) return null;
+        Tiro tiro = this.tiro.clone();
+        int pos[] = new int[]{this.pos[0] + tamanho.width/2 - tiro.getTamanho().width/2, this.pos[1] - tiro.getTamanho().height};
+        tiro.atirar(pos);
+        delayAtirar = delayTiro;
+        return tiro;
     }
 
-    public void setPos(int[] pos) {
-        this.pos = pos;
+    public void delayTiro(){
+        if(delayAtirar > 0){
+            delayAtirar -= 1;
+        }
     }
 }

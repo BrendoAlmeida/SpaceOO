@@ -29,6 +29,10 @@ public class Usuario {
         return true;
     }
 
+    public boolean cadastrar(){
+        return modelUsuario.cadastrar(this);
+    }
+
     public String getNome(){
         return nome;
     }

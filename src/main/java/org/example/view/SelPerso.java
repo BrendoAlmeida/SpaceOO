@@ -21,8 +21,8 @@ public class SelPerso extends JPanel
     private final ImageIcon imgP1 = CarregadorImagem.CarregaIcone("img/player1.png",250,250);
     private final ImageIcon imgP2 = CarregadorImagem.CarregaIcone("img/player2.png",250,250);
 
-    private final Font fnt = CarregadorFonte.CarregaFonte("fonts/FE.ttf");
-    private final Font fnt2 = CarregadorFonte.CarregaFonte("fonts/space_invaders.ttf");
+    private final Font fnt = CarregadorFonte.CarregaFonte("fonts/FE.ttf", 30f);
+    private final Font fnt2 = CarregadorFonte.CarregaFonte("fonts/space_invaders.ttf", 30f);
 
     private final JPanel contPs = new JPanel();
     private final JPanel contP1 = new JPanel();
