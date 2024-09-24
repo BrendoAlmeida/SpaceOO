@@ -24,7 +24,6 @@ public class TratadorMouseHover implements MouseListener {
     }
     @Override
     public void mouseClicked(MouseEvent e) {
-        Usuario usuario;
         if(Click != null)
         {
             Click.setFramePosition(0);

@@ -78,22 +78,31 @@ public class modelUsuario {
         }
     }
 
-    public List<Usuario> listar() {
+    public static List<Usuario> getUsuarios()
+    {
         String sql = "SELECT * FROM usuario";
         PreparedStatement stmt;
-        List<Usuario> usuarios = new ArrayList<>();
-        try {
+        List<Usuario> Usuarios = new ArrayList<>();
+        try{
             stmt = con.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                Usuario usuario = new Usuario(rs.getString("nome"), rs.getString("senha"));
-                usuario.setId(rs.getInt("id"));
-                usuario.setScore(rs.getInt("score"));
-                usuarios.add(usuario);
+            while(rs.next())
+            {
+                Usuario user = new Usuario();
+                user.setId(rs.getInt("id"));
+                user.setNome(rs.getString("nome"));
+                user.setSenha(rs.getString("senha"));
+                user.setScore(rs.getInt("Score"));
+
+                Usuarios.add(user);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        return usuarios;
+        catch(Exception e)
+        {
+            System.out.println("ERRO");
+            e.printStackTrace();
+            Usuarios = null;
+        }
+        return Usuarios;
     }
 }
