@@ -3,10 +3,10 @@ package org.example.controller;
 import java.awt.*;
 
 public class Tiro extends Elemento{
-    private int dano;
-    private int direcao;
-    private boolean tiroInimigo = false;
-    private boolean movendo = false;
+    protected int dano;
+    protected int direcao;
+    protected boolean tiroInimigo = false;
+    protected boolean movendo = false;
 
     public Tiro(int[] pos, Dimension tamanho, int velocidade, int dano, int direcao, boolean tiroInimigo){
         super(pos, tamanho);
@@ -64,7 +64,7 @@ public class Tiro extends Elemento{
     }
 
     public void mover() {
-        if (movendo == false) return;
+        if (!movendo) return;
 
         pos[1] += velocidade * direcao;
         setPos(pos);
