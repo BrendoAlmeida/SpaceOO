@@ -82,7 +82,6 @@ public class TelaCad extends JPanel
             public void keyTyped(KeyEvent e) {
 
             }
-
             @Override
             public void keyPressed(KeyEvent e) {
                 if (Hov != null)
@@ -105,13 +104,13 @@ public class TelaCad extends JPanel
         conf.setForeground(Color.white);
         conf.setPreferredSize(new Dimension(150,100));
         conf.setBackground(Color.BLACK);
-        conf.addMouseListener(new TratadorMouseClick(Click,Hov,txtLog,NmUsr,psswrd,true,"SelPerso"));
+        conf.addMouseListener(new TratadorMouseClick(Click,Hov,txtLog,NmUsr,psswrd,true,false,"SelPerso"));
 
         voltar.setFont(fnt);
         voltar.setForeground(Color.white);
         voltar.setSize(new Dimension(150,100));
-        conf.setBackground(Color.black);
-        conf.addMouseListener(new TratadorMouseHover(Click, Hov,txtLog,NmUsr,psswrd));
+        voltar.setBackground(Color.black);
+        voltar.addMouseListener(new TratadorMouseClick(Click, Hov,null,null,null,false,false,"TelaSelLoginCad"));
 
         NmUsr.setPreferredSize(new Dimension(600,100));
         NmUsr.setBackground(Color.BLACK);
@@ -125,6 +124,7 @@ public class TelaCad extends JPanel
         psswrd.setForeground(Color.getColor("#d5ebdb"));
         psswrd.setVisible(true);
 
+        this.add(voltar);
         this.add(txtInfo);
         this.add(txtNome);
         this.add(NmUsr);

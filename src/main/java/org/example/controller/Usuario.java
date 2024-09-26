@@ -8,15 +8,17 @@ public class Usuario {
     private String senha;
     private int Score;
 
-    public Usuario(String nome, String senha) {
+    public Usuario(String nome, String senha,int Id) {
         this.nome = nome;
         this.senha = senha;
+        this.id = Id;
     }
 
-    public Usuario(String nome, int Score)
+    public Usuario(String nome, int Score,int Id)
     {
         this.nome = nome;
         this.Score = Score;
+        this.id = Id;
     }
 
     public boolean login(){
@@ -72,6 +74,17 @@ public class Usuario {
     @Override
     public String toString()
     {
-        return "Nome: "+this.getNome()+"                              Score:"+ this.getScore();
+        return "Nome: "+this.getNome()+format()+"Score:"+ this.getScore();
     }
+     private String format()
+     {
+         int lNome = this.getNome().length() + 6;
+         int sSize = (this.getScore()+"").length()+6;
+         String res = "";
+
+         for(int i=0; i<75- lNome - sSize;i++)
+             res= res+" ";
+
+         return res;
+     }
 }

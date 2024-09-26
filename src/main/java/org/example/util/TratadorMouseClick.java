@@ -1,6 +1,9 @@
 package org.example.util;
 
+import org.example.controller.Admin;
 import org.example.controller.Usuario;
+import org.example.model.modelUsuario;
+import org.example.view.Fase1;
 import org.example.view.FramePrincipal;
 
 import javax.sound.sampled.Clip;
@@ -16,8 +19,9 @@ public class TratadorMouseClick implements MouseListener {
     JTextField NmUsr;
     JTextField psswrd;
     String tela;
+    boolean ehF;
     boolean vef;
-    public TratadorMouseClick(Clip clc, Clip hv, JLabel tL, JTextField nms, JTextField pswd,boolean v,String tla)
+    public TratadorMouseClick(Clip clc, Clip hv, JLabel tL, JTextField nms, JTextField pswd,boolean v,boolean ehFase,String tla)
     {
         Click = clc;
         Hov = hv;
@@ -26,6 +30,7 @@ public class TratadorMouseClick implements MouseListener {
         psswrd = pswd;
         tela = tla;
         vef = v;
+        ehF = ehFase;
     }
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -37,15 +42,44 @@ public class TratadorMouseClick implements MouseListener {
         }
         if(vef && (NmUsr != null && psswrd !=null) )
         {
-            Usuario usuario;
-            usuario =  new Usuario(NmUsr.getText(), psswrd.getText());
-            if(usuario.login())
-                FramePrincipal.CarregarPag(tela);
+            if(modelUsuario.getUsuarios().isEmpty())
+            {
+                System.out.println("ENTROU");
+                Admin adm;
+                adm = new Admin(NmUsr.getText(), psswrd.getText(),modelUsuario.numUsers);
+
+                if(adm.cadastrar())
+                {
+                    modelUsuario.atualizar(adm);
+                    FramePrincipal.CarregarPag(tela);
+                }
+                else
+                    txtLog.setText("ERRO");
+            }
             else
-                txtLog.setText("Usuário ou senha inválidos!");
+            {
+                System.out.println("ENTROU 2");
+                Usuario usuario;
+                usuario = new Usuario(NmUsr.getText(), psswrd.getText(),modelUsuario.numUsers);
+                modelUsuario.numUsers+=1;
+
+                if(usuario.cadastrar())
+                {
+                    modelUsuario.atualizar(usuario);
+                    FramePrincipal.CarregarPag(tela);
+                }
+                else
+                    txtLog.setText("ERRO");
+            }
+        }
+        else if(ehF)
+        {
+            Fase1.initFase1();
+            FramePrincipal.CarregarPag(tela);
         }
         else
             FramePrincipal.CarregarPag(tela);
+
     }
 
     @Override

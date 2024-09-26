@@ -33,6 +33,7 @@ public class SelPerso extends JPanel
     private final JButton SelP1 = new JButton(imgP1);
     private final JButton SelP2 = new JButton(imgP2);
     private final JButton conf = new JButton("Selecionar");
+    private final JButton voltar = new JButton("Voltar");
 
     public SelPerso(Clip Click, Clip Hov)
     {
@@ -84,7 +85,12 @@ public class SelPerso extends JPanel
         conf.setForeground(Color.white);
         conf.setBackground(Color.BLACK);
         conf.setFont(fnt2);
-        conf.addMouseListener(new TratadorMouseClick(Click,Hov,null,null,null,false,"fase1"));
+        conf.addMouseListener(new TratadorMouseClick(Click,Hov,null,null,null,false,true,"Fase1"));
+
+        voltar.setForeground(Color.white);
+        voltar.setBackground(Color.BLACK);
+        voltar.setFont(fnt2);
+        voltar.addMouseListener(new TratadorMouseClick(Click,Hov,null,null,null,false,false,"TelaCad"));
 
         contP1.add(SelP1);
         contP1.add(estP1);
@@ -103,6 +109,7 @@ public class SelPerso extends JPanel
         contPs.setSize(new Dimension(700,600));
 
 
+        this.add(voltar);
         this.add(txtSel);
         this.add(contPs);
         this.add(contP1);

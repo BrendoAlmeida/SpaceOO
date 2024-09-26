@@ -89,8 +89,8 @@ public class TelaSelLoginCad extends JPanel {
         btnCAD.setFont(fnt);
         btnCAD.setVisible(true);
 
-        btnCAD.addMouseListener(new TratadorMouseClick(Click,Hov,null,null,null,false,"TelaCad"));
-        btnLogin.addMouseListener(new TratadorMouseClick(Click,Hov,null,null,null,false,"TelaLog"));
+        btnCAD.addMouseListener(new TratadorMouseClick(Click,Hov,null,null,null,false,false,"TelaCad"));
+        btnLogin.addMouseListener(new TratadorMouseClick(Click,Hov,null,null,null,false,false,"TelaLog"));
 
         if(clip != null)
         {

@@ -12,7 +12,7 @@ public class FramePrincipal extends JFrame
     protected static Clip clip = CarregadorAudio.CarregarAudio("audio/menuTheme.wav");
 
     private final static CardLayout CdLt = new CardLayout();
-    private final static JPanel pnPrincipal = new JPanel(CdLt);
+    protected final static JPanel pnPrincipal = new JPanel(CdLt);
 
     private final static TelaSelLoginCad tlLC = new TelaSelLoginCad(Click,Hov,clip);
     private final static TelaLog tlLog = new TelaLog(Click,Hov);
@@ -32,7 +32,7 @@ public class FramePrincipal extends JFrame
         pnPrincipal.add(tlLog,"TelaLog");
         pnPrincipal.add(tlCad,"TelaCad");
         pnPrincipal.add(SelP,"SelPerso");
-        pnPrincipal.add(F1,"fase1");
+        pnPrincipal.add(F1,"Fase1");
 
         CdLt.show(pnPrincipal,"TelaSelLoginCad");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

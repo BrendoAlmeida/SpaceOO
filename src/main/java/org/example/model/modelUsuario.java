@@ -1,17 +1,19 @@
 package org.example.model;
 
 import org.example.config.db.connection;
+import org.example.controller.Admin;
 import org.example.controller.Usuario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class modelUsuario {
     private static final Connection con = connection.con;
-
+    public static int numUsers = 0;
     public static Usuario login(Usuario usuario) {
         String sql = "SELECT * FROM usuario where nome = ? and senha = ?";
         PreparedStatement stmt;
@@ -30,12 +32,30 @@ public class modelUsuario {
     }
 
     public static boolean cadastrar(Usuario usuario) {
-        String sql = "INSERT INTO usuario (nome, senha) VALUES (?, ?)";
+        String sql = "INSERT INTO usuario (nome, senha, id) VALUES (?, ?, ?)";
         PreparedStatement stmt;
         try {
             stmt = con.prepareStatement(sql);
             stmt.setString(1, usuario.getNome());
             stmt.setString(2, usuario.getSenha());
+            stmt.setInt(3,usuario.getId());
+            stmt.execute();
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean cadastrar(Admin usuario) {
+        String sql = "INSERT INTO usuario (nome, senha, id) VALUES (?, ?, ?)";
+        PreparedStatement stmt;
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, usuario.getNome());
+            stmt.setString(2, usuario.getSenha());
+            stmt.setInt(3,usuario.getId());
             stmt.execute();
 
             return true;
@@ -51,7 +71,9 @@ public class modelUsuario {
         try {
             stmt = con.prepareStatement(sql);
             stmt.setInt(1, usuario.getId());
-            stmt.execute();
+            int lA = stmt.executeUpdate();
+
+            System.out.println("LINHAS AFETADAS "+lA);
 
             return true;
         } catch (Exception e) {
@@ -88,7 +110,7 @@ public class modelUsuario {
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
-                Usuario user = new Usuario(rs.getString("nome"),rs.getInt("score"));
+                Usuario user = new Usuario(rs.getString("nome"),rs.getInt("score"),rs.getInt("id"));
                 Usuarios.add(user);
             }
         }
@@ -99,5 +121,21 @@ public class modelUsuario {
             Usuarios = null;
         }
         return Usuarios;
+    }
+
+    public static boolean deletarTodos()
+    {
+        String sql = "DELETE FROM usuario";
+        PreparedStatement stmt;
+        try{
+            stmt = con.prepareStatement(sql);
+            int linhasAf = stmt.executeUpdate();
+
+            return linhasAf > 0;
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
