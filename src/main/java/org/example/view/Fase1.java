@@ -27,10 +27,10 @@ public class Fase1 extends JPanel{
         int frameHeight = dimencao.height + insets.top + insets.bottom;
         frame.setSize(frameWidth, frameHeight);
 
-//        Inimigo inimigo = new Inimigo(new Dimension(fatorDimencao, fatorDimencao) , new Tiro(new Dimension(2,10), 10, 1, 1, true), 1, 2, 50);
-        Inimigo inimigo = new Inimigo(new Dimension(fatorDimencao, fatorDimencao) , new TiroPersegue(new Dimension(2,10), 10, 1, 1, true), 1, 2, 50);
+        Inimigo inimigo = new Inimigo(new Dimension(fatorDimencao, fatorDimencao) , new Tiro(new Dimension(2,10), 10, 1, new int[]{1}, true), 1, 2, 50);
+//        Inimigo inimigo = new Inimigo(new Dimension(fatorDimencao, fatorDimencao) , new TiroPersegue(new Dimension(2,10), 10, 1, new int[]{1}, true), 1, 2, 50);
 
-        Personagem personagem = new Personagem(new Dimension(fatorDimencao, fatorDimencao), new Tiro(new Dimension(2,10), 10, 1, -1, false), 3, 5, 50);
+        Personagem personagem = new Personagem(new Dimension(fatorDimencao, fatorDimencao), new Tiro(new Dimension(2,10), 10, 1, new int[]{-1}, false), 3, 5, 50);
         Parede parede = new Parede(new Dimension(fatorDimencao*2, fatorDimencao*2), 30);
 
         frame.setVisible(true);

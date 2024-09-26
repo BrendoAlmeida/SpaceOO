@@ -4,21 +4,21 @@ import java.awt.*;
 
 public class Tiro extends Elemento{
     protected int dano;
-    protected int direcao;
+    protected int[] direcao;
     protected boolean tiroInimigo = false;
     protected boolean movendo = false;
 
-    public Tiro(int[] pos, Dimension tamanho, int velocidade, int dano, int direcao, boolean tiroInimigo){
+    public Tiro(int[] pos, Dimension tamanho, int velocidade, int dano, int[] direcao, boolean tiroInimigo){
         super(pos, tamanho);
         startTiro(direcao, tiroInimigo, velocidade, dano);
     }
 
-    public Tiro(Dimension tamanho, int velocidade, int dano, int direcao, boolean tiroInimigo){
+    public Tiro(Dimension tamanho, int velocidade, int dano, int[] direcao, boolean tiroInimigo){
         super(tamanho);
         startTiro(direcao, tiroInimigo, velocidade, dano);
     }
 
-    public void startTiro(int direcao, boolean tiroInimigo, int velocidade, int dano){
+    public void startTiro(int[] direcao, boolean tiroInimigo, int velocidade, int dano){
         this.setBackground(Color.BLUE);
 
         this.direcao = direcao;
@@ -66,7 +66,7 @@ public class Tiro extends Elemento{
     public void mover() {
         if (!movendo) return;
 
-        pos[1] += velocidade * direcao;
+        pos[1] += velocidade * direcao[0];
         setPos(pos);
     }
 

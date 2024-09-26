@@ -39,6 +39,15 @@ public class Inimigo extends Elemento{
         return tiro;
     }
 
+    public TiroPersegue atirarPersegue(int[] direcao){
+        if(delayAtirar > 0) return null;
+        int pos[] = new int[]{this.pos[0] + tamanho.width/2 - tiro.getTamanho().width/2, this.pos[1] + tiro.getTamanho().height + tamanho.height};
+        TiroPersegue tiro = new TiroPersegue(pos, this.tiro.getTamanho(), this.tiro.getVel(), this.tiro.getDano(), direcao, true);
+        tiro.atirar(pos, direcao);
+        delayAtirar = delayTiro;
+        return tiro;
+    }
+
     public boolean mover(int direcao, int maxPos) {
         if (pos[0] + direcao * velocidade < 0 || pos[0] + direcao * velocidade > maxPos - tamanho.width) return false;
 
@@ -52,5 +61,9 @@ public class Inimigo extends Elemento{
         if(delayAtirar > 0){
             delayAtirar -= 1;
         }
+    }
+
+    public Tiro getTiro() {
+        return tiro;
     }
 }
