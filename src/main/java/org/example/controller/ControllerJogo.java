@@ -116,7 +116,7 @@ public class ControllerJogo {
                 if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     moveRight = true;
                 }
-                if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+                if(e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP){
                     atirar = true;
                 }
             }
@@ -129,7 +129,7 @@ public class ControllerJogo {
                 if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     moveRight = false;
                 }
-                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP) {
                     atirar = false;
                 }
             }
