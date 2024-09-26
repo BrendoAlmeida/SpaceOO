@@ -32,12 +32,60 @@ public class modelPersonagem {
                     tiro = new Tiro(new Dimension(rs.getInt("tiroTamanhoX"), rs.getInt("tiroTamanhoY")), rs.getInt("tiroVelocidade"), rs.getInt("tiroDano"), new int[]{rs.getInt("tiroDirecaoX"), rs.getInt("tiroDirecaoY")}, rs.getBoolean("tiroInimigo"));
                 }
                 Personagem personagem = new Personagem(new Dimension(rs.getInt("jogadorTamanhoX"), rs.getInt("jogadorTamanhoY")), tiro, rs.getInt("vida"), rs.getInt("velocidade"), rs.getInt("delayTiro"));
+                personagem.setId(rs.getInt("id"));
                 personagens.add(personagem);
             }
             return personagens;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public static void update(Personagem personagem){
+        String sql = "UPDATE Jogador SET tamanhoX = ?, tamanhoY = ?, vida = ?, velocidade = ?, delayTiro = ?, idTiro = ? WHERE id = ?";
+        PreparedStatement stmt;
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, personagem.getTamanho().width);
+            stmt.setInt(2, personagem.getTamanho().height);
+            stmt.setInt(3, personagem.getVida());
+            stmt.setInt(4, personagem.getVelocidade());
+            stmt.setInt(5, personagem.getDelayTiro());
+            stmt.setInt(6, personagem.getTiro().getId());
+            stmt.setInt(7, personagem.getId());
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void delete(Personagem personagem){
+        String sql = "DELETE FROM Jogador WHERE id = ?";
+        PreparedStatement stmt;
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, personagem.getId());
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void insert(Personagem personagem){
+        String sql = "INSERT INTO Jogador (tamanhoX, tamanhoY, vida, velocidade, delayTiro, idTiro) VALUES (?, ?, ?, ?, ?, ?)";
+        PreparedStatement stmt;
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, personagem.getTamanho().width);
+            stmt.setInt(2, personagem.getTamanho().height);
+            stmt.setInt(3, personagem.getVida());
+            stmt.setInt(4, personagem.getVelocidade());
+            stmt.setInt(5, personagem.getDelayTiro());
+            stmt.setInt(6, personagem.getTiro().getId());
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

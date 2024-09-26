@@ -31,12 +31,60 @@ public class modelInimigo {
                     tiro = new Tiro(new Dimension(rs.getInt("tiroTamanhoX"), rs.getInt("tiroTamanhoY")), rs.getInt("tiroVelocidade"), rs.getInt("tiroDano"), new int[]{rs.getInt("tiroDirecaoX"), rs.getInt("tiroDirecaoY")}, rs.getBoolean("tiroInimigo"));
                 }
                 Inimigo inimigo = new Inimigo(new Dimension(rs.getInt("inimigoTamanhoX"), rs.getInt("inimigoTamanhoY")), tiro, rs.getInt("vida"), rs.getInt("velocidade"), rs.getInt("delayTiro"));
+                inimigo.setId(rs.getInt("id"));
                 inimigos.add(inimigo);
             }
             return inimigos;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public static void update(Inimigo inimigo){
+        String sql = "UPDATE Inimigos SET TamanhoX = ?, TamanhoY = ?, Vida = ?, Velocidade = ?, DelayTiro = ?, idTiro = ? WHERE id = ?";
+        PreparedStatement stmt;
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, inimigo.getTamanho().width);
+            stmt.setInt(2, inimigo.getTamanho().height);
+            stmt.setInt(3, inimigo.getVida());
+            stmt.setInt(4, inimigo.getVelocidade());
+            stmt.setInt(5, inimigo.getDelayTiro());
+            stmt.setInt(6, inimigo.getTiro().getId());
+            stmt.setInt(7, inimigo.getId());
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void delete(Inimigo inimigo){
+        String sql = "DELETE FROM Inimigos WHERE id = ?";
+        PreparedStatement stmt;
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, inimigo.getId());
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void insert(Inimigo inimigo){
+        String sql = "INSERT INTO Inimigos (TamanhoX, TamanhoY, Vida, Velocidade, DelayTiro, idTiro) VALUES (?, ?, ?, ?, ?, ?)";
+        PreparedStatement stmt;
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, inimigo.getTamanho().width);
+            stmt.setInt(2, inimigo.getTamanho().height);
+            stmt.setInt(3, inimigo.getVida());
+            stmt.setInt(4, inimigo.getVelocidade());
+            stmt.setInt(5, inimigo.getDelayTiro());
+            stmt.setInt(6, inimigo.getTiro().getId());
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
