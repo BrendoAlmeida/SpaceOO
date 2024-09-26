@@ -45,4 +45,8 @@ public class Personagem extends Elemento {
             delayAtirar -= 1;
         }
     }
+
+    public Tiro getTiro() {
+        return tiro;
+    }
 }

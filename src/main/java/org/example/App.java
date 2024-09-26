@@ -2,11 +2,12 @@ package org.example;
 
 import org.example.view.FramePrincipal;
 
+import java.util.List;
+
 public class App
 {
     public static void main(String[] args )
     {
-//      fase1a fase1 = new fase1a();
-        new FramePrincipal();
+        FramePrincipal.CarregarPag("fase1");
     }
 }

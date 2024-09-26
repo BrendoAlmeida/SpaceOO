@@ -116,7 +116,7 @@ public class ControllerJogo {
                 if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     moveRight = true;
                 }
-                if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+                if(e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP){
                     atirar = true;
                 }
             }
@@ -129,7 +129,7 @@ public class ControllerJogo {
                 if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
                     moveRight = false;
                 }
-                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP) {
                     atirar = false;
                 }
             }
@@ -203,14 +203,7 @@ public class ControllerJogo {
     public void moveTiro(){
         for (int i = 0; i < tiros.size(); i++) {
             Tiro tiro = tiros.get(i);
-
-            if (tiro.getClass().getName().equals("org.example.controller.TiroPersegue")) {
-                TiroPersegue tiroPersegue = (TiroPersegue) tiro;
-                tiroPersegue.mover(jogador.getPos());
-                tiro = tiroPersegue;
-            }else{
-                tiro.mover();
-            }
+            tiro.mover();
 
             if (tiro.getPos()[1] < 0  || tiro.getPos()[1] > dimencao.height || tiro.getPos()[0] < 0 || tiro.getPos()[0] > dimencao.width) {
                 tiros.remove(tiro);
@@ -247,7 +240,13 @@ public class ControllerJogo {
 
     public void inimigoAtira(){
         for (Inimigo inimigo : inimigos) {
-            Tiro tiro = inimigo.atirar();
+            Tiro tiro;
+            if (inimigo.getTiro().getClass().getName().equals("org.example.controller.TiroPersegue")) {
+                tiro = inimigo.atirarPersegue(jogador.getPos());
+            }else{
+                tiro = inimigo.atirar();
+            }
+
             if (tiro != null) {
                 boolean tiroColide = false;
                 for (int i = 0; i < inimigos.size(); i++){

@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public abstract class Elemento extends JPanel {
+    protected int id;
     protected int vida;
     protected int[] pos;
     protected Dimension tamanho;
@@ -49,6 +50,14 @@ public abstract class Elemento extends JPanel {
         return sprite;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setSprite(String spritePath) {
         sprite = CarregadorImagem.CarregaIcone(spritePath, tamanho.width, tamanho.height).getImage();
     }
@@ -86,6 +95,10 @@ public abstract class Elemento extends JPanel {
 
     public int getDelayAtirar() {
         return delayAtirar;
+    }
+
+    public int getDelayTiro(){
+        return delayTiro;
     }
 }
 
