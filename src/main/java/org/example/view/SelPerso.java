@@ -17,8 +17,8 @@ public class SelPerso extends JPanel
 {
 
     private final JLabel txtSel = new JLabel("Selecione seu personagem");
-    private final JLabel estP1 = new JLabel("<html>Vida :" +"<br/> Dano: <br/> Velocidade: <br/></html>");
-    private final JLabel estP2 = new JLabel("<html>Vida : <br/> Dano: <br/> Velocidade: <br/></html>");
+    private final JLabel estP1 = new JLabel("<html>Vida :3" +"<br/> Dano:1<br/> Velocidade:1<br/></html>");
+    private final JLabel estP2 = new JLabel("<html>Vida :1 <br/> Dano:2<br/> Velocidade:2<br/></html>");
 
     private final ImageIcon imgP1 = CarregadorImagem.CarregaIcone("img/player1.png",250,250);
     private final ImageIcon imgP2 = CarregadorImagem.CarregaIcone("img/player2.png",250,250);
@@ -79,8 +79,6 @@ public class SelPerso extends JPanel
 
         {//--
             SelP1.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
-
-
             SelP2.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
 
         }//--Listeners de Hover

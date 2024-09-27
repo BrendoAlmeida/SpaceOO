@@ -28,37 +28,29 @@ public class Fase1 extends JPanel{
     }
 
     public Fase1() {
-        //JFrame frame = new JFrame("Space Invaders");
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(null);
         mainPanel.setPreferredSize(dimencao);
         mainPanel.setBackground(Color.BLACK);
         mainPanel.setVisible(true);
-        mainPanel.requestFocus();
 
         this.setLayout(null);
         this.setPreferredSize(dimencao);
         this.setBackground(Color.BLACK);
         this.add(mainPanel);
 
-        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.getContentPane().add(mainPanel);
-        //frame.pack();
-
         Insets insets = FramePrincipal.pnPrincipal.getInsets();
         int frameWidth = dimencao.width + insets.left + insets.right;
         int frameHeight = dimencao.height + insets.top + insets.bottom;
-        //frame.setSize(frameWidth, frameHeight);
         this.setSize(frameWidth,frameHeight);
+
         mainPanel.setSize(frameWidth,frameHeight);
         Personagem personagem = modelPersonagem.getPersonagem(1);
         Inimigo inimigo = modelInimigo.getInimigo(1);
 
         Parede parede = new Parede(new Dimension(fatorDimencao*2, fatorDimencao*2), 30);
 
-        //frame.setVisible(true);
         this.setVisible(true);
-        //controllerJogo = new ControllerJogo(mainPanel, dimencao, fatorDimencao, inimigo, personagem, parede, 3);
         controllerJogo = new ControllerJogo(mainPanel, dimencao, fatorDimencao, inimigo, personagem, parede, 3);
     }
 }

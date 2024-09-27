@@ -1,8 +1,10 @@
 package org.example.controller;
 
+import org.example.util.CarregadorAudio;
 import org.example.util.CarregadorFonte;
 import org.example.util.CarregadorImagem;
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -36,6 +38,35 @@ public class ControllerJogo {
     private double multScore = 100;
 
     private JPanel PanelVida = new JPanel();
+
+    private Clip somMorte = CarregadorAudio.CarregarAudio("audio/SomDeMorte.wav");
+    private Clip SfxTiro = CarregadorAudio.CarregarAudio("audio/Tiro1.wav");
+    private Clip SfxTiroPersegue = CarregadorAudio.CarregarAudio("audio/Tiro2.wav");
+    private Clip SfxParedeQuebra = CarregadorAudio.CarregarAudio("audio/ParedeQuebrando.wav");
+    private Clip DanoSfx = CarregadorAudio.CarregarAudio("audio/Dano.wav");
+    private Clip SfxTiroJog = CarregadorAudio.CarregarAudio("audio/Tiro3.wav");
+
+    private Timer delaySomTiro = new Timer(250, e -> {
+        if(SfxTiro.isActive())
+        {
+            SfxTiro.stop();
+            SfxTiro.setFramePosition(0);
+            SfxTiro.start();
+        }
+        else
+            SfxTiro.start();
+    });
+    private Timer delaySomTiroPersegue = new Timer(250, e->{
+        if(SfxTiroPersegue.isActive())
+        {
+            SfxTiroPersegue.stop();
+            SfxTiroPersegue.setFramePosition(0);
+            SfxTiroPersegue.start();
+        }
+        else
+            SfxTiroPersegue.start();
+    });
+    private final int VIDA_MAXIMA_PAREDE = 30;
 
     public void initScore(){
         LblScore.setText("Score: " + score);
@@ -91,6 +122,57 @@ public class ControllerJogo {
         mainPanel.repaint();
     }
 
+    public void initKeyBindings(JPanel panel)
+    {
+        panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("LEFT"),"moveLeft");
+        panel.getActionMap().put("moveLeft", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                moveLeft = true;
+            }
+        });
+
+        panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("RIGHT"),"moveRight");
+        panel.getActionMap().put("moveRight", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                moveRight = true;
+            }
+        });
+
+        panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("SPACE"),"atirar");
+        panel.getActionMap().put("atirar", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                atirar = true;
+            }
+        });
+
+        panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("released LEFT"),"stopLeft");
+        panel.getActionMap().put("stopLeft", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                moveLeft = false;
+            }
+        });
+
+        panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("released RIGHT"),"stopRight");
+        panel.getActionMap().put("stopRight", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                moveRight = false;
+            }
+        });
+
+        panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("released SPACE"),"stopAtirar");
+        panel.getActionMap().put("stopAtirar", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                atirar = false;
+            }
+        });
+    }
+
     public ControllerJogo(JPanel mainPanel, Dimension dimencao, int fatorDimecao, Inimigo inimigo, Personagem jogador, Parede parede, int qtdFileiras) {
         this.dimencao = dimencao;
         this.fatorDimecao = fatorDimecao;
@@ -106,41 +188,7 @@ public class ControllerJogo {
         this.jogador = jogador;
         mainPanel.repaint();
 
-
-        jogador.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                    System.out.println("APERTOU");
-                    moveLeft = true;
-                }
-                if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    System.out.println("APERTOU");
-                    moveRight = true;
-                }
-                if(e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP){
-                    System.out.println("APERTOU");
-                    atirar = true;
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                    moveLeft = false;
-                }
-                if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    moveRight = false;
-                }
-                if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP) {
-                    atirar = false;
-                }
-            }
-        });
+        initKeyBindings(mainPanel);
 
         startGameLoop();
         startRenderLoop();
@@ -254,16 +302,22 @@ public class ControllerJogo {
             }else{
                 tiro = inimigo.atirar();
             }
-
             if (tiro != null) {
+
+                if(tiro instanceof TiroPersegue)
+                    delaySomTiroPersegue.start();
+                else
+                    delaySomTiro.start();
+
                 boolean tiroColide = false;
-                for (int i = 0; i < inimigos.size(); i++){
+                for(int i = 0; i < inimigos.size(); i++){
                     if (tiro.getBounds().intersects(inimigos.get(i).getBounds())) {
                         tiroColide = true;
                         break;
                     }
                 }
                 if (tiroColide) continue;
+
                 tiros.add(tiro);
                 mainPanel.add(tiro);
             }
@@ -273,6 +327,17 @@ public class ControllerJogo {
     public void jogadorAtira(){
         Tiro tiro = jogador.atirar();
         if (tiro != null) {
+            if(SfxTiroJog.isActive())
+            {
+                SfxTiroJog.stop();
+                SfxTiroJog.setFramePosition(0);
+                SfxTiroJog.start();
+            }
+            else
+            {
+                SfxTiroJog.setFramePosition(0);
+                SfxTiroJog.start();
+            }
             tiros.add(tiro);
             mainPanel.add(tiro);
         }
@@ -287,11 +352,21 @@ public class ControllerJogo {
                 inimigo.tomarDano(tiro.getDano());
                 if (inimigo.getVida() > 0) return true;
 
+                if(somMorte.isActive())
+                {
+                    somMorte.stop();
+                    somMorte.setFramePosition(0);
+                    somMorte.start();
+                }
+                else
+                {
+                    somMorte.setFramePosition(0);
+                    somMorte.start();
+                }
                 inimigos.remove(inimigo);
                 mainPanel.remove(inimigo);
 
                 score += multScore;
-
                 return true;
             }
         }
@@ -302,6 +377,18 @@ public class ControllerJogo {
         Rectangle hitboxTiro = tiro.getBounds();
         Rectangle hitboxJogador = jogador.getBounds();
         if (!hitboxTiro.intersects(hitboxJogador)) return false;
+
+        if(DanoSfx.isActive())
+        {
+            DanoSfx.stop();
+            DanoSfx.setFramePosition(0);
+            DanoSfx.start();
+        }
+        else
+        {
+            DanoSfx.setFramePosition(0);
+            DanoSfx.start();
+        }
 
         jogador.tomarDano(tiro.getDano());
         if(jogador.getVida() == 0) perde();
@@ -315,7 +402,24 @@ public class ControllerJogo {
             Rectangle hitboxParede = parede.getBounds();
             if (hitboxTiro.intersects(hitboxParede)) {
                 parede.tomarDano(tiro.getDano());
-                if (parede.getVida() > 0) return true;
+                if (parede.getVida() > 0)
+                {
+                    if(parede.getVida() < VIDA_MAXIMA_PAREDE*0.75 && parede.getVida() > VIDA_MAXIMA_PAREDE*0.35)
+                        parede.setSprite("img/Parede2.png");
+                    else if(parede.getVida() < VIDA_MAXIMA_PAREDE*0.3)
+                        parede.setSprite("img/Parede3.png");
+
+                    return true;
+                }
+
+                if(SfxParedeQuebra.isActive())
+                {
+                    SfxParedeQuebra.stop();
+                    SfxParedeQuebra.setFramePosition(0);
+                    SfxParedeQuebra.start();
+                }
+                else
+                    SfxParedeQuebra.start();
 
                 paredes.remove(parede);
                 mainPanel.remove(parede);
