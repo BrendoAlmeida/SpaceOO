@@ -35,79 +35,93 @@ public class SelPerso extends JPanel
     private final JButton conf = new JButton("Selecionar");
     private final JButton voltar = new JButton("Voltar");
 
-    public SelPerso(Clip Click, Clip Hov)
-    {
-        this.setSize(1000,800);
+    public SelPerso(Clip Click, Clip Hov) {
+        {//--
+        this.setSize(1000, 800);
         this.setBackground(Color.BLACK);
-        this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        }//--this
 
-        txtSel.setFont(fnt.deriveFont(50f));
-        txtSel.setForeground(Color.white);
+        {//
+            txtSel.setFont(fnt.deriveFont(50f));
+            txtSel.setForeground(Color.white);
 
-        estP1.setForeground(Color.white);
-        estP1.setBackground(Color.BLACK);
-        estP1.setFont(fnt2);
-        estP1.setVisible(false);
+            estP1.setForeground(Color.white);
+            estP1.setBackground(Color.BLACK);
+            estP1.setFont(fnt2);
+            estP1.setVisible(false);
 
-        estP2.setForeground(Color.white);
-        estP2.setBackground(Color.BLACK);
-        estP2.setFont(fnt2);
-        estP2.setVisible(false);
+            estP2.setForeground(Color.white);
+            estP2.setBackground(Color.BLACK);
+            estP2.setFont(fnt2);
+            estP2.setVisible(false);
+        }//--JLabels
 
-        SelP1.setBackground(Color.BLACK);
-        SelP1.setSize(new Dimension(250,250));
+        {//--
+            SelP1.setBackground(Color.BLACK);
+            SelP1.setSize(new Dimension(250, 250));
 
-        SelP1.addMouseListener(new TratadorMouseHover(Click,Hov,null,null,null));
-        SelP1.addActionListener(new ActionListener() {
+            SelP2.setBackground(Color.BLACK);
+            SelP2.setSize(new Dimension(250, 250));
+
+            SelP1.setVisible(true);
+            SelP2.setVisible(true);
+
+            conf.setForeground(Color.white);
+            conf.setBackground(Color.BLACK);
+            conf.setFont(fnt2);
+
+            voltar.setForeground(Color.white);
+            voltar.setBackground(Color.BLACK);
+            voltar.setFont(fnt2);
+
+        }//--JButtons
+
+        {//--
+            SelP1.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
+
+
+            SelP2.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
+
+        }//--Listeners de Hover
+
+        {//--
+            SelP1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(estP2.isVisible())
-                    estP2.setVisible(false);
-                estP1.setVisible(true);
-            }});
-
-        SelP2.setBackground(Color.BLACK);
-        SelP2.setSize(new Dimension(250,250));
-        SelP2.addMouseListener(new TratadorMouseHover(Click,Hov,null,null,null));
-        SelP2.addActionListener(new ActionListener() {
+            if (estP2.isVisible())
+                estP2.setVisible(false);
+            estP1.setVisible(true);
+        }
+        });
+            SelP2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(estP1.isVisible())
+                if (estP1.isVisible())
                     estP1.setVisible(false);
 
                 estP2.setVisible(true);
             }
         });
+            conf.addMouseListener(new TratadorMouseClick(Click, Hov, null, null, null, false, true, "Fase1"));
+            voltar.addMouseListener(new TratadorMouseClick(Click, Hov, null, null, null, false, false, "TelaCad"));
+        }//-Listeners de Ação
 
-        SelP1.setVisible(true);
-        SelP2.setVisible(true);
+        {//--
+            contP1.add(SelP1);
+            contP1.add(estP1);
+            contP1.setLayout(new BoxLayout(contP1, BoxLayout.Y_AXIS));
+            contP1.setBackground(Color.black);
 
-        conf.setForeground(Color.white);
-        conf.setBackground(Color.BLACK);
-        conf.setFont(fnt2);
-        conf.addMouseListener(new TratadorMouseClick(Click,Hov,null,null,null,false,true,"Fase1"));
+            contP2.add(SelP2);
+            contP2.add(estP2);
+            contP2.setLayout(new BoxLayout(contP2, BoxLayout.Y_AXIS));
+            contP2.setBackground(Color.black);
 
-        voltar.setForeground(Color.white);
-        voltar.setBackground(Color.BLACK);
-        voltar.setFont(fnt2);
-        voltar.addMouseListener(new TratadorMouseClick(Click,Hov,null,null,null,false,false,"TelaCad"));
-
-        contP1.add(SelP1);
-        contP1.add(estP1);
-        contP1.setLayout(new BoxLayout(contP1,BoxLayout.Y_AXIS));
-        contP1.setBackground(Color.black);
-
-        contP2.add(SelP2);
-        contP2.add(estP2);
-        contP2.setLayout(new BoxLayout(contP2,BoxLayout.Y_AXIS));
-        contP2.setBackground(Color.black);
-
-        //contPs.add(contP1);
-        //contPs.add(contP2);
-        contPs.setBackground(Color.black);
-        contPs.setLayout(new BoxLayout(contPs,BoxLayout.LINE_AXIS));
-        contPs.setSize(new Dimension(700,600));
-
+            contPs.setBackground(Color.black);
+            contPs.setLayout(new BoxLayout(contPs, BoxLayout.LINE_AXIS));
+            contPs.setSize(new Dimension(700, 600));
+        }//--JPanel
 
         this.add(voltar);
         this.add(txtSel);

@@ -8,6 +8,9 @@ import org.example.view.FramePrincipal;
 
 import javax.sound.sampled.Clip;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -35,6 +38,9 @@ public class TratadorMouseClick implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
 
+        boolean nomeEhValido;
+        boolean senhaEhValida;
+
         if(Click != null)
         {
             Click.setFramePosition(0);
@@ -42,44 +48,68 @@ public class TratadorMouseClick implements MouseListener {
         }
         if(vef && (NmUsr != null && psswrd !=null) )
         {
-            if(modelUsuario.getUsuarios().isEmpty())
+            String res = AvaliadorSenha.AvaliarSenha(psswrd.getText());
+            if(NmUsr.getText().isEmpty() || NmUsr.getText().matches(".*[\\s].*"))
             {
-                System.out.println("ENTROU");
-                Admin adm;
-                adm = new Admin(NmUsr.getText(), psswrd.getText(),modelUsuario.numUsers);
-
-                if(adm.cadastrar())
-                {
-                    modelUsuario.atualizar(adm);
-                    FramePrincipal.CarregarPag(tela);
-                }
-                else
-                    txtLog.setText("ERRO");
+                NmUsr.setBorder(new LineBorder(Color.red,2));
+                nomeEhValido = false;
             }
             else
             {
-                System.out.println("ENTROU 2");
+                NmUsr.setBorder(new LineBorder(Color.green,2));
+                txtLog.setText(txtLog.getText().replace("<p style ='color:red'>Nome não pode ficar vazio</p>",""));
+                nomeEhValido = true;
+            }
+
+            if(!res.equals("Senha adequada"))
+            {
+                if(nomeEhValido)
+                    txtLog.setText("<html>"+AvaliadorSenha.AvaliarSenha(psswrd.getText())+"</html>");
+                else
+                    txtLog.setText("<html><p style ='color:red'>Nome não pode ficar vazio, ou conter espaços em branco</p>"+AvaliadorSenha.AvaliarSenha(psswrd.getText())+"</html>");
+
+                psswrd.setBorder(new LineBorder(Color.red,2));
+                senhaEhValida = false;
+            }
+            else
+            {
+                if(!nomeEhValido)
+                    txtLog.setText("<html><p style ='color:red'>Nome não pode ficar vazio, ou conter espaços em branco</p></html>");
+
+                psswrd.setBorder(new LineBorder(Color.green,2));
+                txtLog.setText(txtLog.getText().replace(res,AvaliadorSenha.AvaliarSenha(psswrd.getText())));
+                senhaEhValida = true;
+            }
+            if(senhaEhValida && nomeEhValido)
+            {
+
                 Usuario usuario;
-                usuario = new Usuario(NmUsr.getText(), psswrd.getText(),modelUsuario.numUsers);
+                usuario = new Usuario(NmUsr.getText(),psswrd.getText());
+                usuario.setId(modelUsuario.numUsers);
                 modelUsuario.numUsers+=1;
 
-                if(usuario.cadastrar())
-                {
-                    modelUsuario.atualizar(usuario);
-                    FramePrincipal.CarregarPag(tela);
-                }
+                if(!modelUsuario.JaExiste(usuario))
+                    if(usuario.cadastrar())
+                        FramePrincipal.CarregarPag(tela);
+                    else
+                        txtLog.setText("ERRO");
                 else
-                    txtLog.setText("ERRO");
+                {
+                    NmUsr.setBorder(new LineBorder(Color.red,2));
+                    txtLog.setText("Já existe um Jogador cadastrado com esse nome");
+                }
+
             }
         }
         else if(ehF)
         {
-            Fase1.initFase1();
+            Fase1.MudarMusica();
+            FramePrincipal.AddPag(new Fase1(),tela);
             FramePrincipal.CarregarPag(tela);
+            Fase1.MudarMusica();
         }
         else
             FramePrincipal.CarregarPag(tela);
-
     }
 
     @Override

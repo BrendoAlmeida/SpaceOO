@@ -8,6 +8,7 @@ public class App
 {
     public static void main(String[] args )
     {
-        FramePrincipal.CarregarPag("fase1");
+        new FramePrincipal();
+        //FramePrincipal.CarregarPag("fase1");
     }
 }

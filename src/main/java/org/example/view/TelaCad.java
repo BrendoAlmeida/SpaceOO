@@ -25,104 +25,124 @@ public class TelaCad extends JPanel
     private final JButton voltar = new JButton("Voltar");
 
     protected final JTextField NmUsr = new JTextField();
-    protected final JTextField psswrd= new JTextField();
+    protected final JTextField psswrd= new JTextField("Senha deve ter pelo menos 8 caracteres, uma maiúscula e um Dígito");
 
     protected Usuario usuario;
 
-    public TelaCad(Clip Click, Clip Hov)
-    {
-        this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-        this.setPreferredSize(new Dimension(1000,300));
+    public TelaCad(Clip Click, Clip Hov) {
+        {//--
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setPreferredSize(new Dimension(1000, 300));
         this.setBackground(Color.black);
+        }//--this
 
-        txtNome.setForeground(Color.WHITE);
-        txtSenha.setForeground(Color.WHITE);
-        txtInfo.setForeground(Color.white);
-        txtLog.setForeground(Color.white);
+        {//--
+            txtNome.setForeground(Color.WHITE);
+            txtSenha.setForeground(Color.WHITE);
+            txtInfo.setForeground(Color.white);
+            txtLog.setForeground(Color.white);
 
-        txtInfo.setFont(fnt);
-        txtLog.setFont(fnt2);
-        txtNome.setFont(fnt);
-        txtSenha.setFont(fnt);
+            txtInfo.setFont(fnt);
+            txtLog.setFont(fnt2);
+            txtNome.setFont(fnt);
+            txtSenha.setFont(fnt);
 
-        txtInfo.setVisible(true);
-        txtLog.setVisible(true);
-        txtNome.setVisible(true);
-        txtSenha.setVisible(true);
+            txtInfo.setVisible(true);
+            txtLog.setVisible(true);
+            txtNome.setVisible(true);
+            txtSenha.setVisible(true);
+        }//Labels
 
-        NmUsr.setMaximumSize(new Dimension(2000,100));
-        psswrd.setMaximumSize(new Dimension(2000,100));
-        NmUsr.addMouseListener(new TratadorMouseHover(Click,Hov,txtLog,NmUsr,psswrd));
-        psswrd.addMouseListener(new TratadorMouseHover(Click,Hov,txtLog,NmUsr,psswrd));
+        {//--
+            NmUsr.addMouseListener(new TratadorMouseHover(Click, Hov, txtLog, NmUsr, psswrd));
+            NmUsr.addKeyListener(new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
 
-        NmUsr.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
+                    }
 
-            }
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if(Hov != null)
-                {
-                    if(Hov.isRunning())
-                        Hov.stop();
-                    Hov.setFramePosition(0);
-                    Hov.start();
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        if (Hov != null) {
+                            if (Hov.isRunning())
+                                Hov.stop();
+                            Hov.setFramePosition(0);
+                            Hov.start();
+                        }
+
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                        if (Hov != null)
+                            Hov.stop();
+                    }
+                });
+            psswrd.addMouseListener(new TratadorMouseHover(Click, Hov, txtLog, NmUsr, psswrd));
+            psswrd.addFocusListener(new FocusListener() {
+                @Override
+                public void focusGained(FocusEvent e) {
+                    psswrd.setText("");
                 }
 
-            }
-            @Override
-            public void keyReleased(KeyEvent e) {
-                if(Hov != null)
-                    Hov.stop();
-            }
-        });
-        psswrd.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
+                @Override
+                public void focusLost(FocusEvent e) {
 
-            }
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (Hov != null)
-                {
-                    if(Hov.isRunning())
-                        Hov.stop();
-
-                    Hov.setFramePosition(0);
-                    Hov.start();
                 }
-            }
-            @Override
-            public void keyReleased(KeyEvent e) {
-                if(Hov != null)
-                    Hov.stop();
-            }
-        });
+            });
+            psswrd.addKeyListener(new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
 
-        conf.setFont(fnt);
-        conf.setForeground(Color.white);
-        conf.setPreferredSize(new Dimension(150,100));
-        conf.setBackground(Color.BLACK);
-        conf.addMouseListener(new TratadorMouseClick(Click,Hov,txtLog,NmUsr,psswrd,true,false,"SelPerso"));
+                    }
 
-        voltar.setFont(fnt);
-        voltar.setForeground(Color.white);
-        voltar.setSize(new Dimension(150,100));
-        voltar.setBackground(Color.black);
-        voltar.addMouseListener(new TratadorMouseClick(Click, Hov,null,null,null,false,false,"TelaSelLoginCad"));
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        if (Hov != null) {
+                            if (Hov.isRunning())
+                                Hov.stop();
 
-        NmUsr.setPreferredSize(new Dimension(600,100));
-        NmUsr.setBackground(Color.BLACK);
-        NmUsr.setFont(fnt2.deriveFont(30f));
-        NmUsr.setForeground(Color.getColor("#d5ebdb"));
-        NmUsr.setVisible(true);
+                            Hov.setFramePosition(0);
+                            Hov.start();
+                        }
+                    }
 
-        psswrd.setPreferredSize(new Dimension(600,100));
-        psswrd.setFont(fnt2.deriveFont(30f));
-        psswrd.setBackground(Color.BLACK);
-        psswrd.setForeground(Color.getColor("#d5ebdb"));
-        psswrd.setVisible(true);
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                        if (Hov != null)
+                            Hov.stop();
+                    }
+                });
+            conf.addMouseListener(new TratadorMouseClick(Click, Hov, txtLog, NmUsr, psswrd, true, false, "SelPerso"));
+            voltar.addMouseListener(new TratadorMouseClick(Click, Hov, null, null, null, false, false, "TelaSelLoginCad"));
+        }//Events
+
+        {//--
+             conf.setFont(fnt);
+             conf.setForeground(Color.white);
+             conf.setPreferredSize(new Dimension(150, 100));
+             conf.setBackground(Color.BLACK);
+
+             voltar.setFont(fnt);
+             voltar.setForeground(Color.white);
+             voltar.setSize(new Dimension(150, 100));
+             voltar.setBackground(Color.black);
+
+             NmUsr.setPreferredSize(new Dimension(600, 100));
+             NmUsr.setBackground(Color.BLACK);
+             NmUsr.setFont(fnt2.deriveFont(30f));
+             NmUsr.setForeground(Color.getColor("#d5ebdb"));
+             NmUsr.setVisible(true);
+
+             psswrd.setPreferredSize(new Dimension(600, 100));
+             psswrd.setFont(fnt2.deriveFont(30f));
+             psswrd.setBackground(Color.BLACK);
+             psswrd.setForeground(Color.getColor("#d5ebdb"));
+             psswrd.setVisible(true);
+
+             NmUsr.setMaximumSize(new Dimension(2000, 100));
+             psswrd.setMaximumSize(new Dimension(2000, 100));
+        }//Botões
 
         this.add(voltar);
         this.add(txtInfo);

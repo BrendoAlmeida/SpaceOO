@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import org.example.util.CarregadorFonte;
+import org.example.util.CarregadorImagem;
 
 import javax.swing.*;
 import java.awt.*;
@@ -95,6 +96,8 @@ public class ControllerJogo {
         this.fatorDimecao = fatorDimecao;
         this.mainPanel = mainPanel;
 
+        this.PanelVida.setBackground(Color.black);
+
         initInimigos(inimigo, qtdFileiras);
         initPersonagem(jogador);
         initParede(parede);
@@ -102,6 +105,7 @@ public class ControllerJogo {
         initVida();
         this.jogador = jogador;
         mainPanel.repaint();
+
 
         jogador.addKeyListener(new KeyListener() {
             @Override
@@ -111,12 +115,15 @@ public class ControllerJogo {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                    System.out.println("APERTOU");
                     moveLeft = true;
                 }
                 if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                    System.out.println("APERTOU");
                     moveRight = true;
                 }
                 if(e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_UP){
+                    System.out.println("APERTOU");
                     atirar = true;
                 }
             }
@@ -193,8 +200,9 @@ public class ControllerJogo {
         for (int i = 0; i < vida; i++) {
             JLabel coracao = new JLabel();
             coracao.setBounds((PanelVida.getComponentCount())*20, 0, 20, 20);
-//            coracao.setIcon(new ImageIcon("img/coracao.png"));
-            coracao.setBackground(Color.RED);
+            //coracao.setIcon(new ImageIcon("img/coracao.png"));
+            coracao.setIcon(CarregadorImagem.CarregaIcone("img/coracao.png",25,25));
+            coracao.setBackground(Color.BLACK);
             coracao.setOpaque(true);
             PanelVida.add(coracao);
         }

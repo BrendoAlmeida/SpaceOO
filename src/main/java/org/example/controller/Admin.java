@@ -1,13 +1,13 @@
 package org.example.controller;
 
 public class Admin extends Usuario{
-    public Admin(String nome, String senha, int Id)
+    public Admin(String nome, String senha)
     {
-        super(nome, senha, Id);
+        super(nome, senha);
     }
 
-    public Admin(String nome, int Score, int Id)
+    public Admin(String nome, int Score)
     {
-        super(nome, Score, Id);
+        super(nome, Score);
     }
 }
