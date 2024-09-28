@@ -28,7 +28,6 @@ public class TelaSelLoginCad extends JPanel {
     private final Font fnt = CarregadorFonte.CarregaFonte("fonts/space_invaders.ttf", 30f);
     private final Font fnt2 = CarregadorFonte.CarregaFonte("fonts/FE.ttf", 30f);
 
-
     private final JButton btnCAD = new JButton("CADASTRO");
     private final JButton btnLogin = new JButton("LOGIN");
 
@@ -44,59 +43,69 @@ public class TelaSelLoginCad extends JPanel {
 
     public TelaSelLoginCad(Clip Click,Clip Hov, Clip clip)
     {
-        this.setPreferredSize(new Dimension(LARGURA,ALTURA));
+        {//
+            this.setPreferredSize(new Dimension(LARGURA, ALTURA));
+            //organiza o painel em um layout de caixas (BoxLayout.Y_AXIS para eixo y e BoxLayout.X_AXIS para eixo x)
+            this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+            this.setBackground(Color.black);
+        }//--this
 
-        contTxt.setLayout(new BoxLayout(contTxt,BoxLayout.Y_AXIS));
-        contTxt.setBorder(new EmptyBorder(100,0,0,150));
-        contTxt.setPreferredSize(new Dimension(500, 400));
-        contTxt.setBackground(Color.BLACK);
-        contTxt.setVisible(true);
+        {//
+            contTxt.setLayout(new BoxLayout(contTxt, BoxLayout.Y_AXIS));
+            contTxt.setBorder(new EmptyBorder(100, 0, 0, 150));
+            contTxt.setPreferredSize(new Dimension(500, 400));
+            contTxt.setBackground(Color.BLACK);
+            contTxt.setVisible(true);
+            contTxt.add(title);
 
-        Cad.setPreferredSize(new Dimension(400,400));
-        Cad.setBackground(Color.BLACK);
-        Cad.add(btnCAD);
-        Cad.setVisible(true);
+            Cad.setPreferredSize(new Dimension(400, 400));
+            Cad.setBackground(Color.BLACK);
+            Cad.add(btnCAD);
+            Cad.setVisible(true);
 
-        Login.setPreferredSize(new Dimension(400,400));
-        Login.setBackground(Color.BLACK);
-        Login.add(btnLogin);
-        Login.setVisible(true);
+            Login.setPreferredSize(new Dimension(400, 400));
+            Login.setBackground(Color.BLACK);
+            Login.add(btnLogin);
+            Login.setVisible(true);
 
+            selec.setPreferredSize(new Dimension(ALTURA, LARGURA));
+            selec.setBackground(Color.BLACK);
+            selec.setLayout(new BoxLayout(selec, BoxLayout.X_AXIS));
+            selec.add(Cad);
+            selec.add(Login);
+            selec.setVisible(true);
+        }//--JPanel
 
-        selec.setPreferredSize(new Dimension(ALTURA, LARGURA));
-        selec.setBackground(Color.BLACK);
-        selec.setLayout(new BoxLayout(selec,BoxLayout.X_AXIS));
-        selec.add(Cad);
-        selec.add(Login);
-        selec.setVisible(true);
+        {//--
+            title.setFont(fnt2.deriveFont(50f));
+            title.setForeground(Color.white);
+            txtLog.setFont(fnt);
+            txtLog.setForeground(Color.white);
+        }//--JLabel
 
-        title.setFont(fnt2.deriveFont(50f));
-        title.setForeground(Color.white);
-        txtLog.setFont(fnt);
-        txtLog.setForeground(Color.white);
+        {//--
+            btnLogin.setFont(fnt);
+            btnLogin.setForeground(Color.WHITE);
+            btnLogin.setBackground(Color.black);
+            btnCAD.setForeground(Color.WHITE);
+            btnCAD.setBackground(Color.black);
 
-        //organiza o painel em um layout de caixas (BoxLayout.Y_AXIS para eixo y e BoxLayout.X_AXIS para eixo x)
-        this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-        this.setBackground(Color.black);
+            btnLogin.setVisible(true);
+            btnCAD.setFont(fnt);
+            btnCAD.setVisible(true);
+        }//--JButtons
 
-        btnLogin.setFont(fnt);
-        btnLogin.setForeground(Color.WHITE);
-        btnLogin.setBackground(Color.black);
-        btnCAD.setForeground(Color.WHITE);
-        btnCAD.setBackground(Color.black);
-        btnLogin.setVisible(true);
-        btnCAD.setFont(fnt);
-        btnCAD.setVisible(true);
-        btnCAD.addMouseListener(new TratadorMouseClick(Click,Hov,null,null,null,false,"TelaCad"));
-        btnLogin.addMouseListener(new TratadorMouseClick(Click,Hov,null,null,null,false,"TelaLog"));
+        {//--
+            btnCAD.addMouseListener(new TratadorMouseClick(Click, Hov, null, null, null, false, false, "TelaCad"));
+            btnLogin.addMouseListener(new TratadorMouseClick(Click, Hov, null, null, null, false, false, "TelaLog"));
+        }//--Listeners
 
         if(clip != null)
         {
             clip.setFramePosition(0);
             clip.start();
+            clip.loop((int)clip.getMicrosecondLength());
         }
-
-        contTxt.add(title);
 
         this.add(contTxt);
         this.add(txtLog);

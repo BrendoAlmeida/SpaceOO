@@ -1,16 +1,19 @@
 package org.example.model;
 
 import org.example.config.db.connection;
+import org.example.controller.Admin;
 import org.example.controller.Usuario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class modelUsuario {
     private static final Connection con = connection.con;
+    public static int numUsers = 0;
 
     public static Usuario login(Usuario usuario) {
         String sql = "SELECT * FROM usuario where nome = ? and senha = ?";
@@ -19,6 +22,9 @@ public class modelUsuario {
             stmt = con.prepareStatement(sql);
             stmt.setString(1, usuario.getNome());
             stmt.setString(2, usuario.getSenha());
+
+            System.out.println(usuario.getSenha());
+
             ResultSet rs = stmt.executeQuery();
             if (!rs.next()) {
                 usuario = null;
@@ -36,7 +42,8 @@ public class modelUsuario {
             stmt = con.prepareStatement(sql);
             stmt.setString(1, usuario.getNome());
             stmt.setString(2, usuario.getSenha());
-            stmt.execute();
+            //stmt.setInt(3,usuario.getId());
+            stmt.executeUpdate();
 
             return true;
         } catch (Exception e) {
@@ -51,7 +58,9 @@ public class modelUsuario {
         try {
             stmt = con.prepareStatement(sql);
             stmt.setInt(1, usuario.getId());
-            stmt.execute();
+            int lA = stmt.executeUpdate();
+
+            System.out.println("LINHAS AFETADAS "+lA);
 
             return true;
         } catch (Exception e) {
@@ -78,6 +87,23 @@ public class modelUsuario {
         }
     }
 
+    public static boolean deletarPorNome(Usuario usuario) {
+        String sql = "DELETE FROM usuario WHERE nome = ?";
+        PreparedStatement stmt;
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, usuario.getNome());
+            int lA = stmt.executeUpdate();
+
+            System.out.println("LINHAS AFETADAS "+lA);
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public static List<Usuario> getUsuarios()
     {
         String sql = "SELECT * FROM usuario";
@@ -88,12 +114,8 @@ public class modelUsuario {
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
-                Usuario user = new Usuario();
-                user.setId(rs.getInt("id"));
-                user.setNome(rs.getString("nome"));
-                user.setSenha(rs.getString("senha"));
-                user.setScore(rs.getInt("Score"));
-
+                //Usuario user = new Usuario(rs.getString("nome"),rs.getInt("score"),rs.getInt("id"));
+                Usuario user = new Usuario(rs.getString("nome"),rs.getInt("score"));
                 Usuarios.add(user);
             }
         }
@@ -104,5 +126,37 @@ public class modelUsuario {
             Usuarios = null;
         }
         return Usuarios;
+    }
+
+    public static boolean deletarTodos()
+    {
+        String sql = "DELETE FROM usuario";
+        PreparedStatement stmt;
+        try{
+            stmt = con.prepareStatement(sql);
+            int linhasAf = stmt.executeUpdate();
+
+            return linhasAf > 0;
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean JaExiste(Usuario usuario)
+    {//Não permite que exista mais de um usuário com o mesmo nome cadastrado no sistema
+        String sql = "SELECT * FROM usuario where nome = ?";
+        try(PreparedStatement stmt = con.prepareStatement(sql))
+        {
+            stmt.setString(1,usuario.getNome());
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();//retorna se existe pelo menos um usuario com o mesmo nome
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

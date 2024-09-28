@@ -11,11 +11,14 @@ public class Usuario {
     public Usuario(String nome, String senha) {
         this.nome = nome;
         this.senha = senha;
+
     }
 
-    public Usuario()
+    public Usuario(String nome, int Score)
     {
-
+        this.nome = nome;
+        this.Score = Score;
+        //this.id = Id;
     }
 
     public boolean login(){
@@ -51,6 +54,10 @@ public class Usuario {
         modelUsuario.atualizar(this);
     }
 
+    public void setSenhaLocal(String senha) {
+        this.senha = senha;
+    }
+
     public int getScore() {
         return Score;
     }
@@ -66,11 +73,23 @@ public class Usuario {
 
     public void setId(int id) {
         this.id = id;
+        modelUsuario.atualizar(this);
     }
 
     @Override
     public String toString()
     {
-        return "Nome: "+this.getNome()+"                              Score:"+ this.getScore();
+        return "Nome: "+this.getNome()+format()+"Score:"+ this.getScore();
     }
+     private String format()
+     {
+         int lNome = this.getNome().length() + 6;
+         int sSize = (this.getScore()+"").length()+6;
+         String res = "";
+
+         for(int i=0; i<75- lNome - sSize;i++)
+             res= res+" ";
+
+         return res;
+     }
 }

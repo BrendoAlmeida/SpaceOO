@@ -29,9 +29,10 @@ public class CarregadorImagem
         URL imgURL = CarregadorImagem.class.getClassLoader().getResource(arq);
         if(imgURL == null)
         {
-
             System.out.println("Imagem não encontrada");
-            return null;
+            URL templateURL = CarregadorImagem.class.getClassLoader().getResource("img/template.png");
+            assert  templateURL != null;
+            return new ImageIcon(templateURL);
         }
         else
         {
