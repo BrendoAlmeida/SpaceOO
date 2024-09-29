@@ -7,18 +7,17 @@ public class Usuario {
     private String nome;
     private String senha;
     private int Score;
+    private boolean isAdmin;
 
     public Usuario(String nome, String senha) {
         this.nome = nome;
         this.senha = senha;
-
     }
 
     public Usuario(String nome, int Score)
     {
         this.nome = nome;
         this.Score = Score;
-        //this.id = Id;
     }
 
     public boolean login(){
@@ -49,10 +48,21 @@ public class Usuario {
         modelUsuario.atualizar(this);
     }
 
+    //
+    public void setIsAdmin()
+    {
+        this.isAdmin = true;
+        modelUsuario.updateIsAdm(this);
+    }
+    public boolean getIsAdmin()
+    {
+        return this.isAdmin;
+    }
     public void setSenha(String senha) {
         this.senha = senha;
         modelUsuario.atualizar(this);
     }
+    //
 
     public void setSenhaLocal(String senha) {
         this.senha = senha;
@@ -79,7 +89,7 @@ public class Usuario {
     @Override
     public String toString()
     {
-        return "Nome: "+this.getNome()+format()+"Score:"+ this.getScore();
+        return "Nome: "+this.getNome()+format()+"Score:"+ modelUsuario.getScrBD(this);
     }
      private String format()
      {

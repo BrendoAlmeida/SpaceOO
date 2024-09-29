@@ -1,19 +1,17 @@
 package org.example.model;
 
 import org.example.config.db.connection;
-import org.example.controller.Admin;
 import org.example.controller.Usuario;
 
+import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class modelUsuario {
+public class modelUsuario  {
     private static final Connection con = connection.con;
-    public static int numUsers = 0;
 
     public static Usuario login(Usuario usuario) {
         String sql = "SELECT * FROM usuario where nome = ? and senha = ?";
@@ -23,7 +21,7 @@ public class modelUsuario {
             stmt.setString(1, usuario.getNome());
             stmt.setString(2, usuario.getSenha());
 
-            System.out.println(usuario.getSenha());
+
 
             ResultSet rs = stmt.executeQuery();
             if (!rs.next()) {
@@ -42,7 +40,6 @@ public class modelUsuario {
             stmt = con.prepareStatement(sql);
             stmt.setString(1, usuario.getNome());
             stmt.setString(2, usuario.getSenha());
-            //stmt.setInt(3,usuario.getId());
             stmt.executeUpdate();
 
             return true;
@@ -60,7 +57,6 @@ public class modelUsuario {
             stmt.setInt(1, usuario.getId());
             int lA = stmt.executeUpdate();
 
-            System.out.println("LINHAS AFETADAS "+lA);
 
             return true;
         } catch (Exception e) {
@@ -70,14 +66,15 @@ public class modelUsuario {
     }
 
     public static boolean atualizar(Usuario usuario) {
-        String sql = "UPDATE usuario SET nome = ?, senha = ?, score = ? WHERE id = ?";
+        String sql = "UPDATE usuario SET nome = ?, senha = ?, score = ?, isAdmin = ? WHERE id = ?";
         PreparedStatement stmt;
         try {
             stmt = con.prepareStatement(sql);
             stmt.setString(1, usuario.getNome());
             stmt.setString(2, usuario.getSenha());
             stmt.setInt(3, usuario.getScore());
-            stmt.setInt(4, usuario.getId());
+            stmt.setBoolean(4, usuario.getIsAdmin());
+            stmt.setInt(5, usuario.getId());
             stmt.execute();
 
             return true;
@@ -95,13 +92,89 @@ public class modelUsuario {
             stmt.setString(1, usuario.getNome());
             int lA = stmt.executeUpdate();
 
-            System.out.println("LINHAS AFETADAS "+lA);
 
             return true;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public static void updateScore(Usuario usuario)
+    {
+        String sql = "UPDATE usuario SET score = ? WHERE nome = ?";
+        PreparedStatement stmt;
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, usuario.getScore());
+            stmt.setString(2, usuario.getNome());
+            stmt.execute();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public static int getScrBD(Usuario usuario)
+    {
+        String sql = "SELECT * FROM usuario WHERE nome = ?";
+        int res;
+        try(PreparedStatement stmt = con.prepareStatement(sql))
+        {
+            stmt.setString(1,usuario.getNome());
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next())
+                res = rs.getInt("score");
+            else
+            {
+                res = -2;
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            res= -1;
+        }
+        return res;
+    }
+    public static void updateIsAdm(Usuario usuario)
+    {
+        String sql = "UPDATE usuario SET isAdmin = ? WHERE nome = ?";
+        PreparedStatement stmt;
+        try {
+            stmt = con.prepareStatement(sql);
+            stmt.setBoolean(1, usuario.getIsAdmin());
+            stmt.setString(2, usuario.getNome());
+            stmt.execute();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static boolean getIsAdm(Usuario usuario)
+    {
+        String sql = "SELECT * FROM usuario WHERE nome = ?";
+        boolean res;
+        try(PreparedStatement stmt = con.prepareStatement(sql))
+        {
+            stmt.setString(1,usuario.getNome());
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next())
+                res = rs.getBoolean("isAdmin");
+            else
+            {
+                res = false;
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            res= false;
+        }
+
+        return res;
     }
 
     public static List<Usuario> getUsuarios()
@@ -114,7 +187,6 @@ public class modelUsuario {
             ResultSet rs = stmt.executeQuery();
             while(rs.next())
             {
-                //Usuario user = new Usuario(rs.getString("nome"),rs.getInt("score"),rs.getInt("id"));
                 Usuario user = new Usuario(rs.getString("nome"),rs.getInt("score"));
                 Usuarios.add(user);
             }

@@ -1,11 +1,10 @@
 package org.example.view;
 
-import org.example.controller.Admin;
+import org.example.controller.Personagem;
+import org.example.model.modelPersonagem;
+import org.example.util.*;
 import org.example.controller.Usuario;
 import org.example.model.modelUsuario;
-import org.example.util.CarregadorFonte;
-import org.example.util.TratadorMouseHover;
-import org.example.util.UsuarioJogando;
 
 import javax.sound.sampled.Clip;
 import javax.swing.*;
@@ -18,15 +17,16 @@ import java.util.List;
 
 public class TelaLog extends JPanel
 {
-    private List<Usuario> ListaUs = modelUsuario.getUsuarios();
-    private DefaultListModel<Usuario> lModel = new DefaultListModel<>();
-    private JList<Usuario> listUsers = new JList<>(lModel);
+    private static List<Usuario> ListaUs = modelUsuario.getUsuarios();
+    private static DefaultListModel<Usuario> lModel = new DefaultListModel<>();
+    private static JList<Usuario> listUsers = new JList<>(lModel);
+
     private final JScrollPane pnUS = new JScrollPane(listUsers);
     private final JLayeredPane Jlp = new JLayeredPane();
     private Usuario usSelected;
     private boolean logAdm;
+    private boolean delAcc;
 
-    private int indexAt;
 
     private final JButton selUsr = new JButton("Entrar");
     private final JButton adm = new JButton("Entrar como Admin");
@@ -34,14 +34,22 @@ public class TelaLog extends JPanel
     private final JButton clear = new JButton("Excluir Todos");
     private final JButton edit = new JButton("Editar");
     private final JButton btnPswrdConf = new JButton("Confirmar");
+    private final JButton btnPswrdEdit = new JButton("Confirmar");
+    private final JButton confEdit = new JButton("Confirmar");
 
     private final JTextField inpPsswrd = new JTextField();
     private final JTextField inpPsswrdLogAdm = new JTextField();
 
+    private final JTextField setVida = new JTextField("Definir vida");
+    private final JTextField setVel = new JTextField("Definir velocidade");
+    private final JTextField setVelAt = new JTextField("Definir vel de ataque");
+
     private final JPanel btnCont = new JPanel();
-    private final JPanel pnSenha = new JPanel();
+    private final JPanel pnPopFlex = new JPanel();
     private final JPanel pnSSubCont= new JPanel();
     private final JPanel pnContLogAdm = new JPanel();
+    private final JPanel pnEdit = new JPanel();
+
 
     private final JLabel txtInfo = new JLabel("Jogadores Cadastrados:");
     private final JLabel txtPswrText = new JLabel("Insira sua senha:");
@@ -53,15 +61,20 @@ public class TelaLog extends JPanel
 
     private final Color CorFundo = new Color(20, 31, 20);
 
-    private void AttLista()
+    public static void AttLista()
     {
         ListaUs = modelUsuario.getUsuarios();
         lModel.clear();
 
         for(Usuario us : ListaUs)
-            lModel.addElement(us);
-    }
+        {
+            if(!ListaUs.isEmpty())
+                listUsers.setCellRenderer(new ListRend());
 
+            lModel.addElement(us);
+        }
+
+    }
     public TelaLog(Clip Click, Clip Hov) {
         AttLista();
         ConfigurarThis();
@@ -99,14 +112,14 @@ public class TelaLog extends JPanel
         errLogin.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 
         //delimita o tamanho do painel
-        pnSenha.setSize(new Dimension(900, 250));
+        pnPopFlex.setSize(new Dimension(900, 250));
         //define os bounds para centralizá-lo na tela
-        pnSenha.setBounds((Jlp.getSize().width - pnSenha.getWidth()) / 2, (Jlp.getSize().height - pnSenha.getHeight()) / 2, 900, 250);
-        pnSenha.setBackground(CorFundo);
-        pnSenha.setLayout(new BoxLayout(pnSenha, BoxLayout.Y_AXIS));
-        pnSenha.add(pnSSubCont);
-        pnSenha.add(errLogin);
-        pnSenha.setVisible(false);
+        pnPopFlex.setBounds((Jlp.getSize().width - pnPopFlex.getWidth()) / 2, (Jlp.getSize().height - pnPopFlex.getHeight()) / 2, 900, 250);
+        pnPopFlex.setBackground(CorFundo);
+        pnPopFlex.setLayout(new BoxLayout(pnPopFlex, BoxLayout.Y_AXIS));
+        pnPopFlex.add(pnSSubCont);
+        pnPopFlex.add(errLogin);
+        pnPopFlex.setVisible(false);
 
         pnUS.setSize(new Dimension(1000, 700));
         pnUS.setMinimumSize(new Dimension(900, 700));
@@ -114,7 +127,7 @@ public class TelaLog extends JPanel
         pnUS.setVisible(true);
 
         Jlp.add(pnUS, JLayeredPane.DEFAULT_LAYER);
-        Jlp.add(pnSenha, JLayeredPane.PALETTE_LAYER);
+        Jlp.add(pnPopFlex, JLayeredPane.PALETTE_LAYER);
         Jlp.setVisible(true);
 
         btnCont.setSize(new Dimension(1000, 800));
@@ -127,6 +140,16 @@ public class TelaLog extends JPanel
         btnCont.add(adm);
         btnCont.add(clear);
         btnCont.setVisible(true);
+
+        pnEdit.setPreferredSize(new Dimension(600,600));
+        pnEdit.setLayout(new BoxLayout(pnEdit,BoxLayout.Y_AXIS));
+        pnEdit.setBackground(CorFundo);
+
+        pnEdit.add(setVida);
+        pnEdit.add(setVel);
+        pnEdit.add(setVelAt);
+        pnEdit.add(confEdit);
+        pnEdit.setVisible(true);
     }
     private void ConfigurarJLabels()
     {
@@ -150,7 +173,7 @@ public class TelaLog extends JPanel
 
         errLogin.setForeground(Color.white);
         errLogin.setPreferredSize(new Dimension(150, 50));
-        errLogin.setFont(fnt2);
+        errLogin.setFont(fnt);
         errLogin.setVisible(false);
         errLogin.setAlignmentX(Component.CENTER_ALIGNMENT);
     }
@@ -190,20 +213,53 @@ public class TelaLog extends JPanel
         btnPswrdConf.setMaximumSize(new Dimension(250, 75));
         btnPswrdConf.setForeground(Color.white);
         btnPswrdConf.setFont(fnt);
-        btnPswrdConf.setMargin(pnSenha.getInsets());
+        btnPswrdConf.setMargin(pnPopFlex.getInsets());
         btnPswrdConf.setVisible(true);
 
+        btnPswrdEdit.setBackground(Color.BLACK);
+        btnPswrdEdit.setMaximumSize(new Dimension(250, 75));
+        btnPswrdEdit.setForeground(Color.white);
+        btnPswrdEdit.setFont(fnt);
+        btnPswrdEdit.setMargin(pnPopFlex.getInsets());
+        btnPswrdEdit.setVisible(true);
+
         inpPsswrd.setMaximumSize(new Dimension(800, 75));
-        inpPsswrd.setMargin(pnSenha.getInsets());
+        inpPsswrd.setMargin(pnPopFlex.getInsets());
         inpPsswrd.setBackground(CorFundo);
         inpPsswrd.setForeground(Color.white);
         inpPsswrd.setFont(fnt);
 
-        inpPsswrdLogAdm.setMaximumSize(new Dimension(800, 75));
-        inpPsswrdLogAdm.setMargin(pnSenha.getInsets());
+        inpPsswrdLogAdm.setMaximumSize(new Dimension(500, 75));
+        inpPsswrdLogAdm.setMargin(pnPopFlex.getInsets());
         inpPsswrdLogAdm.setBackground(CorFundo);
         inpPsswrdLogAdm.setForeground(Color.white);
         inpPsswrdLogAdm.setFont(fnt);
+
+        setVida.setMaximumSize(new Dimension(600, 75));
+        setVida.setMargin(pnPopFlex.getInsets());
+        setVida.setBackground(CorFundo);
+        setVida.setForeground(Color.white);
+        setVida.setFont(fnt);
+
+        setVel.setMaximumSize(new Dimension(600, 75));
+        setVel.setMargin(pnPopFlex.getInsets());
+        setVel.setBackground(CorFundo);
+        setVel.setForeground(Color.white);
+        setVel.setFont(fnt);
+
+        setVelAt.setMaximumSize(new Dimension(600, 75));
+        setVelAt.setMargin(pnPopFlex.getInsets());
+        setVelAt.setBackground(CorFundo);
+        setVelAt.setForeground(Color.white);
+        setVelAt.setFont(fnt);
+
+        confEdit.setBackground(Color.BLACK);
+        confEdit.setMaximumSize(new Dimension(250, 75));
+        confEdit.setForeground(Color.white);
+        confEdit.setFont(fnt);
+        confEdit.setMargin(pnPopFlex.getInsets());
+        confEdit.setVisible(true);
+
     }
     private void ConfigurarListenersAc(Clip Click, Clip Hov)
     {
@@ -252,10 +308,10 @@ public class TelaLog extends JPanel
         listUsers.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                pnSenha.setVisible(false);
+                pnPopFlex.setVisible(false);
             }
         });
-        pnSenha.addFocusListener(new FocusListener() {
+        pnPopFlex.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
 
@@ -263,13 +319,13 @@ public class TelaLog extends JPanel
 
             @Override
             public void focusLost(FocusEvent e) {
-                pnSenha.setVisible(false);
+                //pnSenha.setVisible(false);
             }
         });
         selUsr.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                pnSenha.setVisible(true);
+                pnPopFlex.setVisible(true);
                 btnPswrdConf.setVisible(true);
                 inpPsswrd.setVisible(true);
             }
@@ -277,109 +333,167 @@ public class TelaLog extends JPanel
         btnPswrdConf.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!logAdm)
-                {
-                    usSelected.setSenhaLocal(inpPsswrd.getText());
-                    if(usSelected!=null)
-                        if(usSelected.login())
-                        {
-                            UsuarioJogando.setUserJog(usSelected);
-                            FramePrincipal.CarregarPag("SelPerso");
-                        }
-                        else
-                        {
-                            errLogin.setText("Senha incorreta");
-                            errLogin.setVisible(true);
-                        }
-                    else
-                    {
-                        errLogin.setText("Selecione um usuário na lista");
-                        errLogin.setVisible(true);
-                    }
-                }
-                else
-                {
-                    if(inpPsswrd.getText().equals(Admin.SENHA))
-                    {
-                        Admin admSelected = new Admin(usSelected);
-                        usSelected.setSenhaLocal(inpPsswrdLogAdm.getText());
-
-                        if(usSelected.login())
-                        {
-                            admSelected.setSenha(inpPsswrdLogAdm.getText());
-                            admSelected.cadastrar();
-
-                            modelUsuario.deletarPorNome(usSelected);
-                            AttLista();
-                        }
-                        else
-                            errLogin.setText("Senha do usuário incorreta");
-
-                        errLogin.setText("Usuario recadastrado como administrador");
-                        errLogin.setVisible(true);
-                        btnPswrdConf.setVisible(false);
-                        inpPsswrd.setVisible(false);
-
-                        revalidate();
-                        repaint();
-                    }
-                    else
-                    {
-                        errLogin.setText(errLogin.getText()+"Senha do admin incorreta");
-                        errLogin.setVisible(true);
-                    }
-                }
-
+                AcBtnVef(logAdm,delAcc);
             }
         });
         del.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e)
+            {
+                pnPopFlex.removeAll();
+                pnPopFlex.add(pnSSubCont);
+                pnPopFlex.add(errLogin);
 
-                boolean deltd = modelUsuario.deletarPorNome(usSelected);
-                if (deltd) {
-                    AttLista();
-                    revalidate();
-                    repaint();
-                } else
-                    System.out.println("Falha ao deletar usuário");
+                txtPswrText.setVisible(true);
+                inpPsswrd.setVisible(true);
+                btnPswrdConf.setVisible(true);
+                errLogin.setText("");
+
+                pnPopFlex.setVisible(true);
+                txtPswrText.setText("Insira a senha do jogador selecionado:");
+
+                delAcc = true;
+                logAdm = false;
             }
         });
         clear.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                modelUsuario.deletarTodos();
-                AttLista();
-                revalidate();
-                repaint();
+                if(modelUsuario.getIsAdm(usSelected))
+                {
+                    modelUsuario.deletarTodos();
+                    AttLista();
+                    revalidate();
+                    repaint();
 
-                modelUsuario.numUsers = 0;
+                    delAcc = false;
+                    logAdm = false;
+                }
+                else
+                {
+                    pnPopFlex.setVisible(true);
+                    pnPopFlex.removeAll();
+
+                    errLogin.setText("Usuario selecionado da lista precisa ser administrador");
+                    pnPopFlex.add(errLogin);
+                    errLogin.setVisible(true);
+
+                }
             }
         });
         adm.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                pnSenha.removeAll();
-                pnSenha.add(pnContLogAdm);
-                pnSenha.add(pnSSubCont);
-                pnSenha.add(errLogin);
-                pnSenha.setVisible(true);
+                pnPopFlex.removeAll();
+                pnPopFlex.add(pnContLogAdm);
+                pnPopFlex.add(pnSSubCont);
+                pnPopFlex.add(errLogin);
+                pnPopFlex.setVisible(true);
 
                 logAdm = true;
+                delAcc = false;
+
                 txtPswrText.setText("Insira a senha de administrador:");
+                errLogin.setText("");
                 errLogin.setVisible(true);
+            }
+        });
+        edit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(modelUsuario.getIsAdm(usSelected))
+                {
+                    pnSSubCont.remove(btnPswrdConf);
+                    pnSSubCont.add(btnPswrdEdit);
+                    pnPopFlex.add(pnSSubCont);
+                    pnPopFlex.add(errLogin);
+                    pnPopFlex.setVisible(true);
+                }
+                else
+                {
+                    pnPopFlex.setVisible(true);
+                    pnPopFlex.removeAll();
+
+                    errLogin.setText("Usuario selecionado da lista precisa ser administrador");
+                    pnPopFlex.add(errLogin);
+                    errLogin.setVisible(true);
+                }
+            }
+        });
+
+        btnPswrdEdit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                usSelected.setSenhaLocal(inpPsswrd.getText());
+                if(usSelected.login())
+                {
+                    pnPopFlex.removeAll();
+                    pnPopFlex.add(pnEdit);
+                    pnPopFlex.setVisible(true);
+
+                    revalidate();
+                    repaint();
+                }
+            }
+        });
+
+        setVida.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                setVida.setText("");
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+
+            }
+        });
+        setVel.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                setVel.setText("");
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+
+            }
+        });
+        setVelAt.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                setVelAt.setText("");
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+
+            }
+        });
+
+        confEdit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                Personagem p = modelPersonagem.getPersonagem(1);
+                EditarPersonagem(p);
+
+                PersonagemSel.setOBPsel(p);
+                FramePrincipal.IniciaFase(1, p);
             }
         });
     }
     private void ConfigurarListenersHov(Clip Click, Clip Hov)
     {
-        btnPswrdConf.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
-        del.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
-        edit.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
-        adm.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
-        selUsr.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
-        clear.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
-        inpPsswrd.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
+        btnPswrdConf.addMouseListener(new TratadorMouseHover(Click, Hov));
+        del.addMouseListener(new TratadorMouseHover(Click, Hov));
+        edit.addMouseListener(new TratadorMouseHover(Click, Hov));
+        adm.addMouseListener(new TratadorMouseHover(Click, Hov));
+        selUsr.addMouseListener(new TratadorMouseHover(Click, Hov));
+        clear.addMouseListener(new TratadorMouseHover(Click, Hov));
+        inpPsswrd.addMouseListener(new TratadorMouseHover(Click, Hov));
+        confEdit.addMouseListener(new TratadorMouseHover(Click,Hov));
     }
 
     private void ConfigurarThis()
@@ -395,5 +509,96 @@ public class TelaLog extends JPanel
         listUsers.setForeground(Color.white);
         listUsers.setFont(fnt);
         listUsers.setVisible(true);
+    }
+
+    private void AcBtnVef(boolean logAdm, boolean delAcc)
+    {
+        if(!logAdm)
+        {
+            usSelected.setSenhaLocal(inpPsswrd.getText());
+            if(usSelected!=null)
+            {
+                if(usSelected.login())
+                {
+                    if(delAcc)
+                    {//Se ele quer deletar a conta selecionada
+                        boolean deltd = modelUsuario.deletarPorNome(usSelected);
+                        if (deltd)
+                        {
+                            AttLista();
+                            revalidate();
+                            repaint();
+                        } else
+                            System.out.println("Falha ao deletar usuário");
+
+                        delAcc = false;
+
+                        pnPopFlex.setVisible(false);
+                        inpPsswrd.setText("");
+                        inpPsswrdLogAdm.setText("");
+                    }
+                    else
+                    {
+                        UsuarioJogando.setUserJog(usSelected);
+                        FramePrincipal.CarregarPag("SelPerso");
+                    }
+                }//se o login deu erro
+                else
+                {
+                    errLogin.setText("Senha incorreta");
+                    errLogin.setVisible(true);
+                }
+            }
+            else
+            {
+                errLogin.setText("Selecione um usuário na lista");
+                errLogin.setVisible(true);
+            }
+        }
+        else
+        {
+            if(inpPsswrd.getText().equals(Admin.getSenha()))
+            {
+                usSelected.setSenhaLocal(inpPsswrdLogAdm.getText());
+
+                if(usSelected.login())
+                {
+                    usSelected.setIsAdmin();
+                    AttLista();
+
+                    pnPopFlex.setVisible(true);
+                    inpPsswrd.setText("");
+                    inpPsswrdLogAdm.setText("");
+
+
+                    pnPopFlex.removeAll();
+                    pnPopFlex.add(errLogin);
+
+                    errLogin.setText("Usuário selecionado da lista agora é admin");
+                    errLogin.setVisible(true);
+
+                    btnPswrdConf.setVisible(false);
+                    inpPsswrd.setVisible(false);
+                }
+                else
+                {
+                    errLogin.setText("Senha do usuário incorreta");
+                }
+                revalidate();
+                repaint();
+            }
+            else
+            {
+                errLogin.setText(errLogin.getText()+"Senha do admin incorreta");
+                errLogin.setVisible(true);
+            }
+        }
+    }
+
+    private void EditarPersonagem(Personagem perso)
+    {
+        perso.setVida(Integer.parseInt(setVida.getText()));
+        perso.setVelocidade(Integer.parseInt(setVel.getText()));
+        perso.setDelayAtirar(Integer.parseInt(setVelAt.getText()));
     }
 }

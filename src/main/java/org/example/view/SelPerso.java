@@ -1,14 +1,8 @@
 package org.example.view;
-import org.example.controller.Personagem;
-import org.example.util.CarregadorFonte;
-import org.example.util.CarregadorImagem;
-import org.example.util.TratadorMouseClick;
-import org.example.util.TratadorMouseHover;
+import org.example.util.*;
 
 import javax.sound.sampled.Clip;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,6 +37,7 @@ public class SelPerso extends JPanel
         ConfigurarListenersAc(Click,Hov);
         ConfigurarThis();
     }
+
     private void ConfigurarJpanels()
     {
         contP1.add(SelP1);
@@ -105,7 +100,9 @@ public class SelPerso extends JPanel
             public void actionPerformed(ActionEvent e) {
                 if (estP2.isVisible())
                     estP2.setVisible(false);
+
                 estP1.setVisible(true);
+                PersonagemSel.setPsel(1);
             }
         });
         SelP2.addActionListener(new ActionListener() {
@@ -115,10 +112,11 @@ public class SelPerso extends JPanel
                     estP1.setVisible(false);
 
                 estP2.setVisible(true);
+                PersonagemSel.setPsel(2);
             }
         });
-        conf.addMouseListener(new TratadorMouseClick(Click, Hov, null, null, null, false, true, "Fase1"));
-        voltar.addMouseListener(new TratadorMouseClick(Click, Hov, null, null, null, false, false, "TelaCad"));
+        conf.addMouseListener(new TratadorMouseClick(Click, Hov, false, true, "Fase1"));
+        voltar.addMouseListener(new TratadorMouseClick(Click, Hov,false, false, "TelaCad"));
     }
 
     private void ConfigurarThis()

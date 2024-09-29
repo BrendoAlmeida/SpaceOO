@@ -1,9 +1,11 @@
 package org.example.view;
+import org.example.controller.Personagem;
 import org.example.util.CarregadorAudio;
 
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLOutput;
 
 public class FramePrincipal extends JFrame
 {
@@ -40,8 +42,6 @@ public class FramePrincipal extends JFrame
                 break;
             }
         }
-
-        // Atualiza o layout
         pnPrincipal.revalidate();
         pnPrincipal.repaint();
     }
@@ -51,16 +51,80 @@ public class FramePrincipal extends JFrame
         pnPrincipal.add(pag,StrPag);
     }
 
+    public static void SetCompName(Component comp,String str)
+    {
+        comp.setName(str);
+    }
+
+    public static void IniciaFase(int fase, int p)
+    {
+        if(fase == 1)
+        {
+            Fase1 f = new Fase1(p);
+            f.setName("Fase1");
+            AddPag(f,"Fase1");
+            Fase1.MudarMusica();
+            CarregarPag("Fase1");
+        }
+        if(fase == 2)
+        {
+            Fase1 f = new Fase1(p);
+            f.setName("Fase2");
+            AddPag(f,"Fase2");
+            CarregarPag("Fase2");
+        }
+        if(fase == 3)
+        {
+            Fase1 f = new Fase1(p);
+            f.setName("Fase3");
+            AddPag(f,"Fase3");
+            CarregarPag("Fase3");
+        }
+
+    }
+    public static void IniciaFase(int fase, Personagem p)
+    {
+        if(fase == 1)
+        {
+            Fase1 f = new Fase1(p);
+            f.setName("Fase1");
+            AddPag(f,"Fase1");
+            Fase1.MudarMusica();
+            CarregarPag("Fase1");
+        }
+        if(fase == 2)
+        {
+            Fase1 f = new Fase1(p);
+            f.setName("Fase2");
+            AddPag(f,"Fase2");
+            CarregarPag("Fase2");
+        }
+        if(fase == 3)
+        {
+            Fase1 f = new Fase1(p);
+            f.setName("Fase3");
+            AddPag(f,"Fase3");
+            CarregarPag("Fase3");
+        }
+    }
+
     public FramePrincipal()
     {
+        SetCompName(tlLC,"TelaSelLoginCad");
+        SetCompName(tlLog,"TelaLog");
+        SetCompName(tlCad,"TelaCad");
+        SetCompName(SelP,"SelPerso");
+
         this.setTitle("Space SwingInvaders");
         pnPrincipal.add(tlLC,"TelaSelLoginCad");
         pnPrincipal.add(tlLog,"TelaLog");
         pnPrincipal.add(tlCad,"TelaCad");
         pnPrincipal.add(SelP,"SelPerso");
+
         //pnPrincipal.add(F1,"Fase1");
 
         CdLt.show(pnPrincipal,"TelaSelLoginCad");
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(pnPrincipal);
         this.pack();

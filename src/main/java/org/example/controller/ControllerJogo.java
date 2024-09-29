@@ -1,11 +1,10 @@
 package org.example.controller;
 
-import org.example.util.CarregadorAudio;
-import org.example.util.CarregadorFonte;
-import org.example.util.CarregadorImagem;
-import org.example.util.UsuarioJogando;
+import org.example.model.modelUsuario;
+import org.example.util.*;
 import org.example.view.Fase1;
 import org.example.view.FramePrincipal;
+import org.example.view.TelaLog;
 import org.example.view.TelaMorteVitoria;
 
 import javax.sound.sampled.Clip;
@@ -42,6 +41,7 @@ public class ControllerJogo{
     private double multScore = 100;
 
     private JPanel PanelVida = new JPanel();
+    private final int faseAt;
 
     private Clip somMorte = CarregadorAudio.CarregarAudio("audio/SomDeMorte.wav");
     private Clip SfxTiro = CarregadorAudio.CarregarAudio("audio/Tiro1.wav");
@@ -60,6 +60,24 @@ public class ControllerJogo{
         else
             SfxTiro.start();
     });
+
+    private void PararAudios()
+    {
+        somMorte.stop();
+        SfxTiro.stop();
+        SfxTiroPersegue.stop();
+        SfxParedeQuebra.stop();
+        DanoSfx.stop();
+        SfxTiroJog.stop();
+
+        somMorte.close();
+        SfxTiro.close();
+        SfxTiroPersegue.close();
+        SfxParedeQuebra.close();
+        DanoSfx.close();
+        SfxTiroJog.close();
+    }
+
     private Timer delaySomTiroPersegue = new Timer(250, e->{
         if(SfxTiroPersegue.isActive())
         {
@@ -177,10 +195,13 @@ public class ControllerJogo{
         });
     }
 
-    public ControllerJogo(JPanel mainPanel, Dimension dimencao, int fatorDimecao, Inimigo inimigo, Personagem jogador, Parede parede, int qtdFileiras) {
+    public ControllerJogo(JPanel mainPanel, Dimension dimencao, int fatorDimecao, Inimigo inimigo, Personagem jogador, Parede parede, int qtdFileiras,int fase) {
         this.dimencao = dimencao;
         this.fatorDimecao = fatorDimecao;
         this.mainPanel = mainPanel;
+        //modifica o construtor para verificar qual é a fase
+        //para fazer as funções de ganha e perde serem universais
+        this.faseAt = fase;
 
         this.PanelVida.setBackground(Color.black);
 
@@ -395,7 +416,8 @@ public class ControllerJogo{
         }
 
         jogador.tomarDano(tiro.getDano());
-        if(jogador.getVida() == 0) perde();
+        if(jogador.getVida() == 0) perde(faseAt);
+
 
         return true;
     }
@@ -453,12 +475,54 @@ public class ControllerJogo{
         return inimigos;
     }
 
-    public void perde(){
+    public void perde(int faseAt)
+    {
         updateTimer.stop();
         renderTimer.stop();
 
-        FramePrincipal.RemoverPag("Fase1");
+        UsuarioJogando.getUserJog().setScore(score);
+        modelUsuario.updateScore(UsuarioJogando.getUserJog());
+
+        if(faseAt == 1)
+            FramePrincipal.RemoverPag("Fase1");
+        else if(faseAt == 2)
+            FramePrincipal.RemoverPag("Fase2");
+        else if(faseAt == 3)
+            FramePrincipal.RemoverPag("Fase3");
+
         FramePrincipal.AddPag(new TelaMorteVitoria(FramePrincipal.Click,FramePrincipal.Hov,false, UsuarioJogando.getUserJog()),"TelaMorteVitoria");
         FramePrincipal.CarregarPag("TelaMorteVitoria");
+
+        PararAudios();
+        //Parar a execução da fase em segundo plano
+        throw new FimFaseException();
+    }
+
+    public void ganha(int fase)
+    {//chamada quando inimigos.isEmpty()
+
+        TelaLog.AttLista();
+        UsuarioJogando.getUserJog().setScore(score);
+        modelUsuario.updateScore(UsuarioJogando.getUserJog());
+
+        if(faseAt == 1)
+            FramePrincipal.RemoverPag("Fase1");
+        else if(faseAt == 2)
+            FramePrincipal.RemoverPag("Fase2");
+        else if(faseAt == 3)
+            FramePrincipal.RemoverPag("Fase3");
+
+
+        if(fase < 3)
+            FramePrincipal.IniciaFase(fase+1,jogador.getId());
+        else
+        {
+            FramePrincipal.AddPag(new TelaMorteVitoria(FramePrincipal.Click,FramePrincipal.Hov,false, UsuarioJogando.getUserJog()),"TelaMorteVitoria");
+            FramePrincipal.CarregarPag("TelaMorteVitoria");
+        }
+
+        PararAudios();
+        //Parar a execução da fase em segundo plano
+        throw new FimFaseException();
     }
 }
