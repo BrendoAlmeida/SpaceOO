@@ -18,7 +18,7 @@ public class modelPersonagem {
     private static final Connection con = connection.con;
 
     public static List<Personagem> getPersonagens(){
-        String sql = "SELECT Jogador.sprite AS sprite Jogador.id AS id, Jogador.tamanhoX AS jogadorTamanhoX, Jogador.tamanhoY AS jogadorTamanhoY, Jogador.vida, Jogador.velocidade, Jogador.delayTiro, Tiros.tamanhoX AS tiroTamanhoX, Tiros.tamanhoY AS tiroTamanhoY, Tiros.velocidade AS tiroVelocidade, Tiros.dano AS tiroDano, Tiros.direcaoX AS tiroDirecaoX, Tiros.direcaoY AS tiroDirecaoY, Tiros.tiroInimigo AS tiroInimigo, Tiros.isPersegue FROM Jogador INNER JOIN Tiros ON Jogador.idTiro = Tiros.id";
+        String sql = "SELECT Jogador.sprite AS sprite, Jogador.id AS id, Jogador.tamanhoX AS jogadorTamanhoX, Jogador.tamanhoY AS jogadorTamanhoY, Jogador.vida, Jogador.velocidade, Jogador.delayTiro, Tiros.tamanhoX AS tiroTamanhoX, Tiros.tamanhoY AS tiroTamanhoY, Tiros.velocidade AS tiroVelocidade, Tiros.dano AS tiroDano, Tiros.direcaoX AS tiroDirecaoX, Tiros.direcaoY AS tiroDirecaoY, Tiros.tiroInimigo AS tiroInimigo, Tiros.isPersegue FROM Jogador INNER JOIN Tiros ON Jogador.idTiro = Tiros.id";
         PreparedStatement stmt;
         try {
             stmt = con.prepareStatement(sql);
