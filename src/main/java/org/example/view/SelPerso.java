@@ -1,22 +1,18 @@
 package org.example.view;
-import org.example.util.CarregadorFonte;
-import org.example.util.CarregadorImagem;
-import org.example.util.TratadorMouseClick;
-import org.example.util.TratadorMouseHover;
+import org.example.util.*;
 
 import javax.sound.sampled.Clip;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SelPerso extends JPanel
 {
+
     private final JLabel txtSel = new JLabel("Selecione seu personagem");
-    private final JLabel estP1 = new JLabel("<html>Vida : <br/> Dano: <br/> Velocidade: <br/></html>");
-    private final JLabel estP2 = new JLabel("<html>Vida : <br/> Dano: <br/> Velocidade: <br/></html>");
+    private final JLabel estP1 = new JLabel("<html>Vida :3" +"<br/> Dano:1<br/> Velocidade:1<br/></html>");
+    private final JLabel estP2 = new JLabel("<html>Vida :1 <br/> Dano:2<br/> Velocidade:2<br/></html>");
 
     private final ImageIcon imgP1 = CarregadorImagem.CarregaIcone("img/player1.png",250,250);
     private final ImageIcon imgP2 = CarregadorImagem.CarregaIcone("img/player2.png",250,250);
@@ -31,13 +27,35 @@ public class SelPerso extends JPanel
     private final JButton SelP1 = new JButton(imgP1);
     private final JButton SelP2 = new JButton(imgP2);
     private final JButton conf = new JButton("Selecionar");
+    private final JButton voltar = new JButton("Voltar");
 
-    public SelPerso(Clip Click, Clip Hov)
+    public SelPerso(Clip Click, Clip Hov) {
+        ConfigurarJpanels();
+        ConfigurarJButtons();
+        ConfigurarJLabels();
+        ConfigurarListenersHov(Click,Hov);
+        ConfigurarListenersAc(Click,Hov);
+        ConfigurarThis();
+    }
+
+    private void ConfigurarJpanels()
     {
-        this.setSize(1000,800);
-        this.setBackground(Color.BLACK);
-        this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+        contP1.add(SelP1);
+        contP1.add(estP1);
+        contP1.setLayout(new BoxLayout(contP1, BoxLayout.Y_AXIS));
+        contP1.setBackground(Color.black);
 
+        contP2.add(SelP2);
+        contP2.add(estP2);
+        contP2.setLayout(new BoxLayout(contP2, BoxLayout.Y_AXIS));
+        contP2.setBackground(Color.black);
+
+        contPs.setBackground(Color.black);
+        contPs.setLayout(new BoxLayout(contPs, BoxLayout.LINE_AXIS));
+        contPs.setSize(new Dimension(700, 600));
+    }
+    private void ConfigurarJLabels()
+    {
         txtSel.setFont(fnt.deriveFont(50f));
         txtSel.setForeground(Color.white);
 
@@ -50,31 +68,14 @@ public class SelPerso extends JPanel
         estP2.setBackground(Color.BLACK);
         estP2.setFont(fnt2);
         estP2.setVisible(false);
-
+    }
+    private void ConfigurarJButtons()
+    {
         SelP1.setBackground(Color.BLACK);
-        SelP1.setSize(new Dimension(250,250));
-
-        SelP1.addMouseListener(new TratadorMouseHover(Click,Hov,null,null,null));
-        SelP1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(estP2.isVisible())
-                    estP2.setVisible(false);
-                estP1.setVisible(true);
-            }});
+        SelP1.setSize(new Dimension(250, 250));
 
         SelP2.setBackground(Color.BLACK);
-        SelP2.setSize(new Dimension(250,250));
-        SelP2.addMouseListener(new TratadorMouseHover(Click,Hov,null,null,null));
-        SelP2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(estP1.isVisible())
-                    estP1.setVisible(false);
-
-                estP2.setVisible(true);
-            }
-        });
+        SelP2.setSize(new Dimension(250, 250));
 
         SelP1.setVisible(true);
         SelP2.setVisible(true);
@@ -82,25 +83,49 @@ public class SelPerso extends JPanel
         conf.setForeground(Color.white);
         conf.setBackground(Color.BLACK);
         conf.setFont(fnt2);
-        conf.addMouseListener(new TratadorMouseClick(Click,Hov,null,null,null,false,"fase1"));
 
-        contP1.add(SelP1);
-        contP1.add(estP1);
-        contP1.setLayout(new BoxLayout(contP1,BoxLayout.Y_AXIS));
-        contP1.setBackground(Color.black);
+        voltar.setForeground(Color.white);
+        voltar.setBackground(Color.BLACK);
+        voltar.setFont(fnt2);
+    }
+    private void ConfigurarListenersHov(Clip Click, Clip Hov)
+    {
+        SelP1.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
+        SelP2.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
+    }
+    private void ConfigurarListenersAc(Clip Click, Clip Hov)
+    {
+        SelP1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (estP2.isVisible())
+                    estP2.setVisible(false);
 
-        contP2.add(SelP2);
-        contP2.add(estP2);
-        contP2.setLayout(new BoxLayout(contP2,BoxLayout.Y_AXIS));
-        contP2.setBackground(Color.black);
+                estP1.setVisible(true);
+                PersonagemSel.setPsel(1);
+            }
+        });
+        SelP2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (estP1.isVisible())
+                    estP1.setVisible(false);
 
-        //contPs.add(contP1);
-        //contPs.add(contP2);
-        contPs.setBackground(Color.black);
-        contPs.setLayout(new BoxLayout(contPs,BoxLayout.LINE_AXIS));
-        contPs.setSize(new Dimension(700,600));
+                estP2.setVisible(true);
+                PersonagemSel.setPsel(2);
+            }
+        });
+        conf.addMouseListener(new TratadorMouseClick(Click, Hov, false, true, "Fase1"));
+        voltar.addMouseListener(new TratadorMouseClick(Click, Hov,false, false, "TelaCad"));
+    }
 
+    private void ConfigurarThis()
+    {
+        this.setSize(1000, 800);
+        this.setBackground(Color.BLACK);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+        this.add(voltar);
         this.add(txtSel);
         this.add(contPs);
         this.add(contP1);

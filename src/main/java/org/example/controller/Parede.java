@@ -4,12 +4,12 @@ import java.awt.*;
 
 public class Parede extends Elemento {
     public Parede(int[] pos, Dimension tamanho, int vida) {
-        super(pos, tamanho, "img/player1.png");
+        super(pos, tamanho, "img/Parede1.png");
         startParede(vida);
     }
 
     public Parede(Dimension tamanho, int vida) {
-        super(tamanho, "img/player1.png");
+        super(tamanho, "img/Parede1.png");
         startParede(vida);
     }
 

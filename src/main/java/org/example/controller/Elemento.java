@@ -44,7 +44,7 @@ public abstract class Elemento extends JPanel {
     public int getVida() { return vida; }
 
     public void tomarDano(int dano) {
-        this.vida -= dano; // TODO imunidade apos tomar dano?
+        this.vida -= dano; //TODO imunidade apos tomar dano
     }
 
     public Image getSprite() {

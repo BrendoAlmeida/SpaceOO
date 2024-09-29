@@ -7,7 +7,6 @@ public class Tiro extends Elemento{
     protected int[] direcao;
     protected boolean tiroInimigo = false;
     protected boolean movendo = false;
-
     public Tiro(int[] pos, Dimension tamanho, int velocidade, int dano, int[] direcao, boolean tiroInimigo){
         super(pos, tamanho);
         startTiro(direcao, tiroInimigo, velocidade, dano);
@@ -29,7 +28,7 @@ public class Tiro extends Elemento{
 
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(Color.BLUE);
+        g2d.setColor(Color.WHITE);
         g2d.fillRect(0, 0, tamanho.width, tamanho.height);
     }
 
