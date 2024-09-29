@@ -5,6 +5,7 @@ import org.example.controller.Usuario;
 import org.example.model.modelUsuario;
 import org.example.util.CarregadorFonte;
 import org.example.util.TratadorMouseHover;
+import org.example.util.UsuarioJogando;
 
 import javax.sound.sampled.Clip;
 import javax.swing.*;
@@ -63,64 +64,98 @@ public class TelaLog extends JPanel
 
     public TelaLog(Clip Click, Clip Hov) {
         AttLista();
-        {//--
-            this.setPreferredSize(new Dimension(1000, 800));
-            this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-            this.setBackground(Color.BLACK);
-        }//--this
+        ConfigurarThis();
+        ConfigurarJpanels();
+        ConfigurarJButtons();
+        ConfigurarJList();
+        ConfigurarJLabels();
+        ConfigurarListenersAc(Click, Hov);
+        ConfigurarListenersHov(Click,Hov);
 
-        {//--
-            Jlp.setSize(new Dimension(1000, 700));
+        this.add(btnCont);
+        this.add(txtInfo);
+        this.add(Jlp);
+        this.setVisible(true);
+    }
+    private void ConfigurarJpanels()
+    {
+        Jlp.setSize(new Dimension(1000, 700));
 
-            pnContLogAdm.setBackground(CorFundo);
-            pnContLogAdm.setLayout(new BoxLayout(pnContLogAdm, BoxLayout.X_AXIS));
-            pnContLogAdm.setAlignmentY(Component.CENTER_ALIGNMENT);
-            pnContLogAdm.add(txtPswrTextLogAdm);
-            pnContLogAdm.add(inpPsswrdLogAdm);
-            pnContLogAdm.setVisible(true);
+        pnContLogAdm.setBackground(CorFundo);
+        pnContLogAdm.setLayout(new BoxLayout(pnContLogAdm, BoxLayout.X_AXIS));
+        pnContLogAdm.setAlignmentY(Component.CENTER_ALIGNMENT);
+        pnContLogAdm.add(txtPswrTextLogAdm);
+        pnContLogAdm.add(inpPsswrdLogAdm);
+        pnContLogAdm.setVisible(true);
 
-            pnSSubCont.setBackground(CorFundo);
-            pnSSubCont.setLayout(new BoxLayout(pnSSubCont, BoxLayout.X_AXIS));
-            pnSSubCont.setAlignmentY(Component.CENTER_ALIGNMENT);
-            pnSSubCont.add(txtPswrText);
-            pnSSubCont.add(inpPsswrd);
-            pnSSubCont.add(btnPswrdConf);
-            pnSSubCont.setVisible(true);
+        pnSSubCont.setBackground(CorFundo);
+        pnSSubCont.setLayout(new BoxLayout(pnSSubCont, BoxLayout.X_AXIS));
+        pnSSubCont.setAlignmentY(Component.CENTER_ALIGNMENT);
+        pnSSubCont.add(txtPswrText);
+        pnSSubCont.add(inpPsswrd);
+        pnSSubCont.add(btnPswrdConf);
+        pnSSubCont.setVisible(true);
 
-            errLogin.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+        errLogin.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 
-            //delimita o tamanho do painel
-            pnSenha.setSize(new Dimension(900, 250));
-            //define os bounds para centralizá-lo na tela
-            pnSenha.setBounds((Jlp.getSize().width - pnSenha.getWidth()) / 2, (Jlp.getSize().height - pnSenha.getHeight()) / 2, 900, 250);
-            pnSenha.setBackground(CorFundo);
-            pnSenha.setLayout(new BoxLayout(pnSenha, BoxLayout.Y_AXIS));
-            pnSenha.add(pnSSubCont);
-            pnSenha.add(errLogin);
-            pnSenha.setVisible(false);
+        //delimita o tamanho do painel
+        pnSenha.setSize(new Dimension(900, 250));
+        //define os bounds para centralizá-lo na tela
+        pnSenha.setBounds((Jlp.getSize().width - pnSenha.getWidth()) / 2, (Jlp.getSize().height - pnSenha.getHeight()) / 2, 900, 250);
+        pnSenha.setBackground(CorFundo);
+        pnSenha.setLayout(new BoxLayout(pnSenha, BoxLayout.Y_AXIS));
+        pnSenha.add(pnSSubCont);
+        pnSenha.add(errLogin);
+        pnSenha.setVisible(false);
 
-            pnUS.setSize(new Dimension(1000, 700));
-            pnUS.setMinimumSize(new Dimension(900, 700));
-            pnUS.setBackground(Color.BLACK);
-            pnUS.setVisible(true);
+        pnUS.setSize(new Dimension(1000, 700));
+        pnUS.setMinimumSize(new Dimension(900, 700));
+        pnUS.setBackground(Color.BLACK);
+        pnUS.setVisible(true);
 
-            Jlp.add(pnUS, JLayeredPane.DEFAULT_LAYER);
-            Jlp.add(pnSenha, JLayeredPane.PALETTE_LAYER);
-            Jlp.setVisible(true);
+        Jlp.add(pnUS, JLayeredPane.DEFAULT_LAYER);
+        Jlp.add(pnSenha, JLayeredPane.PALETTE_LAYER);
+        Jlp.setVisible(true);
 
-            btnCont.setSize(new Dimension(1000, 800));
-            btnCont.setLayout(new BoxLayout(btnCont, BoxLayout.X_AXIS));
-            btnCont.setBackground(Color.BLACK);
-            btnCont.setBorder(new EmptyBorder(0, 0, 0, 0));
-            btnCont.add(selUsr);
-            btnCont.add(edit);
-            btnCont.add(del);
-            btnCont.add(adm);
-            btnCont.add(clear);
-            btnCont.setVisible(true);
-        }//--JPanels
+        btnCont.setSize(new Dimension(1000, 800));
+        btnCont.setLayout(new BoxLayout(btnCont, BoxLayout.X_AXIS));
+        btnCont.setBackground(Color.BLACK);
+        btnCont.setBorder(new EmptyBorder(0, 0, 0, 0));
+        btnCont.add(selUsr);
+        btnCont.add(edit);
+        btnCont.add(del);
+        btnCont.add(adm);
+        btnCont.add(clear);
+        btnCont.setVisible(true);
+    }
+    private void ConfigurarJLabels()
+    {
+        txtInfo.setForeground(Color.white);
+        txtInfo.setSize(new Dimension(200, 200));
+        txtInfo.setFont(fnt2);
+        txtInfo.setVisible(true);
+        txtInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        {//
+        txtPswrText.setForeground(Color.white);
+        txtPswrText.setSize(new Dimension(75, 75));
+        txtPswrText.setFont(fnt2);
+        txtPswrText.setVisible(true);
+        txtPswrText.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        txtPswrTextLogAdm.setForeground(Color.white);
+        txtPswrTextLogAdm.setSize(new Dimension(75, 75));
+        txtPswrTextLogAdm.setFont(fnt2);
+        txtPswrTextLogAdm.setVisible(true);
+        txtPswrTextLogAdm.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        errLogin.setForeground(Color.white);
+        errLogin.setPreferredSize(new Dimension(150, 50));
+        errLogin.setFont(fnt2);
+        errLogin.setVisible(false);
+        errLogin.setAlignmentX(Component.CENTER_ALIGNMENT);
+    }
+    private void ConfigurarJButtons()
+    {
         selUsr.setBackground(Color.BLACK);
         selUsr.setSize(new Dimension(250, 200));
         selUsr.setForeground(Color.white);
@@ -169,221 +204,196 @@ public class TelaLog extends JPanel
         inpPsswrdLogAdm.setBackground(CorFundo);
         inpPsswrdLogAdm.setForeground(Color.white);
         inpPsswrdLogAdm.setFont(fnt);
-    }//--JButtons
+    }
+    private void ConfigurarListenersAc(Clip Click, Clip Hov)
+    {
+        listUsers.addMouseListener(new MouseListener() {
+            //listUsers.locationToIndex(e.getPoint()); pega o valor do item de click
+            //na lista
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (Click != null) {
+                    Click.setFramePosition(0);
+                    Click.start();
+                }
 
-        {//--
-            txtInfo.setForeground(Color.white);
-            txtInfo.setSize(new Dimension(200, 200));
-            txtInfo.setFont(fnt2);
-            txtInfo.setVisible(true);
-            txtInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-            txtPswrText.setForeground(Color.white);
-            txtPswrText.setSize(new Dimension(75, 75));
-            txtPswrText.setFont(fnt2);
-            txtPswrText.setVisible(true);
-            txtPswrText.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-            txtPswrTextLogAdm.setForeground(Color.white);
-            txtPswrTextLogAdm.setSize(new Dimension(75, 75));
-            txtPswrTextLogAdm.setFont(fnt2);
-            txtPswrTextLogAdm.setVisible(true);
-            txtPswrTextLogAdm.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-            errLogin.setForeground(Color.white);
-            errLogin.setPreferredSize(new Dimension(150, 50));
-            errLogin.setFont(fnt2);
-            errLogin.setVisible(false);
-            errLogin.setAlignmentX(Component.CENTER_ALIGNMENT);
-        }//--JLabels
-
-        {//--
-            listUsers.setBackground(Color.BLACK);
-            listUsers.setForeground(Color.white);
-            listUsers.setFont(fnt);
-            listUsers.setVisible(true);
-        }//--Jlist
-
-        {//--
-            listUsers.addMouseListener(new MouseListener() {
-                //listUsers.locationToIndex(e.getPoint()); pega o valor do item de click
-                //na lista
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    if (Click != null) {
-                        Click.setFramePosition(0);
-                        Click.start();
+                if (e.getButton() == 1) {
+                    int index = listUsers.locationToIndex(e.getPoint());
+                    if (index >= 0) {
+                        usSelected = listUsers.getModel().getElementAt(index);
                     }
+                }
+            }
 
-                    if (e.getButton() == 1) {
-                        int index = listUsers.locationToIndex(e.getPoint());
-                        if (index >= 0) {
-                            usSelected = listUsers.getModel().getElementAt(index);
-                            System.out.println("index:" + index);
-                            System.out.println("id:" + usSelected.getId());
-                            indexAt = index;
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (Hov != null) {
+                    Hov.setFramePosition(0);
+                    Hov.start();
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (Hov != null)
+                    Hov.stop();
+            }
+        });
+        listUsers.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                pnSenha.setVisible(false);
+            }
+        });
+        pnSenha.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                pnSenha.setVisible(false);
+            }
+        });
+        selUsr.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pnSenha.setVisible(true);
+                btnPswrdConf.setVisible(true);
+                inpPsswrd.setVisible(true);
+            }
+        });
+        btnPswrdConf.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!logAdm)
+                {
+                    usSelected.setSenhaLocal(inpPsswrd.getText());
+                    if(usSelected!=null)
+                        if(usSelected.login())
+                        {
+                            UsuarioJogando.setUserJog(usSelected);
+                            FramePrincipal.CarregarPag("SelPerso");
                         }
-                    }
-                }
-
-                @Override
-                public void mousePressed(MouseEvent e) {
-
-                }
-
-                @Override
-                public void mouseReleased(MouseEvent e) {
-
-                }
-
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                    if (Hov != null) {
-                        Hov.setFramePosition(0);
-                        Hov.start();
-                    }
-                }
-
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    if (Hov != null)
-                        Hov.stop();
-                }
-            });
-            listUsers.addListSelectionListener(new ListSelectionListener() {
-                @Override
-                public void valueChanged(ListSelectionEvent e) {
-                    pnSenha.setVisible(false);
-                }
-            });
-            pnSenha.addFocusListener(new FocusListener() {
-                @Override
-                public void focusGained(FocusEvent e) {
-
-                }
-
-                @Override
-                public void focusLost(FocusEvent e) {
-                    pnSenha.setVisible(false);
-                }
-            });
-            selUsr.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    pnSenha.setVisible(true);
-                    btnPswrdConf.setVisible(true);
-                    inpPsswrd.setVisible(true);
-                }
-            });
-            btnPswrdConf.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if(!logAdm)
-                    {
-                        usSelected.setSenhaLocal(inpPsswrd.getText());
-                        if(usSelected!=null)
-                            if(usSelected.login())
-                                FramePrincipal.CarregarPag("SelPerso");
-                            else
-                            {
-                                errLogin.setText("Senha incorreta");
-                                errLogin.setVisible(true);
-                            }
                         else
                         {
-                            errLogin.setText("Selecione um usuário na lista");
+                            errLogin.setText("Senha incorreta");
                             errLogin.setVisible(true);
                         }
+                    else
+                    {
+                        errLogin.setText("Selecione um usuário na lista");
+                        errLogin.setVisible(true);
+                    }
+                }
+                else
+                {
+                    if(inpPsswrd.getText().equals(Admin.SENHA))
+                    {
+                        Admin admSelected = new Admin(usSelected);
+                        usSelected.setSenhaLocal(inpPsswrdLogAdm.getText());
+
+                        if(usSelected.login())
+                        {
+                            admSelected.setSenha(inpPsswrdLogAdm.getText());
+                            admSelected.cadastrar();
+
+                            modelUsuario.deletarPorNome(usSelected);
+                            AttLista();
+                        }
+                        else
+                            errLogin.setText("Senha do usuário incorreta");
+
+                        errLogin.setText("Usuario recadastrado como administrador");
+                        errLogin.setVisible(true);
+                        btnPswrdConf.setVisible(false);
+                        inpPsswrd.setVisible(false);
+
+                        revalidate();
+                        repaint();
                     }
                     else
                     {
-                        if(inpPsswrd.getText().equals(Admin.SENHA))
-                        {
-                            Admin admSelected = new Admin(usSelected);
-                            usSelected.setSenhaLocal(inpPsswrdLogAdm.getText());
-
-                            if(usSelected.login())
-                            {
-                                admSelected.setSenha(inpPsswrdLogAdm.getText());
-                                admSelected.cadastrar();
-
-                                modelUsuario.deletarPorNome(usSelected);
-                                AttLista();
-                            }
-                            else
-                                errLogin.setText("Senha do usuário incorreta");
-
-                            errLogin.setText("Usuario recadastrado como administrador");
-                            errLogin.setVisible(true);
-                            btnPswrdConf.setVisible(false);
-                            inpPsswrd.setVisible(false);
-
-                            revalidate();
-                            repaint();
-                        }
-                        else
-                        {
-                            errLogin.setText(errLogin.getText()+"Senha do admin incorreta");
-                            errLogin.setVisible(true);
-                        }
+                        errLogin.setText(errLogin.getText()+"Senha do admin incorreta");
+                        errLogin.setVisible(true);
                     }
-
                 }
-            });
-            del.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
 
-                    boolean deltd = modelUsuario.deletarPorNome(usSelected);
-                    if (deltd) {
-                        AttLista();
-                        revalidate();
-                        repaint();
-                    } else
-                        System.out.println("Falha ao deletar usuário");
-                }
-            });
-            clear.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    modelUsuario.deletarTodos();
+            }
+        });
+        del.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                boolean deltd = modelUsuario.deletarPorNome(usSelected);
+                if (deltd) {
                     AttLista();
                     revalidate();
                     repaint();
+                } else
+                    System.out.println("Falha ao deletar usuário");
+            }
+        });
+        clear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                modelUsuario.deletarTodos();
+                AttLista();
+                revalidate();
+                repaint();
 
-                    modelUsuario.numUsers = 0;
-                }
-            });
-            adm.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    pnSenha.removeAll();
-                    pnSenha.add(pnContLogAdm);
-                    pnSenha.add(pnSSubCont);
-                    pnSenha.add(errLogin);
-                    pnSenha.setVisible(true);
+                modelUsuario.numUsers = 0;
+            }
+        });
+        adm.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pnSenha.removeAll();
+                pnSenha.add(pnContLogAdm);
+                pnSenha.add(pnSSubCont);
+                pnSenha.add(errLogin);
+                pnSenha.setVisible(true);
 
-                    logAdm = true;
-                    txtPswrText.setText("Insira a senha de administrador:");
-                    errLogin.setVisible(true);
-                }
-            });
-        }//--Listeners de Ação
+                logAdm = true;
+                txtPswrText.setText("Insira a senha de administrador:");
+                errLogin.setVisible(true);
+            }
+        });
+    }
+    private void ConfigurarListenersHov(Clip Click, Clip Hov)
+    {
+        btnPswrdConf.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
+        del.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
+        edit.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
+        adm.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
+        selUsr.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
+        clear.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
+        inpPsswrd.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
+    }
 
-        {//--
-            btnPswrdConf.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
-            del.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
-            edit.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
-            adm.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
-            selUsr.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
-            clear.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
-            inpPsswrd.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
+    private void ConfigurarThis()
+    {
+        this.setPreferredSize(new Dimension(1000, 800));
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setBackground(Color.BLACK);
+    }
 
-        }//--Listeners de Hover
-
-        this.add(btnCont);
-        this.add(txtInfo);
-        this.add(Jlp);
-        this.setVisible(true);
+    private void ConfigurarJList()
+    {
+        listUsers.setBackground(Color.BLACK);
+        listUsers.setForeground(Color.white);
+        listUsers.setFont(fnt);
+        listUsers.setVisible(true);
     }
 }

@@ -90,7 +90,10 @@ public class TratadorMouseClick implements MouseListener {
 
                 if(!modelUsuario.JaExiste(usuario))
                     if(usuario.cadastrar())
+                    {
+                        UsuarioJogando.setUserJog(usuario);
                         FramePrincipal.CarregarPag(tela);
+                    }
                     else
                         txtLog.setText("ERRO");
                 else

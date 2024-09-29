@@ -3,6 +3,10 @@ package org.example.controller;
 import org.example.util.CarregadorAudio;
 import org.example.util.CarregadorFonte;
 import org.example.util.CarregadorImagem;
+import org.example.util.UsuarioJogando;
+import org.example.view.Fase1;
+import org.example.view.FramePrincipal;
+import org.example.view.TelaMorteVitoria;
 
 import javax.sound.sampled.Clip;
 import javax.swing.*;
@@ -13,7 +17,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.List;
 
-public class ControllerJogo {
+public class ControllerJogo{
     private Dimension dimencao;
     private int fatorDimecao;
 
@@ -450,7 +454,11 @@ public class ControllerJogo {
     }
 
     public void perde(){
-        System.out.println("Perdeu");
         updateTimer.stop();
+        renderTimer.stop();
+
+        FramePrincipal.RemoverPag("Fase1");
+        FramePrincipal.AddPag(new TelaMorteVitoria(FramePrincipal.Click,FramePrincipal.Hov,false, UsuarioJogando.getUserJog()),"TelaMorteVitoria");
+        FramePrincipal.CarregarPag("TelaMorteVitoria");
     }
 }

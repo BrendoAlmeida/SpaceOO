@@ -7,9 +7,9 @@ import java.awt.*;
 
 public class FramePrincipal extends JFrame
 {
-    protected static Clip Hov = CarregadorAudio.CarregarAudio("audio/Hover.wav");
-    protected static Clip Click = CarregadorAudio.CarregarAudio("audio/Click.wav");
-    protected static Clip clip = CarregadorAudio.CarregarAudio("audio/menuTheme.wav");
+    public static Clip Hov = CarregadorAudio.CarregarAudio("audio/Hover.wav");
+    public static Clip Click = CarregadorAudio.CarregarAudio("audio/Click.wav");
+    public static Clip clip = CarregadorAudio.CarregarAudio("audio/menuTheme.wav");
 
     private final static CardLayout CdLt = new CardLayout();
     protected final static JPanel pnPrincipal = new JPanel(CdLt);
@@ -18,6 +18,7 @@ public class FramePrincipal extends JFrame
     private final static TelaLog tlLog = new TelaLog(Click,Hov);
     private final static TelaCad tlCad = new TelaCad(Click,Hov);
     private final static SelPerso SelP = new SelPerso(Click,Hov);
+
     //private final static Fase1 F1 = new Fase1(clip, clip);
 
     public static void PararMusicaMenu()
@@ -28,6 +29,21 @@ public class FramePrincipal extends JFrame
     public static void CarregarPag(String pag)
     {
         CdLt.show(pnPrincipal,pag);
+    }
+
+    public static void RemoverPag(String nomePainel)
+    {
+        Component[] componentes = pnPrincipal.getComponents();
+        for (Component comp : componentes) {
+            if (comp.getName() != null && comp.getName().equals(nomePainel)) {
+                pnPrincipal.remove(comp);
+                break;
+            }
+        }
+
+        // Atualiza o layout
+        pnPrincipal.revalidate();
+        pnPrincipal.repaint();
     }
 
     public static void AddPag(JPanel pag, String StrPag)

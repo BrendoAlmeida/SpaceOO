@@ -36,63 +36,79 @@ public class SelPerso extends JPanel
     private final JButton voltar = new JButton("Voltar");
 
     public SelPerso(Clip Click, Clip Hov) {
-        {//--
-        this.setSize(1000, 800);
-        this.setBackground(Color.BLACK);
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        }//--this
+        ConfigurarJpanels();
+        ConfigurarJButtons();
+        ConfigurarJLabels();
+        ConfigurarListenersHov(Click,Hov);
+        ConfigurarListenersAc(Click,Hov);
+        ConfigurarThis();
+    }
+    private void ConfigurarJpanels()
+    {
+        contP1.add(SelP1);
+        contP1.add(estP1);
+        contP1.setLayout(new BoxLayout(contP1, BoxLayout.Y_AXIS));
+        contP1.setBackground(Color.black);
 
-        {//
-            txtSel.setFont(fnt.deriveFont(50f));
-            txtSel.setForeground(Color.white);
+        contP2.add(SelP2);
+        contP2.add(estP2);
+        contP2.setLayout(new BoxLayout(contP2, BoxLayout.Y_AXIS));
+        contP2.setBackground(Color.black);
 
-            estP1.setForeground(Color.white);
-            estP1.setBackground(Color.BLACK);
-            estP1.setFont(fnt2);
-            estP1.setVisible(false);
+        contPs.setBackground(Color.black);
+        contPs.setLayout(new BoxLayout(contPs, BoxLayout.LINE_AXIS));
+        contPs.setSize(new Dimension(700, 600));
+    }
+    private void ConfigurarJLabels()
+    {
+        txtSel.setFont(fnt.deriveFont(50f));
+        txtSel.setForeground(Color.white);
 
-            estP2.setForeground(Color.white);
-            estP2.setBackground(Color.BLACK);
-            estP2.setFont(fnt2);
-            estP2.setVisible(false);
-        }//--JLabels
+        estP1.setForeground(Color.white);
+        estP1.setBackground(Color.BLACK);
+        estP1.setFont(fnt2);
+        estP1.setVisible(false);
 
-        {//--
-            SelP1.setBackground(Color.BLACK);
-            SelP1.setSize(new Dimension(250, 250));
+        estP2.setForeground(Color.white);
+        estP2.setBackground(Color.BLACK);
+        estP2.setFont(fnt2);
+        estP2.setVisible(false);
+    }
+    private void ConfigurarJButtons()
+    {
+        SelP1.setBackground(Color.BLACK);
+        SelP1.setSize(new Dimension(250, 250));
 
-            SelP2.setBackground(Color.BLACK);
-            SelP2.setSize(new Dimension(250, 250));
+        SelP2.setBackground(Color.BLACK);
+        SelP2.setSize(new Dimension(250, 250));
 
-            SelP1.setVisible(true);
-            SelP2.setVisible(true);
+        SelP1.setVisible(true);
+        SelP2.setVisible(true);
 
-            conf.setForeground(Color.white);
-            conf.setBackground(Color.BLACK);
-            conf.setFont(fnt2);
+        conf.setForeground(Color.white);
+        conf.setBackground(Color.BLACK);
+        conf.setFont(fnt2);
 
-            voltar.setForeground(Color.white);
-            voltar.setBackground(Color.BLACK);
-            voltar.setFont(fnt2);
-
-        }//--JButtons
-
-        {//--
-            SelP1.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
-            SelP2.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
-
-        }//--Listeners de Hover
-
-        {//--
-            SelP1.addActionListener(new ActionListener() {
+        voltar.setForeground(Color.white);
+        voltar.setBackground(Color.BLACK);
+        voltar.setFont(fnt2);
+    }
+    private void ConfigurarListenersHov(Clip Click, Clip Hov)
+    {
+        SelP1.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
+        SelP2.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
+    }
+    private void ConfigurarListenersAc(Clip Click, Clip Hov)
+    {
+        SelP1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            if (estP2.isVisible())
-                estP2.setVisible(false);
-            estP1.setVisible(true);
-        }
+                if (estP2.isVisible())
+                    estP2.setVisible(false);
+                estP1.setVisible(true);
+            }
         });
-            SelP2.addActionListener(new ActionListener() {
+        SelP2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (estP1.isVisible())
@@ -101,25 +117,15 @@ public class SelPerso extends JPanel
                 estP2.setVisible(true);
             }
         });
-            conf.addMouseListener(new TratadorMouseClick(Click, Hov, null, null, null, false, true, "Fase1"));
-            voltar.addMouseListener(new TratadorMouseClick(Click, Hov, null, null, null, false, false, "TelaCad"));
-        }//-Listeners de Ação
+        conf.addMouseListener(new TratadorMouseClick(Click, Hov, null, null, null, false, true, "Fase1"));
+        voltar.addMouseListener(new TratadorMouseClick(Click, Hov, null, null, null, false, false, "TelaCad"));
+    }
 
-        {//--
-            contP1.add(SelP1);
-            contP1.add(estP1);
-            contP1.setLayout(new BoxLayout(contP1, BoxLayout.Y_AXIS));
-            contP1.setBackground(Color.black);
-
-            contP2.add(SelP2);
-            contP2.add(estP2);
-            contP2.setLayout(new BoxLayout(contP2, BoxLayout.Y_AXIS));
-            contP2.setBackground(Color.black);
-
-            contPs.setBackground(Color.black);
-            contPs.setLayout(new BoxLayout(contPs, BoxLayout.LINE_AXIS));
-            contPs.setSize(new Dimension(700, 600));
-        }//--JPanel
+    private void ConfigurarThis()
+    {
+        this.setSize(1000, 800);
+        this.setBackground(Color.BLACK);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(voltar);
         this.add(txtSel);
