@@ -1,14 +1,11 @@
 package org.example.util;
 
-import org.example.controller.Admin;
 import org.example.controller.Usuario;
 import org.example.model.modelUsuario;
-import org.example.view.Fase1;
 import org.example.view.FramePrincipal;
 
 import javax.sound.sampled.Clip;
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -18,12 +15,13 @@ import java.awt.event.MouseListener;
 public class TratadorMouseClick implements MouseListener {
     Clip Click;
     Clip Hov;
-    JLabel txtLog;
-    JTextField NmUsr;
-    JTextField psswrd;
+    JLabel txtLog = null;
+    JTextField NmUsr = null;
+    JTextField psswrd = null;
     String tela;
     boolean ehF;
     boolean vef;
+
     public TratadorMouseClick(Clip clc, Clip hv, JLabel tL, JTextField nms, JTextField pswd,boolean v,boolean ehFase,String tla)
     {
         Click = clc;
@@ -35,6 +33,25 @@ public class TratadorMouseClick implements MouseListener {
         vef = v;
         ehF = ehFase;
     }
+
+    public TratadorMouseClick(Clip clc, Clip hv, boolean v, boolean ehFase, String tla, int Perso)
+    {
+        Click = clc;
+        Hov = hv;
+        tela = tla;
+        vef = v;
+        ehF = ehFase;
+    }
+
+    public TratadorMouseClick(Clip clc, Clip hv, boolean v, boolean ehFase, String tla)
+    {
+        Click = clc;
+        Hov = hv;
+        tela = tla;
+        vef = v;
+        ehF = ehFase;
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
 
@@ -46,6 +63,7 @@ public class TratadorMouseClick implements MouseListener {
             Click.setFramePosition(0);
             Click.start();
         }
+        //Se é cadastro insere os valores
         if(vef && (NmUsr != null && psswrd !=null) )
         {
             String res = AvaliadorSenha.AvaliarSenha(psswrd.getText());
@@ -80,17 +98,20 @@ public class TratadorMouseClick implements MouseListener {
                 txtLog.setText(txtLog.getText().replace(res,AvaliadorSenha.AvaliarSenha(psswrd.getText())));
                 senhaEhValida = true;
             }
+
+            //Se os valores inseridos são válidos faz o cadastro
             if(senhaEhValida && nomeEhValido)
             {
 
                 Usuario usuario;
                 usuario = new Usuario(NmUsr.getText(),psswrd.getText());
-                usuario.setId(modelUsuario.numUsers);
-                modelUsuario.numUsers+=1;
 
                 if(!modelUsuario.JaExiste(usuario))
                     if(usuario.cadastrar())
+                    {
+                        UsuarioJogando.setUserJog(usuario);
                         FramePrincipal.CarregarPag(tela);
+                    }
                     else
                         txtLog.setText("ERRO");
                 else
@@ -100,14 +121,11 @@ public class TratadorMouseClick implements MouseListener {
                 }
 
             }
-        }
+        }//Se não precisa de cadastro e é fase
         else if(ehF)
         {
-            Fase1.MudarMusica();
-            FramePrincipal.AddPag(new Fase1(),tela);
-            FramePrincipal.CarregarPag(tela);
-            Fase1.MudarMusica();
-        }
+            FramePrincipal.IniciaFase(1, PersonagemSel.getPsel());
+        }//Se não precisa de cadastro e não é fase
         else
             FramePrincipal.CarregarPag(tela);
     }

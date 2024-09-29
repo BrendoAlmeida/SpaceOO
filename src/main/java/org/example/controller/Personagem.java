@@ -7,11 +7,19 @@ public class Personagem extends Elemento {
 
     public Personagem(int[] pos, Dimension tamanho, Tiro tiro, int vida, int velocidade, int delayTiro) {
         super(pos, tamanho, "img/player1.png");
+
+        if(this.getId() == 2)
+            this.setSprite("img/player2.png");
+
         startPersonagem(tiro, vida, velocidade, delayTiro);
     }
 
     public Personagem(Dimension tamanho, Tiro tiro, int vida, int velocidade, int delayTiro) {
         super(tamanho, "img/player1.png");
+
+        if(this.getId() == 2)
+            this.setSprite("img/player2.png");
+
         startPersonagem(tiro, vida, velocidade, delayTiro);
     }
 

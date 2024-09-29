@@ -22,6 +22,11 @@ public class TratadorMouseHover implements MouseListener {
         NmUsr = nms;
         psswrd = pswd;
     }
+    public TratadorMouseHover(Clip clc, Clip hv)
+    {
+        Click = clc;
+        Hov = hv;
+    }
     @Override
     public void mouseClicked(MouseEvent e) {
         if(Click != null)
