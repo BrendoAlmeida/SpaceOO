@@ -6,13 +6,13 @@ import java.util.Random;
 public class Inimigo extends Elemento{
     private Tiro tiro;
 
-    public Inimigo(int[] pos, Dimension tamanho, Tiro tiro, int vida, int velocidade, int delayTiro) {
-        super(pos, tamanho, "img/inimigo1.png");
+    public Inimigo(int[] pos, Dimension tamanho, Tiro tiro, int vida, int velocidade, int delayTiro, String sprite) {
+        super(pos, tamanho, sprite);
         startInimigo(tiro, vida, velocidade, delayTiro);
     }
 
-    public Inimigo(Dimension tamanho, Tiro tiro, int vida, int velocidade, int delayTiro) {
-        super(tamanho, "img/inimigo1.png");
+    public Inimigo(Dimension tamanho, Tiro tiro, int vida, int velocidade, int delayTiro, String sprite) {
+        super(tamanho, sprite);
         startInimigo(tiro, vida, velocidade, delayTiro);
     }
 
@@ -27,7 +27,7 @@ public class Inimigo extends Elemento{
     }
 
     public Inimigo clone() {
-        return new Inimigo(this.tamanho, this.tiro, this.vida, this.velocidade, this.delayAtirar);
+        return new Inimigo(this.tamanho, this.tiro, this.vida, this.velocidade, this.delayAtirar, this.spritePath);
     }
 
     public Tiro atirar(){

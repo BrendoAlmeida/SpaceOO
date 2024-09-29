@@ -5,13 +5,13 @@ import java.awt.*;
 public class Personagem extends Elemento {
     private Tiro tiro;
 
-    public Personagem(int[] pos, Dimension tamanho, Tiro tiro, int vida, int velocidade, int delayTiro) {
-        super(pos, tamanho, "img/player1.png");
+    public Personagem(int[] pos, Dimension tamanho, Tiro tiro, int vida, int velocidade, int delayTiro, String sprite) {
+        super(pos, tamanho, sprite);
         startPersonagem(tiro, vida, velocidade, delayTiro);
     }
 
-    public Personagem(Dimension tamanho, Tiro tiro, int vida, int velocidade, int delayTiro) {
-        super(tamanho, "img/player1.png");
+    public Personagem(Dimension tamanho, Tiro tiro, int vida, int velocidade, int delayTiro, String sprite) {
+        super(tamanho, sprite);
         startPersonagem(tiro, vida, velocidade, delayTiro);
     }
 

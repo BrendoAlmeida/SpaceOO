@@ -14,6 +14,7 @@ public abstract class Elemento extends JPanel {
     protected int velocidade;
     protected int delayAtirar;
     protected int delayTiro;
+    protected String spritePath;
 
     public Elemento(int[] pos, Dimension tamanho, String spritePath) {
         setTamanho(tamanho);
@@ -60,6 +61,7 @@ public abstract class Elemento extends JPanel {
 
     public void setSprite(String spritePath) {
         sprite = CarregadorImagem.CarregaIcone(spritePath, tamanho.width, tamanho.height).getImage();
+        this.spritePath = spritePath;
     }
 
     public int[] getPos() {

@@ -14,6 +14,9 @@ public class ControllerJogo {
     private Dimension dimencao;
     private int fatorDimecao;
 
+    private Inimigo inimigoType;
+    private Personagem jogadorType;
+
     private List<Inimigo> inimigos = new java.util.ArrayList<>();
     private int direcaoInimigo = 1;
     private List<Tiro> tiros = new java.util.ArrayList<>();
@@ -50,13 +53,17 @@ public class ControllerJogo {
         mainPanel.add(PanelVida);
     }
 
-    public void initInimigos(Inimigo inimigo, int qtdFileiras) {
+    public void initInimigos(Inimigo inimigo, int qtdFileiras, int maxInimigos) {
         int tamanhoX = this.getDimencao().width;
         int fatorDim = this.getFatorDimecao();
         int qtdInimigos = (tamanhoX - fatorDim*2);
 
+        if (maxInimigos == -1) maxInimigos = qtdInimigos;
+
         for (int i = fatorDim; i < qtdInimigos; i += fatorDim) {
+            if (inimigos.size() >= maxInimigos) break;
             for (int j = 0; j < qtdFileiras; j++) {
+                if (inimigos.size() >= maxInimigos) break;
                 Inimigo novoInimigo = inimigo.clone();
                 novoInimigo.setPos(new int[]{i, fatorDim + (j * fatorDim)});
                 inimigos.add(novoInimigo);
@@ -90,13 +97,15 @@ public class ControllerJogo {
         mainPanel.repaint();
     }
 
-    public ControllerJogo(JPanel mainPanel, Dimension dimencao, int fatorDimecao, Inimigo inimigo, Personagem jogador, Parede parede, int qtdFileiras) {
+    public ControllerJogo(JPanel mainPanel, Dimension dimencao, int fatorDimecao, Inimigo inimigo, Personagem jogador, Parede parede, int qtdFileiras, int maxInimigos) {
         this.dimencao = dimencao;
         this.fatorDimecao = fatorDimecao;
         this.mainPanel = mainPanel;
 
-        initInimigos(inimigo, qtdFileiras);
+        initInimigos(inimigo, qtdFileiras, maxInimigos);
+        inimigoType = inimigo;
         initPersonagem(jogador);
+        jogadorType = jogador;
         initParede(parede);
         initScore();
         initVida();
@@ -282,7 +291,7 @@ public class ControllerJogo {
                 inimigos.remove(inimigo);
                 mainPanel.remove(inimigo);
 
-                score += multScore;
+                score += multScore * inimigoType.getVida();
 
                 return true;
             }
