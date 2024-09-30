@@ -79,7 +79,7 @@ public class ControllerJogo {
         SfxTiroJog.close();
     }
 
-    private Timer delaySomTiroPersegue = new Timer(250, e->{
+    private Timer delaySomTiroPersegue = new Timer(200, e->{
         if(SfxTiroPersegue.isActive())
         {
             SfxTiroPersegue.stop();
@@ -200,8 +200,9 @@ public class ControllerJogo {
         });
     }
 
-    public ControllerJogo(JPanel mainPanel, Dimension dimencao, int fatorDimecao, Inimigo inimigo, Personagem jogador, Parede parede, int qtdFileiras, int fase, int maxInimigos) {
+    public ControllerJogo(JPanel mainPanel, Dimension dimencao, int fatorDimecao, Inimigo inimigo, Personagem jogador, Parede parede, int qtdFileiras, int fase, int maxInimigos, int scr) {
         this.dimencao = dimencao;
+        this.score = scr;
         this.fatorDimecao = fatorDimecao;
         this.mainPanel = mainPanel;
         //modifica o construtor para verificar qual é a fase
@@ -523,7 +524,7 @@ public class ControllerJogo {
 
 
         if(fase < 3)
-            FramePrincipal.IniciaFase(fase+1,jogador.getId());
+            FramePrincipal.IniciaFase(fase+1,jogador.getId(),this.score);
         else
         {
             FramePrincipal.AddPag(new TelaMorteVitoria(FramePrincipal.Click,FramePrincipal.Hov,true, UsuarioJogando.getUserJog(), score),"TelaMorteVitoria");

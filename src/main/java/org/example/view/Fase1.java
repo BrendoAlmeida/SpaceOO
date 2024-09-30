@@ -27,7 +27,7 @@ public class Fase1 extends JPanel{
         faseMusica.loop((int)faseMusica.getMicrosecondLength());
     }
 
-    public Fase1(int perso) {
+    public Fase1(int perso, int scr) {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(null);
         mainPanel.setPreferredSize(dimencao);
@@ -52,10 +52,10 @@ public class Fase1 extends JPanel{
         Parede parede = new Parede(new Dimension(fatorDimencao*2, fatorDimencao*2), 30);
 
         this.setVisible(true);
-        controllerJogo = new ControllerJogo(mainPanel, dimencao, fatorDimencao, inimigo, personagem, parede, 3,1, -1);
+        controllerJogo = new ControllerJogo(mainPanel, dimencao, fatorDimencao, inimigo, personagem, parede, 3,1, -1,scr);
     }
 
-    public Fase1(Personagem perso)
+    public Fase1(Personagem perso,int scr)
     {//chamada quando o personagem é editado
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(null);
@@ -80,6 +80,6 @@ public class Fase1 extends JPanel{
         Parede parede = new Parede(new Dimension(fatorDimencao*2, fatorDimencao*2), 30);
 
         this.setVisible(true);
-        controllerJogo = new ControllerJogo(mainPanel, dimencao, fatorDimencao, inimigo, perso, parede, 3,1, -1);
+        controllerJogo = new ControllerJogo(mainPanel, dimencao, fatorDimencao, inimigo, perso, parede, 3,1, -1,scr);
     }
 }

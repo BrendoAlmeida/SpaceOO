@@ -480,7 +480,7 @@ public class TelaLog extends JPanel
                 EditarPersonagem(p);
 
                 PersonagemSel.setOBPsel(p);
-                FramePrincipal.IniciaFase(1, p);
+                FramePrincipal.IniciaFase(1, p,0);
             }
         });
     }
@@ -569,7 +569,6 @@ public class TelaLog extends JPanel
                     pnPopFlex.setVisible(true);
                     inpPsswrd.setText("");
                     inpPsswrdLogAdm.setText("");
-
 
                     pnPopFlex.removeAll();
                     pnPopFlex.add(errLogin);

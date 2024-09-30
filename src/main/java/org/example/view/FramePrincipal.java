@@ -56,11 +56,11 @@ public class FramePrincipal extends JFrame
         comp.setName(str);
     }
 
-    public static void IniciaFase(int fase, int p)
+    public static void IniciaFase(int fase, int p, int scrAt)
     {
         if(fase == 1)
         {
-            Fase1 f = new Fase1(p);
+            Fase1 f = new Fase1(p,scrAt);
             f.setName("Fase1");
             AddPag(f,"Fase1");
             Fase1.MudarMusica();
@@ -68,25 +68,25 @@ public class FramePrincipal extends JFrame
         }
         if(fase == 2)
         {
-            Fase2 f = new Fase2(p);
+            Fase2 f = new Fase2(p,scrAt);
             f.setName("Fase2");
             AddPag(f,"Fase2");
             CarregarPag("Fase2");
         }
         if(fase == 3)
         {
-            Fase3 f = new Fase3(p);
+            Fase3 f = new Fase3(p,scrAt);
             f.setName("Fase3");
             AddPag(f,"Fase3");
             CarregarPag("Fase3");
         }
 
     }
-    public static void IniciaFase(int fase, Personagem p)
+    public static void IniciaFase(int fase, Personagem p, int scrAt)
     {
         if(fase == 1)
         {
-            Fase1 f = new Fase1(p);
+            Fase1 f = new Fase1(p,scrAt);
             f.setName("Fase1");
             AddPag(f,"Fase1");
             Fase1.MudarMusica();
@@ -94,14 +94,14 @@ public class FramePrincipal extends JFrame
         }
         if(fase == 2)
         {
-            Fase1 f = new Fase1(p);
+            Fase1 f = new Fase1(p,scrAt);
             f.setName("Fase2");
             AddPag(f,"Fase2");
             CarregarPag("Fase2");
         }
         if(fase == 3)
         {
-            Fase1 f = new Fase1(p);
+            Fase1 f = new Fase1(p,scrAt);
             f.setName("Fase3");
             AddPag(f,"Fase3");
             CarregarPag("Fase3");

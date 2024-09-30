@@ -3,6 +3,7 @@ package org.example.util;
 import org.example.controller.Usuario;
 import org.example.model.modelUsuario;
 import org.example.view.FramePrincipal;
+import org.example.view.TelaLog;
 
 import javax.sound.sampled.Clip;
 import javax.swing.*;
@@ -102,9 +103,7 @@ public class TratadorMouseClick implements MouseListener {
             //Se os valores inseridos são válidos faz o cadastro
             if(senhaEhValida && nomeEhValido)
             {
-
-                Usuario usuario;
-                usuario = new Usuario(NmUsr.getText(),psswrd.getText());
+                Usuario usuario = new Usuario(NmUsr.getText(),psswrd.getText());
 
                 if(!modelUsuario.JaExiste(usuario))
                     if(usuario.cadastrar())
@@ -124,10 +123,16 @@ public class TratadorMouseClick implements MouseListener {
         }//Se não precisa de cadastro e é fase
         else if(ehF)
         {
-            FramePrincipal.IniciaFase(1, PersonagemSel.getPsel());
+            FramePrincipal.IniciaFase(1, PersonagemSel.getPsel(),0);
         }//Se não precisa de cadastro e não é fase
         else
+        {
+            if(tela.equals("TelaLog"))
+                TelaLog.AttLista();
+
             FramePrincipal.CarregarPag(tela);
+        }
+
     }
 
     @Override

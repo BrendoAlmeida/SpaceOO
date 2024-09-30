@@ -19,7 +19,7 @@ public class TelaMorteVitoria extends JPanel
     private final Font fnt2 = CarregadorFonte.CarregaFonte("fonts/space_invaders.ttf", 30f);
 
     private final JButton jogarDnv = new JButton("Jogar Novamente");
-    private final JButton voltar = new JButton("Voltar para o ínicio");
+    private final JButton voltar = new JButton("Voltar para o inicio");
 
     private final JPanel pnP = new JPanel();
     private final JPanel contB = new JPanel();
