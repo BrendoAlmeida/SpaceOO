@@ -16,7 +16,11 @@ import java.io.IOException;
 //.setBorder() pra configurar a borda
 //Classe Clip
 //
-
+/*
+Igor Correa Trifilio Campos 202365092A
+Brendo Lee Visconde de Almeida	202365067A
+Gabriel Toledo Gonçalves Barreto 202365083A
+*/
 public class TelaSelLoginCad extends JPanel {
 
     final int LARGURA = 1000;

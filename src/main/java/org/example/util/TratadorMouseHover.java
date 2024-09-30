@@ -6,7 +6,11 @@ import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-
+/*
+Igor Correa Trifilio Campos 202365092A
+Brendo Lee Visconde de Almeida	202365067A
+Gabriel Toledo Gonçalves Barreto 202365083A
+*/
 public class TratadorMouseHover implements MouseListener {
     Clip Click;
     Clip Hov;

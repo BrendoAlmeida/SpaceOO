@@ -2,7 +2,11 @@ package org.example.controller;
 
 import java.awt.*;
 import java.util.Random;
-
+/*
+Igor Correa Trifilio Campos 202365092A
+Brendo Lee Visconde de Almeida	202365067A
+Gabriel Toledo Gonçalves Barreto 202365083A
+*/
 public class Inimigo extends Elemento{
     private Tiro tiro;
 

@@ -4,7 +4,11 @@ import org.example.util.CarregadorImagem;
 
 import javax.swing.*;
 import java.awt.*;
-
+/*
+Igor Correa Trifilio Campos 202365092A
+Brendo Lee Visconde de Almeida	202365067A
+Gabriel Toledo Gonçalves Barreto 202365083A
+*/
 public abstract class Elemento extends JPanel {
     protected int id;
     protected int vida;

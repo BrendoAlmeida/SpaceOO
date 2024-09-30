@@ -6,7 +6,11 @@ import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLOutput;
-
+/*
+Igor Correa Trifilio Campos 202365092A
+Brendo Lee Visconde de Almeida	202365067A
+Gabriel Toledo Gonçalves Barreto 202365083A
+*/
 public class FramePrincipal extends JFrame
 {
     public static Clip Hov = CarregadorAudio.CarregarAudio("audio/Hover.wav");

@@ -2,7 +2,11 @@ package org.example.util;
 import javax.sound.sampled.*;
 import java.io.IOException;
 import java.net.URL;
-
+/*
+Igor Correa Trifilio Campos 202365092A
+Brendo Lee Visconde de Almeida	202365067A
+Gabriel Toledo Gonçalves Barreto 202365083A
+*/
 public class CarregadorAudio
 {
     public static Clip CarregarAudio(String arq)

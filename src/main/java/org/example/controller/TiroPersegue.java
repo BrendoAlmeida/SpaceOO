@@ -1,7 +1,11 @@
 package org.example.controller;
 
 import java.awt.*;
-
+/*
+Igor Correa Trifilio Campos 202365092A
+Brendo Lee Visconde de Almeida	202365067A
+Gabriel Toledo Gonçalves Barreto 202365083A
+*/
 public class TiroPersegue extends Tiro{
     public TiroPersegue(int[] pos, Dimension tamanho, int velocidade, int dano, int[] direcao, boolean tiroInimigo) {
         super(pos, tamanho, velocidade, dano, direcao, tiroInimigo);

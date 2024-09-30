@@ -11,7 +11,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
+/*
+Igor Correa Trifilio Campos 202365092A
+Brendo Lee Visconde de Almeida	202365067A
+Gabriel Toledo Gonçalves Barreto 202365083A
+*/
 // Inimigo: Dimension tamanho, Tiro tiro, int vida, int velocidade, int delayTiro
 public class modelInimigo {
     private static final Connection con = connection.con;

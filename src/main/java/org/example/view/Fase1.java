@@ -9,7 +9,11 @@ import org.example.util.CarregadorAudio;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
-
+/*
+Igor Correa Trifilio Campos 202365092A
+Brendo Lee Visconde de Almeida	202365067A
+Gabriel Toledo Gonçalves Barreto 202365083A
+*/
 public class Fase1 extends JPanel{
     private static ControllerJogo controllerJogo;
     //private Dimension dimencao = new Dimension(750, 600);

@@ -1,7 +1,11 @@
 package org.example.controller;
 
 import org.example.model.modelUsuario;
-
+/*
+Igor Correa Trifilio Campos 202365092A
+Brendo Lee Visconde de Almeida	202365067A
+Gabriel Toledo Gonçalves Barreto 202365083A
+*/
 public class Usuario {
     private int id = -1;
     private String nome;
