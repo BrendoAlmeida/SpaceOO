@@ -73,6 +73,8 @@ public class Usuario {
     }
 
     public void setScore(int score) {
+        if (this.getScore() > score) return;
+
         Score = score;
         modelUsuario.atualizar(this);
     }

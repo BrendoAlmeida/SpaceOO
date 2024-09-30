@@ -68,14 +68,14 @@ public class FramePrincipal extends JFrame
         }
         if(fase == 2)
         {
-            Fase1 f = new Fase1(p);
+            Fase2 f = new Fase2(p);
             f.setName("Fase2");
             AddPag(f,"Fase2");
             CarregarPag("Fase2");
         }
         if(fase == 3)
         {
-            Fase1 f = new Fase1(p);
+            Fase3 f = new Fase3(p);
             f.setName("Fase3");
             AddPag(f,"Fase3");
             CarregarPag("Fase3");

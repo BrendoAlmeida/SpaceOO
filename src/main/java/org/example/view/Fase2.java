@@ -53,6 +53,6 @@ public class Fase2 extends JPanel {
         Parede parede = new Parede(new Dimension(fatorDimencao * 2, fatorDimencao * 2), 30);
 
         this.setVisible(true);
-        controllerJogo = new ControllerJogo(mainPanel, dimencao, fatorDimencao, inimigo, personagem, parede, 1,3, -1);
+        controllerJogo = new ControllerJogo(mainPanel, dimencao, fatorDimencao, inimigo, personagem, parede, 1,2, -1);
     }
 }
