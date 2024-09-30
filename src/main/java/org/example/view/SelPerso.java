@@ -35,7 +35,7 @@ public class SelPerso extends JPanel
 
         for (int i = 0; i < personagens.size(); i++) {
             Personagem personagem = personagens.get(i);
-            JButton button = new JButton(new ImageIcon(personagem.getSprite()));
+            JButton button = new JButton(new ImageIcon(personagem.getSprite().getScaledInstance(250, 250, Image.SCALE_DEFAULT)));
 
             JLabel estatisticas = new JLabel("<html> Vida: " + personagem.getVida() + "<br> Velocidade: " + personagem.getVelocidade() + "<br> Delay Tiro: " + personagem.getDelayTiro() + "</html>");
 
