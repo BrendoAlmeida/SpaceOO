@@ -35,7 +35,7 @@ public class SelPerso extends JPanel
 
         for (int i = 0; i < personagens.size(); i++) {
             Personagem personagem = personagens.get(i);
-            JButton button = new JButton(new ImageIcon(personagem.getSprite()));
+            JButton button = new JButton(new ImageIcon(personagem.getSprite().getScaledInstance(250,250,Image.SCALE_DEFAULT)));
 
             JLabel estatisticas = new JLabel("<html> Vida: " + personagem.getVida() + "<br> Velocidade: " + personagem.getVelocidade() + "<br> Delay Tiro: " + personagem.getDelayTiro() + "</html>");
 
@@ -44,7 +44,7 @@ public class SelPerso extends JPanel
             estatisticas.setFont(fnt2);
             estatisticas.setVisible(false);
 
-            button.addMouseListener(new TratadorMouseHover(Click, Hov, null, null, null));
+            button.addMouseListener(new TratadorMouseHover(Click, Hov));
 
             button.addActionListener(new ActionListener() {
                 @Override
@@ -58,7 +58,6 @@ public class SelPerso extends JPanel
                 }
             });
             button.setBackground(Color.BLACK);
-            button.setSize(new Dimension(250, 250));
             button.setVisible(true);
 
             JPanel panel = new JPanel();
