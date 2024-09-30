@@ -261,10 +261,13 @@ public class ControllerJogo {
         moveInimigo();
         updateScore();
         updateVida();
+
         jogador.delayTiro();
         for (Inimigo inimigo : inimigos) {
             inimigo.delayTiro();
         }
+
+        if(inimigos.isEmpty()) ganha(faseAt);
     }
 
     public void updateScore(){
@@ -425,7 +428,6 @@ public class ControllerJogo {
         jogador.tomarDano(tiro.getDano());
         if(jogador.getVida() == 0) perde(faseAt);
 
-
         return true;
     }
 
@@ -497,7 +499,7 @@ public class ControllerJogo {
         else if(faseAt == 3)
             FramePrincipal.RemoverPag("Fase3");
 
-        FramePrincipal.AddPag(new TelaMorteVitoria(FramePrincipal.Click,FramePrincipal.Hov,false, UsuarioJogando.getUserJog()),"TelaMorteVitoria");
+        FramePrincipal.AddPag(new TelaMorteVitoria(FramePrincipal.Click,FramePrincipal.Hov,false, UsuarioJogando.getUserJog(), score),"TelaMorteVitoria");
         FramePrincipal.CarregarPag("TelaMorteVitoria");
 
         PararAudios();
@@ -524,7 +526,7 @@ public class ControllerJogo {
             FramePrincipal.IniciaFase(fase+1,jogador.getId());
         else
         {
-            FramePrincipal.AddPag(new TelaMorteVitoria(FramePrincipal.Click,FramePrincipal.Hov,false, UsuarioJogando.getUserJog()),"TelaMorteVitoria");
+            FramePrincipal.AddPag(new TelaMorteVitoria(FramePrincipal.Click,FramePrincipal.Hov,true, UsuarioJogando.getUserJog(), score),"TelaMorteVitoria");
             FramePrincipal.CarregarPag("TelaMorteVitoria");
         }
 

@@ -24,10 +24,10 @@ public class TelaMorteVitoria extends JPanel
     private final JPanel pnP = new JPanel();
     private final JPanel contB = new JPanel();
 
-    public TelaMorteVitoria(Clip Click, Clip Hov,boolean ganhou,Usuario user)
+    public TelaMorteVitoria(Clip Click, Clip Hov,boolean ganhou,Usuario user, int score)
     {
         ConfigurarJPanel();
-        ConfigurarJLabels(ganhou,user);
+        ConfigurarJLabels(ganhou,user, score);
         ConfigurarJButtons();
         ConfigurarListenersHover(Click,Hov);
         ConfigurarListenerAc(Click,Hov);
@@ -58,7 +58,7 @@ public class TelaMorteVitoria extends JPanel
 
         this.add(pnP);
     }
-    private void ConfigurarJLabels(boolean ganhou, Usuario user)
+    private void ConfigurarJLabels(boolean ganhou, Usuario user, int score)
     {
 
         Res.setSize(new Dimension(200, 200));
@@ -71,7 +71,7 @@ public class TelaMorteVitoria extends JPanel
         Scr.setFont(fnt2);
         Scr.setVisible(true);
         Scr.setAlignmentX(Component.CENTER_ALIGNMENT);
-        Scr.setText("SCORE: "+user.getScore());
+        Scr.setText("SCORE: " + score);
 
         if(ganhou)
             Res.setText("Vitória");
