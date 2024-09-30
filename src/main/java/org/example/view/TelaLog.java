@@ -407,6 +407,7 @@ public class TelaLog extends JPanel
                     pnSSubCont.add(btnPswrdEdit);
                     pnPopFlex.add(pnSSubCont);
                     pnPopFlex.add(errLogin);
+                    errLogin.setText("");
                     pnPopFlex.setVisible(true);
                 }
                 else
